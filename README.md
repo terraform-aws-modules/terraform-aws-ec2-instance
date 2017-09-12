@@ -1,5 +1,5 @@
-AWS EC2 Terraform module
-========================
+AWS EC2 Instance Terraform module
+=================================
 
 Terraform module which creates EC2 instance(s) on AWS.
 
@@ -11,8 +11,8 @@ Usage
 -----
 
 ```hcl
-module "ec2" {
-  source = "terraform-aws-modules/ec2/aws"
+module "ec2_cluster" {
+  source = "terraform-aws-modules/ec2-instance/aws"
 
   name  = "my-cluster"
   count = 5
@@ -33,7 +33,7 @@ module "ec2" {
 Examples
 --------
 
-* [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2/tree/master/examples/basic)
+* [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
 
 Limitations
 -----------
