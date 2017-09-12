@@ -5,15 +5,7 @@ Terraform module which creates EC2 instance(s) on AWS.
 
 These types of resources are supported:
 
-* [VPC](https://www.terraform.io/docs/providers/aws/r/vpc.html)
-* [Subnet](https://www.terraform.io/docs/providers/aws/r/aws_subnet.html)
-* [Route](https://www.terraform.io/docs/providers/aws/r/route.html)
-* [Route table](https://www.terraform.io/docs/providers/aws/r/route_table.html)
-* [Internet Gateway](https://www.terraform.io/docs/providers/aws/r/internet_gateway.html) 
-* [NAT Gateway](https://www.terraform.io/docs/providers/aws/r/nat_gateway.html)
-* [VPC Endpoint](https://www.terraform.io/docs/providers/aws/r/vpc_endpoint.html) (S3 and DynamoDB)
-* [RDS DB Subnet Group](https://www.terraform.io/docs/providers/aws/r/db_subnet_group.html) 
-* [ElastiCache Subnet Group](https://www.terraform.io/docs/providers/aws/r/elasticache_subnet_group.html) 
+* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html) 
 
 Usage
 -----
@@ -39,16 +31,22 @@ module "ec2" {
 ```
 
 Examples
-========
+--------
 
-* [Basic EC2 instance](examples/basic)
+* [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2/tree/master/examples/basic)
+
+Limitations
+-----------
+
+* `network_interface` can't be specified together with `associate_public_ip_address`, which makes `network_interface`
+  not configurable using this module at the moment
 
 Authors
-=======
+-------
 
 Module managed by [Anton Babenko](https://github.com/antonbabenko).
 
 License
-=======
+-------
 
 Apache 2 Licensed. See LICENSE for full details.
