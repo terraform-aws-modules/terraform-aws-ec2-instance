@@ -13,11 +13,6 @@ data "aws_subnet_ids" "all" {
   vpc_id = "${data.aws_vpc.default.id}"
 }
 
-data "aws_security_group" "default" {
-  vpc_id = "${data.aws_vpc.default.id}"
-  name   = "default"
-}
-
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
@@ -38,12 +33,23 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+module "security_group" {
+  source = "terraform-aws-modules/security-group/aws"
+
+  name        = "example"
+  description = "Security group for example usage with EC2 instance"
+  vpc_id      = "${data.aws_vpc.default.id}"
+
+  ingress_cidr_blocks      = ["0.0.0.0/0"]
+  ingress_rules            = ["http-80-tcp"]
+}
+
 module "ec2" {
   source = "../../"
 
   name                        = "example"
   ami                         = "${data.aws_ami.amazon_linux.id}"
   instance_type               = "t2.micro"
-  vpc_security_group_ids      = ["${data.aws_security_group.default.id}"]
+  vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   associate_public_ip_address = true
 }
