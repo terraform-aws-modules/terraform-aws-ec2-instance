@@ -154,12 +154,15 @@ variable "block_duration_minutes" {
 variable "spot_type" {
   type        = "string"
   description = "(Optional; Default: 'persistent') If set to 'one-time', after the instance is terminated, the spot request will be closed. Also, Terraform can't manage one-time spot requests, just launch them."
+  default     = "persistent"
 }
 
 variable "create_timeout" {
   description = "(Defaults to 10 mins) Used when requesting the spot instance (only valid if wait_for_fulfillment = true)"
+  default     = "10"
 }
 
 variable "delete_timeout" {
   description = "(Defaults to 10 mins) Used when terminating all instances launched via the given spot instance request"
+  default     = "10"
 }

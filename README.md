@@ -34,7 +34,7 @@ module "ec2_cluster" {
 Examples
 --------
 
-* [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
+* [Basic EC2  instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
 
 Limitations
 -----------
