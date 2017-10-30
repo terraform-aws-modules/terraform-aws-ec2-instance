@@ -133,6 +133,7 @@ variable "network_interface" {
 variable "spot_price" {
   type        = "string"
   description = "The maximum hourly price (bid) you are willing to pay for the instance, e.g. 0.10"
+  default     = "0.01"
 }
 
 variable "launch_group" {
@@ -144,13 +145,13 @@ variable "launch_group" {
 variable "instance_interruption_behaviour" {
   type        = "string"
   description = "Whether a Spot instance stops or terminates when it is interrupted, can be stop or terminate"
-  default     = "terminates"
+  default     = "terminate"
 }
 
 variable "block_duration_minutes" {
   type        = "string"
   description = "(Optional) The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)."
-  default     = "60"
+  default     = 60
 }
 
 variable "spot_type" {
@@ -161,10 +162,10 @@ variable "spot_type" {
 
 variable "create_timeout" {
   description = "(Defaults to 10 mins) Used when requesting the spot instance (only valid if wait_for_fulfillment = true)"
-  default     = "10"
+  default     = 10
 }
 
 variable "delete_timeout" {
   description = "(Defaults to 10 mins) Used when terminating all instances launched via the given spot instance request"
-  default     = "10"
+  default     = 10
 }
