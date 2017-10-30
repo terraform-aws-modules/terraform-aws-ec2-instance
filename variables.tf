@@ -133,7 +133,6 @@ variable "network_interface" {
 variable "spot_price" {
   type        = "string"
   description = "The maximum hourly price (bid) you are willing to pay for the instance, e.g. 0.10"
-  default     = "0.01"
 }
 
 variable "wait_for_fulfillment" {
