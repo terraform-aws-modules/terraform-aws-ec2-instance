@@ -138,17 +138,19 @@ variable "spot_price" {
 variable "launch_group" {
   type        = "string"
   description = "Group name to assign the instances to so they can be started/stopped in unison, e.g. purple-plutonium"
-  default     = "defaulted"
+  default     = "default"
 }
 
 variable "instance_interruption_behaviour" {
   type        = "string"
   description = "Whether a Spot instance stops or terminates when it is interrupted, can be stop or terminate"
+  default     = "terminates"
 }
 
 variable "block_duration_minutes" {
   type        = "string"
   description = "(Optional) The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)."
+  default     = "60"
 }
 
 variable "spot_type" {
