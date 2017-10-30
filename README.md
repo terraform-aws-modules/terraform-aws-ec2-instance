@@ -1,18 +1,18 @@
 AWS EC2 Instance Terraform module
 =================================
 
-Terraform module which creates EC2 instance(s) on AWS.
+Terraform module which creates EC2 Spot instance(s) request(s) on AWS.
 
 These types of resources are supported:
 
-* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html)
+* [EC2 Spot Instance Request](https://www.terraform.io/docs/providers/aws/r/spot_instance_request.html)
 
 Usage
 -----
 
 ```hcl
-module "ec2_cluster" {
-  source = "terraform-aws-modules/ec2-instance/aws"
+module "ec2_spot_cluster" {
+  source = "johnypony3/ec2-spot-instance/aws"
 
   name  = "my-cluster"
   count = 5
@@ -34,7 +34,7 @@ module "ec2_cluster" {
 Examples
 --------
 
-* [Basic EC2  instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
+* [Basic EC2 Spot instance](https://github.com/johnypony3/terraform-aws-ec2-spot-instance/tree/master/examples/spot)
 
 Limitations
 -----------
@@ -46,7 +46,7 @@ Authors
 -------
 
 Module managed by [Anton Babenko](https://github.com/antonbabenko).
-
+Temporarily managed by [johnypony3](https://github.com/johnypony3)
 License
 -------
 
