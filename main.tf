@@ -1,7 +1,7 @@
 ######
-# EC2 instance
+# EC2 spot instance
 ######
-resource "aws_spot_instance" "this" {
+resource "aws_spot_instance_request" "this" {
   count = "${var.count}"
 
   ami                    = "${var.ami}"
@@ -40,7 +40,7 @@ resource "aws_spot_instance" "this" {
 
   timeouts {
     create = "${var.create_timeout}"
-    delete = "2${var.delete_timeout}h"
+    delete = "${var.delete_timeout}"
   }
 
   # Note: network_interface can't be specified together with associate_public_ip_address

@@ -136,10 +136,15 @@ variable "spot_price" {
   default     = "0.01"
 }
 
+variable "wait_for_fulfillment" {
+  description = "(Optional; Default: false) If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached."
+  default     = false
+}
+
 variable "launch_group" {
   type        = "string"
   description = "Group name to assign the instances to so they can be started/stopped in unison, e.g. purple-plutonium"
-  default     = "default"
+  default     = ""
 }
 
 variable "instance_interruption_behaviour" {
@@ -151,7 +156,7 @@ variable "instance_interruption_behaviour" {
 variable "block_duration_minutes" {
   type        = "string"
   description = "(Optional) The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)."
-  default     = 60
+  default     = "0"
 }
 
 variable "spot_type" {
@@ -162,10 +167,10 @@ variable "spot_type" {
 
 variable "create_timeout" {
   description = "(Defaults to 10 mins) Used when requesting the spot instance (only valid if wait_for_fulfillment = true)"
-  default     = 10
+  default     = "10m"
 }
 
 variable "delete_timeout" {
   description = "(Defaults to 10 mins) Used when terminating all instances launched via the given spot instance request"
-  default     = 10
+  default     = "10m"
 }
