@@ -45,7 +45,7 @@ module "security_group" {
   egress_rules        = ["all-all"]
 }
 
-module "ec2" {
+module "ec2_spot" {
   source = "../../"
 
   name                        = "example"
@@ -53,4 +53,5 @@ module "ec2" {
   instance_type               = "t2.micro"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   associate_public_ip_address = true
+  spot_price                  = "0.03"
 }

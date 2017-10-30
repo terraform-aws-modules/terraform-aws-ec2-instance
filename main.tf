@@ -1,7 +1,7 @@
 ######
 # EC2 instance
 ######
-resource "aws_instance" "this" {
+resource "aws_spot_instance" "this" {
   count = "${var.count}"
 
   ami                    = "${var.ami}"
@@ -30,6 +30,18 @@ resource "aws_instance" "this" {
   availability_zone                    = "${var.availability_zone}"
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
+
+  spot_price                      = "${var.spot_price}"
+  wait_for_fulfillment            = "${var.wait_for_fulfillment}"
+  spot_type                       = "${var.spot_type}"
+  instance_interruption_behaviour = "${var.instance_interruption_behaviour}"
+  launch_group                    = "${var.launch_group}"
+  block_duration_minutes          = "${var.block_duration_minutes}"
+
+  timeouts {
+    create = "${var.create_timeout}"
+    delete = "2${var.delete_timeout}h"
+  }
 
   # Note: network_interface can't be specified together with associate_public_ip_address
   # network_interface = "${var.network_interface}"

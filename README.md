@@ -5,7 +5,7 @@ Terraform module which creates EC2 instance(s) on AWS.
 
 These types of resources are supported:
 
-* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html) 
+* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html)
 
 Usage
 -----
@@ -16,12 +16,13 @@ module "ec2_cluster" {
 
   name  = "my-cluster"
   count = 5
-  
+
   ami                    = "ami-ebd02392"
   instance_type          = "t2.micro"
   key_name               = "user1"
   monitoring             = true
   vpc_security_group_ids = ["sg-12345678"]
+  spot_price             = "0.03"
 
   tags = {
     Terraform = "true"
