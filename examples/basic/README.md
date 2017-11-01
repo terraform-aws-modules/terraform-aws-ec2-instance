@@ -1,7 +1,7 @@
-Basic EC2 instance
+Basic EC2 spot instance request
 ==================
 
-Configuration in this directory creates single EC2 instance with minimum set of arguments: AMI ID and instance type.
+Configuration in this directory creates single EC2 spot instance request with minimum set of arguments: AMI ID and instance type.
 
 Unspecified arguments for security group id and subnet are inherited from the default VPC.
 

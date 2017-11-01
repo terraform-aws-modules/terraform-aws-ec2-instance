@@ -1,11 +1,11 @@
-AWS EC2 Instance Terraform module
-=================================
+AWS EC2 Spot Instance Terraform module
+======================================
 
-Terraform module which creates EC2 Spot instance(s) request(s) on AWS.
+Terraform module which creates EC2 Spot Instance(s) request(s) on AWS.
 
 These types of resources are supported:
 
-* [EC2 Spot Instance Request](https://www.terraform.io/docs/providers/aws/r/spot_instance_request.html)
+* [EC2 Spot Instance ](https://www.terraform.io/docs/providers/aws/r/spot_instance_request.html)
 
 Usage
 -----
