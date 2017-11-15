@@ -60,5 +60,5 @@ output "vpc_security_group_ids" {
 
 output "subnet_id" {
   description = "List of IDs of VPC subnets of instances"
-  value       = ["${aws_instance.this.*.}"]
+  value       = ["${aws_instance.this.*.subnet_id}"]
 }
