@@ -11,11 +11,6 @@ variable "ami" {
   description = "ID of AMI to use for the instance"
 }
 
-variable "availability_zone" {
-  description = "The AZ to start the instance in"
-  default     = ""
-}
-
 variable "placement_group" {
   description = "The Placement Group to start the instance in"
   default     = ""
@@ -62,7 +57,6 @@ variable "vpc_security_group_ids" {
 
 variable "subnet_id" {
   description = "The VPC Subnet ID to launch in"
-  default     = ""
 }
 
 variable "associate_public_ip_address" {

@@ -27,7 +27,6 @@ resource "aws_instance" "this" {
   source_dest_check                    = "${var.source_dest_check}"
   disable_api_termination              = "${var.disable_api_termination}"
   instance_initiated_shutdown_behavior = "${var.instance_initiated_shutdown_behavior}"
-  availability_zone                    = "${var.availability_zone}"
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
 
@@ -35,4 +34,10 @@ resource "aws_instance" "this" {
   # network_interface = "${var.network_interface}"
 
   tags = "${merge(var.tags, map("Name", format("%s-%d", var.name, count.index+1)))}"
+  lifecycle {
+    # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
+    # (eg, https://github.com/terraform-providers/terraform-provider-aws/issues/2036)
+    # we have to ignore changes in the following arguments
+    ignore_changes = ["private_ip", "vpc_security_group_ids", "root_block_device"]
+  }
 }
