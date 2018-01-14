@@ -57,6 +57,7 @@ variable "vpc_security_group_ids" {
 
 variable "subnet_id" {
   description = "The VPC Subnet ID to launch in"
+  type        = "list"
 }
 
 variable "associate_public_ip_address" {
@@ -76,7 +77,8 @@ variable "source_dest_check" {
 
 variable "user_data" {
   description = "The user data to provide when launching the instance"
-  default     = ""
+  default     = []
+  type        = "list"
 }
 
 variable "iam_instance_profile" {
