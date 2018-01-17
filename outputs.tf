@@ -63,3 +63,8 @@ output "subnet_id" {
   description = "List of IDs of VPC subnets of instances"
   value       = ["${aws_instance.this.*.subnet_id}"]
 }
+
+output "tags" {
+  description = "List of tags of instances"
+  value       = ["${aws_instance.this.*.tags}"]
+}
