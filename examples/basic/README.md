@@ -1,7 +1,7 @@
 Basic EC2 instance
 ==================
 
-Configuration in this directory creates single EC2 instance with minimum set of arguments: AMI ID and instance type.
+Configuration in this directory creates single EC2 instance with minimum set of arguments: AMI ID and instance type. It will also assign Elastic IP (EIP) to an instance.
 
 Unspecified arguments for security group id and subnet are inherited from the default VPC.
 
