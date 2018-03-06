@@ -22,6 +22,7 @@ module "ec2_cluster" {
   key_name               = "user1"
   monitoring             = true
   vpc_security_group_ids = ["sg-12345678"]
+  subnet_id              = "subnet-eddcdzz4"
 
   tags = {
     Terraform = "true"
