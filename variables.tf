@@ -2,7 +2,7 @@ variable "name" {
   description = "Name to be used on all resources as prefix"
 }
 
-variable "count" {
+variable "instance_count" {
   description = "Number of instances to launch"
   default     = 1
 }

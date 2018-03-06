@@ -45,7 +45,7 @@ module "security_group" {
   egress_rules        = ["all-all"]
 }
 
-resource "aws_eip" "openvnp_eip" {
+resource "aws_eip" "this" {
   vpc      = true
   instance = "${module.ec2.id[0]}"
 }
