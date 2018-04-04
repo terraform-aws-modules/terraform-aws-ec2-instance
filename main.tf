@@ -38,6 +38,6 @@ resource "aws_instance" "this" {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
     # (eg, https://github.com/terraform-providers/terraform-provider-aws/issues/2036)
     # we have to ignore changes in the following arguments
-    ignore_changes = ["private_ip", "vpc_security_group_ids", "root_block_device"]
+    ignore_changes = ["private_ip", "root_block_device"]
   }
 }
