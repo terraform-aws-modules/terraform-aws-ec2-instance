@@ -7,7 +7,7 @@ resource "aws_instance" "this" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance_type}"
   user_data              = "${var.user_data}"
-  subnet_id              = "${var.subnet_id}"
+  subnet_id              = "${element(var.subnet_ids, count.index)}"
   key_name               = "${var.key_name}"
   monitoring             = "${var.monitoring}"
   vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
