@@ -51,7 +51,7 @@ resource "aws_eip" "this" {
 }
 
 module "ec2" {
-  source = "../../"
+  source = "../../module/ec2-instance/"
 
   name                        = "example"
   ami                         = "${data.aws_ami.amazon_linux.id}"
