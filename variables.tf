@@ -123,3 +123,18 @@ variable "network_interface" {
   description = "Customize network interfaces to be attached at instance boot time"
   default     = []
 }
+
+variable "ec2_name" {
+  description = "Name of the instance being created"
+  default     = ""
+}
+
+variable "ttl" {
+  description = "The time to live for the instance"
+  default     = ""
+}
+
+variable "owner" {
+  description = "Email address of the owner/creator"
+  default     = ""
+}
