@@ -33,6 +33,49 @@ module "ec2_cluster" {
 
 * [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
 
+## Make an encrypted ami for use
+
+This module does not sopport encrypted AMI's out of the box however it is easy enough for you to generate one for use
+
+This example creates an encrypted image from the latest ubuntu 16.04 base image.
+
+
+```hcl
+resource "aws_ami_copy" "ubuntu-xenial-encrypted-ami" {
+  name              = "ubuntu-xenial-encrypted-ami"
+  description       = "An encrypted root ami based off ${data.aws_ami.ubuntu-xenial.id}"
+  source_ami_id     = "${data.aws_ami.ubuntu-xenial.id}"
+  source_ami_region = "eu-west-2"
+  encrypted         = "true"
+
+  tags {
+    Name = "ubuntu-xenial-encrypted-ami"
+  }
+}
+
+data "aws_ami" "encrypted-ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-xenial-encrypted"]
+  }
+
+  owners = ["self"]
+}
+
+data "aws_ami" "ubuntu-xenial" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+  }
+}
+```
+
+
 ## Limitations
 
 * `network_interface` can't be specified together with `associate_public_ip_address`, which makes `network_interface`
