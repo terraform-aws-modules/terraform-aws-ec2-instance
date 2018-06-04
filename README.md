@@ -89,6 +89,7 @@ data "aws_ami" "ubuntu-xenial" {
 |------|-------------|:----:|:-----:|:-----:|
 | ami | ID of AMI to use for the instance | string | - | yes |
 | associate_public_ip_address | If true, the EC2 instance will have associated public IP address | string | `false` | no |
+| cpu_credits | The credit option for CPU usage (unlimited or standard) | string | `standard` | no |
 | disable_api_termination | If true, enables EC2 Instance Termination Protection | string | `false` | no |
 | ebs_block_device | Additional EBS block devices to attach to the instance | string | `<list>` | no |
 | ebs_optimized | If true, the launched EC2 instance will be EBS-optimized | string | `false` | no |
@@ -119,6 +120,7 @@ data "aws_ami" "ubuntu-xenial" {
 | Name | Description |
 |------|-------------|
 | availability_zone | List of availability zones of instances |
+| credit_specification | List of credit specification of instances |
 | id | List of IDs of instances |
 | key_name | List of key names of instances |
 | network_interface_id | List of IDs of the network interface of instances |

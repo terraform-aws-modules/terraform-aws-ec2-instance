@@ -24,6 +24,7 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Description |
 |------|-------------|
+| credit_specification | Credit specification of EC2 instance |
 | id | List of IDs of instances |
 | instance_id | EC2 instance ID |
 | instance_public_dns | Public DNS name assigned to the EC2 instance |

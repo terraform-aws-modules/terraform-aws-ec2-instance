@@ -1,5 +1,7 @@
 ######
 # EC2 instance
+#
+# Note: network_interface can't be specified together with associate_public_ip_address
 ######
 resource "aws_instance" "this" {
   count = "${var.instance_count}"
@@ -30,10 +32,12 @@ resource "aws_instance" "this" {
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
 
-  # Note: network_interface can't be specified together with associate_public_ip_address
-  # network_interface = "${var.network_interface}"
+  credit_specification {
+    cpu_credits = "${var.cpu_credits}"
+  }
 
   tags = "${merge(var.tags, map("Name", var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name))}"
+
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
     # (eg, https://github.com/terraform-providers/terraform-provider-aws/issues/2036)
