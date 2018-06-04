@@ -123,3 +123,8 @@ variable "network_interface" {
   description = "Customize network interfaces to be attached at instance boot time"
   default     = []
 }
+
+variable "cpu_credits" {
+  description = "The credit option for CPU usage (unlimited or standard)"
+  default     = "standard"
+}
