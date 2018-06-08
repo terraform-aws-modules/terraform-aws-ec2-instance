@@ -53,9 +53,25 @@ resource "aws_eip" "this" {
 module "ec2" {
   source = "../../"
 
-  name                        = "example"
+  instance_count = 2
+
+  name                        = "example-normal"
+  ami                         = "${data.aws_ami.amazon_linux.id}"
+  instance_type               = "m4.large"
+  subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
+  vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
+  associate_public_ip_address = true
+}
+
+module "ec2_with_t2_unlimited" {
+  source = "../../"
+
+  instance_count = 2
+
+  name                        = "example-t2-unlimited"
   ami                         = "${data.aws_ami.amazon_linux.id}"
   instance_type               = "t2.micro"
+  cpu_credits                 = "unlimited"
   subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   associate_public_ip_address = true
