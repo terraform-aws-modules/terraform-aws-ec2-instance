@@ -138,3 +138,13 @@ variable "owner" {
   description = "Email address of the owner/creator"
   default     = ""
 }
+
+variable "backup" {
+  description = "Should instance be backed-up (Snapshot) Yes/No"
+  default     = ""
+}
+
+variable "retention" {
+  description = "Number of days that a snapshot should be retained for"
+  default     = ""
+}
