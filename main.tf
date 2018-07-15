@@ -35,9 +35,11 @@ resource "aws_instance" "this" {
 
   #tags = "${merge(var.tags, map("Name", var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name))}"
   tags {
-    Name  = "${var.ec2_name}"
-    TTL   = "${var.ttl}"
-    Owner = "${var.owner}"
+    Name      = "${var.ec2_name}"
+    TTL       = "${var.ttl}"
+    Owner     = "${var.owner}"
+    Backup    = "${var.backup}"
+    Retention = "${var.retention}"
   }
 
   lifecycle {
