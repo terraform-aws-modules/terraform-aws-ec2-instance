@@ -56,7 +56,7 @@ variable "vpc_security_group_ids" {
 }
 
 variable "subnet_id" {
-  description = "The VPC Subnet ID to launch in"
+  description = "The VPC Subnet ID to launch in. A comma-separated list may be passed to be used with instance_count."
 }
 
 variable "associate_public_ip_address" {
