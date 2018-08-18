@@ -1,5 +1,5 @@
 locals {
-  is_t2_instance_type = "${replace(replace(var.instance_type, "/^[^t2].*/", "0"), "/^t2.*$/", "1")}"
+  is_t2_instance_type = "${replace(var.instance_type, "/^t2\\..*$/", "1") == "1" ? "1" : "0"}"
 }
 
 ######
