@@ -32,8 +32,9 @@ module "ec2_cluster" {
 ## Examples
 
 * [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
+* [EC2 instance with EBS volume attachment](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment)
 
-## Make an encrypted ami for use
+## Make an encrypted AMI for use
 
 This module does not sopport encrypted AMI's out of the box however it is easy enough for you to generate one for use
 
@@ -76,10 +77,11 @@ data "aws_ami" "ubuntu-xenial" {
 ```
 
 
-## Limitations
+## Notes
 
 * `network_interface` can't be specified together with `associate_public_ip_address`, which makes `network_interface`
   not configurable using this module at the moment
+* Changes in `ebs_block_device` argument will be ignored. Use [aws_volume_attachment](https://www.terraform.io/docs/providers/aws/r/volume_attachment.html) resource to attach and detach volumes from AWS EC2 instances. See [this example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment).
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
