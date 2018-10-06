@@ -66,11 +66,25 @@ module "ec2" {
 module "ec2_with_t2_unlimited" {
   source = "../../"
 
-  instance_count = 2
+  instance_count = 1
 
   name                        = "example-t2-unlimited"
   ami                         = "${data.aws_ami.amazon_linux.id}"
   instance_type               = "t2.micro"
+  cpu_credits                 = "unlimited"
+  subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
+  vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
+  associate_public_ip_address = true
+}
+
+module "ec2_with_t3_unlimited" {
+  source = "../../"
+
+  instance_count = 1
+
+  name                        = "example-t3-unlimited"
+  ami                         = "${data.aws_ami.amazon_linux.id}"
+  instance_type               = "t3.large"
   cpu_credits                 = "unlimited"
   subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]

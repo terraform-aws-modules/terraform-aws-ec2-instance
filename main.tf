@@ -1,12 +1,12 @@
 locals {
-  is_t2_instance_type = "${replace(var.instance_type, "/^t2\\..*$/", "1") == "1" ? "1" : "0"}"
+  is_t_instance_type = "${replace(var.instance_type, "/^t[23]{1}\\..*$/", "1") == "1" ? "1" : "0"}"
 }
 
 ######
 # Note: network_interface can't be specified together with associate_public_ip_address
 ######
 resource "aws_instance" "this" {
-  count = "${var.instance_count * (1 - local.is_t2_instance_type)}"
+  count = "${var.instance_count * (1 - local.is_t_instance_type)}"
 
   ami                    = "${var.ami}"
   instance_type          = "${var.instance_type}"
@@ -45,7 +45,7 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_instance" "this_t2" {
-  count = "${var.instance_count * local.is_t2_instance_type}"
+  count = "${var.instance_count * local.is_t_instance_type}"
 
   ami                    = "${var.ami}"
   instance_type          = "${var.instance_type}"
