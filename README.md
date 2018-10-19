@@ -26,6 +26,20 @@ module "ec2_cluster" {
     Terraform = "true"
     Environment = "dev"
   }
+  # Use Chef
+  chef_role              = "my_role" # Only one role per instance is supported, as required by our in-house standards
+  chef_organization      = "my_org"
+  chef_environment       = "_default"
+  chef_user              = "my_user"
+  chef_user_key          = "${data.aws_s3_bucket_object.chef_user_pem_key.body}" # Using a restricted S3 bucket is highly recommended
+  chef_secret_key        = "${data.aws_s3_bucket_object.chef_encrypted_data_bag_secret.body}"
+  default_system_user    = "centos"
+  ssh_private_key        = "${tls_private_key.default.private_key_pem}"  # Or use S3 again
+
+  # Directives to allow Chef to contact nodes via the Bastion. Omit directives when connecting directly
+  bastion_host           = "${element(module.bastion.public_ip, 0)}"
+  bastion_user           = "centos"
+  bastion_private_key    = "${tls_private_key.default.private_key_pem}"
 }
 ```
 
