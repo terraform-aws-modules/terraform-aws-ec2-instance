@@ -129,3 +129,84 @@ variable "cpu_credits" {
   description = "The credit option for CPU usage (unlimited or standard)"
   default     = "standard"
 }
+
+variable "chef_role" {
+  description = "The top level role to assign to the instance"
+  default     = ""
+}
+
+variable "chef_environment" {
+  description = "The Chef environment to put the instance in"
+  default     = "_default"
+}
+
+variable "chef_organization" {
+  type        = "string"
+  description = "The organization the instance will be bootstrapped against"
+  default     = ""
+}
+
+variable "chef_user" {
+  type        = "string"
+  description = "The Chef user/client that will be used to bootstrap the node"
+  default     = ""
+}
+
+variable "chef_client_version" {
+  type        = "string"
+  description = "the version of Chef to install on the node"
+  default     = ""
+}
+
+variable "chef_vault_json" {
+  description = "The json string to pass to chef-client's --bootstrap-vault-json flag"
+  default     = ""
+}
+
+variable "ssh_private_key" {
+  type        = "string"
+  description = "The private key used to ssh into the instance. Please use an S3 bucket!"
+  default     = ""
+}
+
+variable "chef_secret_key" {
+  type        = "string"
+  description = "The encrypted data_bag secret to use with Chef"
+  default     = ""
+}
+
+variable "chef_user_key" {
+  type        = "string"
+  description = "The private key associated to the Chef user used to bootstrap"
+  default     = ""
+}
+
+variable "chef_server_url" {
+  type        = "string"
+  description = "The url of your chef server"
+  default     = ""
+}
+
+variable "default_system_user" {
+  type        = "string"
+  description = "The system user to use when connecting to the instance"
+  default     = ""
+}
+
+variable "bastion_host" {
+  type        = "string"
+  description = "The hostname/addresse of the bastion instance to go through when SSHing"
+  default     = ""
+}
+
+variable "bastion_user" {
+  type        = "string"
+  description = "The system user to use when connecting to the bastion instance"
+  default     = ""
+}
+
+variable "bastion_private_key" {
+  type        = "string"
+  description = "The private key associated to the bastion user"
+  default     = ""
+}
