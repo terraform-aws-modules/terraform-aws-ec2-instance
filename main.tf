@@ -115,8 +115,7 @@ resource "aws_instance" "this_t2" {
   ipv6_addresses              = "${var.ipv6_addresses}"
 
   # Make sure Chef waits for cloud-init before executing
-  # While remote-exec could replace cloud-init here, it cannot be used with autoscaling groups (among oth
-ers)
+  # While remote-exec could replace cloud-init here, it cannot be used with autoscaling groups (among others)
   # As such usage of remote-exec should be minimized so we do not end up depending on it
 
   provisioner "remote-exec" {
