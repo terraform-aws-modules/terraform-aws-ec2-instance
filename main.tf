@@ -50,7 +50,7 @@ resource "aws_instance" "this" {
     environment              = "${var.chef_environment}"
     # We're imposing a single role as the run-list as part of our in-house standards
     run_list                 = ["role[${var.chef_role}]"]
-    node_name                = "${var.chef_role}-${count.index}"
+    node_name                = "${var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name}"
     secret_key               = "${var.chef_secret_key}"
     server_url               = "${var.chef_server_url}/organizations/${var.chef_organization}"
     fetch_chef_certificates  = true
@@ -143,7 +143,7 @@ resource "aws_instance" "this_t2" {
     environment              = "${var.chef_environment}"
     # We're imposing a single role as the run-list as part of our in-house standards
     run_list                 = ["role[${var.chef_role}]"]
-    node_name                = "${var.chef_role}-${count.index}"
+    node_name                = "${var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name}"
     secret_key               = "${var.chef_secret_key}"
     server_url               = "${var.chef_server_url}/organizations/${var.chef_organization}"
     fetch_chef_certificates  = true
