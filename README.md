@@ -4,17 +4,18 @@ Terraform module which creates EC2 instance(s) on AWS.
 
 These types of resources are supported:
 
-* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html) 
+* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html)
 
 ## Usage
 
 ```hcl
 module "ec2_cluster" {
-  source = "terraform-aws-modules/ec2-instance/aws"
+  source                 = "terraform-aws-modules/ec2-instance/aws"
+  version                = "1.12.0"
 
-  name           = "my-cluster"
-  instance_count = 5
-  
+  name                   = "my-cluster"
+  instance_count         = 5
+
   ami                    = "ami-ebd02392"
   instance_type          = "t2.micro"
   key_name               = "user1"
@@ -67,12 +68,13 @@ data "aws_ami" "encrypted-ami" {
 
 data "aws_ami" "ubuntu-xenial" {
   most_recent = true
-  owners      = ["099720109477"]
 
   filter {
     name   = "name"
     values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
   }
+
+  owners      = ["099720109477"]
 }
 ```
 
