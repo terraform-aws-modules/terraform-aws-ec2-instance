@@ -38,6 +38,7 @@ resource "aws_instance" "this" {
       type                   = "ssh"
       user                   = "${var.default_system_user}"
       private_key            = "${var.ssh_private_key}"
+      timeout                = "15m"
 
       # Some nodes require connecting via a Bastion instance
       bastion_host           = "${var.bastion_host}"
@@ -69,6 +70,7 @@ resource "aws_instance" "this" {
       private_key            = "${var.ssh_private_key}"
 
       # Some nodes require connecting via a Bastion instance
+      timeout                = "15m"
       bastion_host           = "${var.bastion_host}"
       bastion_user           = "${var.bastion_user}"
       bastion_private_key    = "${var.bastion_private_key}"
@@ -131,7 +133,7 @@ resource "aws_instance" "this_t2" {
       type                   = "ssh"
       user                   = "${var.default_system_user}"
       private_key            = "${var.ssh_private_key}"
-      timeout                = "10m"
+      timeout                = "15m"
       # Some nodes require connecting via a Bastion instance
       bastion_host           = "${var.bastion_host}"
       bastion_user           = "${var.bastion_user}"
@@ -160,7 +162,7 @@ resource "aws_instance" "this_t2" {
       type                   = "ssh"
       user                   = "${var.default_system_user}"
       private_key            = "${var.ssh_private_key}"
-      timeout                = "10m"
+      timeout                = "15m"
       # Some nodes require connecting via a Bastion instance
       bastion_host           = "${var.bastion_host}"
       bastion_user           = "${var.bastion_user}"
