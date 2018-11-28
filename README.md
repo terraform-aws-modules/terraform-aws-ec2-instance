@@ -37,7 +37,7 @@ module "ec2_cluster" {
 
 ## Make an encrypted AMI for use
 
-This module does not sopport encrypted AMI's out of the box however it is easy enough for you to generate one for use
+This module does not support encrypted AMI's out of the box however it is easy enough for you to generate one for use
 
 This example creates an encrypted image from the latest ubuntu 16.04 base image.
 
