@@ -116,7 +116,6 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | A mapping of tags to assign to the resource | string | `<map>` | no |
 | tenancy | The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host. | string | `default` | no |
 | user_data | The user data to provide when launching the instance | string | `` | no |
-| volume_tags | A mapping of tags to assign to the devices created by the instance at launch time | string | `<map>` | no |
 | vpc_security_group_ids | A list of security group IDs to associate with | list | - | yes |
 
 ## Outputs

@@ -99,11 +99,6 @@ variable "tags" {
   default     = {}
 }
 
-variable "volume_tags" {
-  description = "A mapping of tags to assign to the devices created by the instance at launch time"
-  default     = {}
-}
-
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details"
   default     = []
