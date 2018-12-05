@@ -66,6 +66,8 @@ output "private_ip" {
   value       = ["${local.this_private_ip}"]
 }
 
+
+
 output "security_groups" {
   description = "List of associated security groups of instances"
   value       = ["${local.this_security_groups}"]
