@@ -49,7 +49,7 @@ module "security_group" {
 module "ec2" {
   source = "../../"
 
-  instance_count = 1
+  instance_count = "${var.instances_number}"
 
   name                        = "example-with-ebs"
   ami                         = "${data.aws_ami.amazon_linux.id}"
@@ -60,12 +60,16 @@ module "ec2" {
 }
 
 resource "aws_volume_attachment" "this_ec2" {
+  count = "${var.instances_number}"
+
   device_name = "/dev/sdh"
-  volume_id   = "${aws_ebs_volume.this.id}"
-  instance_id = "${module.ec2.id[0]}"
+  volume_id   = "${aws_ebs_volume.this.*.id[count.index]}"
+  instance_id = "${module.ec2.id[count.index]}"
 }
 
 resource "aws_ebs_volume" "this" {
-  availability_zone = "${module.ec2.availability_zone[0]}"
+  count = "${var.instances_number}"
+
+  availability_zone = "${module.ec2.availability_zone[count.index]}"
   size              = 1
 }
