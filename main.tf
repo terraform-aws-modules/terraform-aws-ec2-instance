@@ -34,7 +34,7 @@ resource "aws_instance" "this" {
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
 
-  tags = "${merge(var.tags, map("Name", var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name))}"
+  tags = "${merge(map("Name", var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name), var.tags)}"
 
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
@@ -77,7 +77,7 @@ resource "aws_instance" "this_t2" {
     cpu_credits = "${var.cpu_credits}"
   }
 
-  tags = "${merge(var.tags, map("Name", var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name))}"
+  tags = "${merge(map("Name", var.instance_count > 1 ? format("%s-%d", var.name, count.index+1) : var.name), var.tags)}"
 
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
