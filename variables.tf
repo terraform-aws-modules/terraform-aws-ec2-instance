@@ -148,3 +148,10 @@ variable "retention" {
   description = "Number of days that a snapshot should be retained for"
   default     = ""
 }
+
+
+variable "stopstart" {
+  description = "the default schedule tag containing json schedule information to add to instance when schedule_tag_force set to true."
+  default = "{\"mon\": {\"start\": 7, \"stop\": 20},\"tue\": {\"start\": 7, \"stop\": 20},\"wed\": {\"start\": 7, \"stop\": 20},\"thu\": {\"start\": 7, \"stop\": 20}, \"fri\": {\"start\": 7, \"stop\": 20}}"
+}
+
