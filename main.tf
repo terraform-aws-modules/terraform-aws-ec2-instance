@@ -40,6 +40,7 @@ resource "aws_instance" "this" {
     Owner     = "${var.owner}"
     Backup    = "${var.backup}"
     Retention = "${var.retention}"
+    Scheduled_Restart = "${var.stopstart}"
   }
 
   lifecycle {
