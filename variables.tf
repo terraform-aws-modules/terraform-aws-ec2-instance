@@ -57,6 +57,13 @@ variable "vpc_security_group_ids" {
 
 variable "subnet_id" {
   description = "The VPC Subnet ID to launch in"
+  default     = ""
+}
+
+variable "subnet_ids" {
+  description = "A list of VPC Subnet IDs to launch in"
+  default     = []
+  type        = "list"
 }
 
 variable "associate_public_ip_address" {
