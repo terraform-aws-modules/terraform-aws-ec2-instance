@@ -84,6 +84,7 @@ data "aws_ami" "ubuntu-xenial" {
 * `network_interface` can't be specified together with `associate_public_ip_address`, which makes `network_interface`
   not configurable using this module at the moment
 * Changes in `ebs_block_device` argument will be ignored. Use [aws_volume_attachment](https://www.terraform.io/docs/providers/aws/r/volume_attachment.html) resource to attach and detach volumes from AWS EC2 instances. See [this example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment).
+* One of `subnet_id` or `subnet_ids` is required. If both are provided, the value of `subnet_id` is prepended to the value of `subnet_ids`.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -118,8 +119,6 @@ data "aws_ami" "ubuntu-xenial" {
 | user\_data | The user data to provide when launching the instance | string | `""` | no |
 | volume\_tags | A mapping of tags to assign to the devices created by the instance at launch time | map | `<map>` | no |
 | vpc\_security\_group\_ids | A list of security group IDs to associate with | list | n/a | yes |
-
-* One of 'subnet\_id' or 'subnet\_ids' is required. If both are provided, the value of 'subnet\_id' is prepended to the value of 'subnet\_ids'.
 
 ## Outputs
 
