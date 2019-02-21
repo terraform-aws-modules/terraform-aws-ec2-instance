@@ -84,6 +84,7 @@ data "aws_ami" "ubuntu-xenial" {
 * `network_interface` can't be specified together with `associate_public_ip_address`, which makes `network_interface`
   not configurable using this module at the moment
 * Changes in `ebs_block_device` argument will be ignored. Use [aws_volume_attachment](https://www.terraform.io/docs/providers/aws/r/volume_attachment.html) resource to attach and detach volumes from AWS EC2 instances. See [this example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment).
+* One of `subnet_id` or `subnet_ids` is required. If both are provided, the value of `subnet_id` is prepended to the value of `subnet_ids`.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -111,7 +112,8 @@ data "aws_ami" "ubuntu-xenial" {
 | private\_ip | Private IP address to associate with the instance in a VPC | string | `""` | no |
 | root\_block\_device | Customize details about the root block device of the instance. See Block Devices below for details | list | `<list>` | no |
 | source\_dest\_check | Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs. | string | `"true"` | no |
-| subnet\_id | The VPC Subnet ID to launch in | string | n/a | yes |
+| subnet\_id* | The VPC Subnet ID to launch in | string | `""` | no |
+| subnet\_ids* | A list of VPC Subnet IDs to launch in | string | `<list>` | no |
 | tags | A mapping of tags to assign to the resource | map | `<map>` | no |
 | tenancy | The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host. | string | `"default"` | no |
 | user\_data | The user data to provide when launching the instance | string | `""` | no |

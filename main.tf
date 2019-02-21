@@ -11,7 +11,7 @@ resource "aws_instance" "this" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance_type}"
   user_data              = "${var.user_data}"
-  subnet_id              = "${var.subnet_id}"
+  subnet_id              = "${element(distinct(compact(concat(list(var.subnet_id), var.subnet_ids))),count.index)}"
   key_name               = "${var.key_name}"
   monitoring             = "${var.monitoring}"
   vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
@@ -50,7 +50,7 @@ resource "aws_instance" "this_t2" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance_type}"
   user_data              = "${var.user_data}"
-  subnet_id              = "${var.subnet_id}"
+  subnet_id              = "${element(distinct(compact(concat(list(var.subnet_id), var.subnet_ids))),count.index)}"
   key_name               = "${var.key_name}"
   monitoring             = "${var.monitoring}"
   vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
