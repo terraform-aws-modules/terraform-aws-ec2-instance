@@ -107,6 +107,7 @@ data "aws_ami" "ubuntu-xenial" {
 | key\_name | The key name to use for the instance | string | `""` | no |
 | monitoring | If true, the launched EC2 instance will have detailed monitoring enabled | string | `"false"` | no |
 | name | Name to be used on all resources as prefix | string | n/a | yes |
+| use\_num\_suffix | Always append numerical suffix to instance name, even if instance_count is 1 | string | `"false"` | no |
 | network\_interface | Customize network interfaces to be attached at instance boot time | list | `<list>` | no |
 | placement\_group | The Placement Group to start the instance in | string | `""` | no |
 | private\_ip | Private IP address to associate with the instance in a VPC | string | `""` | no |
