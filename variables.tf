@@ -135,3 +135,8 @@ variable "cpu_credits" {
   description = "The credit option for CPU usage (unlimited or standard)"
   default     = "standard"
 }
+
+variable "use_num_suffix" {
+  description = "Always append numerical suffix to instance name, even if instance_count is 1"
+  default     = "false"
+}
