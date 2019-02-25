@@ -107,16 +107,16 @@ data "aws_ami" "ubuntu-xenial" {
 | key\_name | The key name to use for the instance | string | `""` | no |
 | monitoring | If true, the launched EC2 instance will have detailed monitoring enabled | string | `"false"` | no |
 | name | Name to be used on all resources as prefix | string | n/a | yes |
-| use\_num\_suffix | Always append numerical suffix to instance name, even if instance_count is 1 | string | `"false"` | no |
 | network\_interface | Customize network interfaces to be attached at instance boot time | list | `<list>` | no |
 | placement\_group | The Placement Group to start the instance in | string | `""` | no |
 | private\_ip | Private IP address to associate with the instance in a VPC | string | `""` | no |
 | root\_block\_device | Customize details about the root block device of the instance. See Block Devices below for details | list | `<list>` | no |
 | source\_dest\_check | Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs. | string | `"true"` | no |
-| subnet\_id* | The VPC Subnet ID to launch in | string | `""` | no |
-| subnet\_ids* | A list of VPC Subnet IDs to launch in | string | `<list>` | no |
+| subnet\_id | The VPC Subnet ID to launch in | string | `""` | no |
+| subnet\_ids | A list of VPC Subnet IDs to launch in | list | `<list>` | no |
 | tags | A mapping of tags to assign to the resource | map | `<map>` | no |
 | tenancy | The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host. | string | `"default"` | no |
+| use\_num\_suffix | Always append numerical suffix to instance name, even if instance_count is 1 | string | `"false"` | no |
 | user\_data | The user data to provide when launching the instance | string | `""` | no |
 | volume\_tags | A mapping of tags to assign to the devices created by the instance at launch time | map | `<map>` | no |
 | vpc\_security\_group\_ids | A list of security group IDs to associate with | list | n/a | yes |
