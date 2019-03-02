@@ -30,6 +30,7 @@ resource "aws_instance" "this" {
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
 
+  dependency                           = "${var.dependency}"
   # Note: network_interface can't be specified together with associate_public_ip_address
   # network_interface = "${var.network_interface}"
 
