@@ -29,8 +29,9 @@ resource "aws_instance" "this" {
   instance_initiated_shutdown_behavior = "${var.instance_initiated_shutdown_behavior}"
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
-
+  # Allow dependencies to be created with this module
   dependency                           = "${var.dependency}"
+  
   # Note: network_interface can't be specified together with associate_public_ip_address
   # network_interface = "${var.network_interface}"
 
