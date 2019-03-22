@@ -66,8 +66,8 @@ module "ec2" {
   associate_public_ip_address = true
 
   root_block_device = [{
-    volume_type           = "gp2"
-    volume_size           = 10
+    volume_type = "gp2"
+    volume_size = 10
   }]
 }
 
