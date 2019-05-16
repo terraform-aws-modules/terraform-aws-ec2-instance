@@ -11,7 +11,7 @@ These types of resources are supported:
 ```hcl
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "1.12.0"
+  version                = "1.21.0"
 
   name                   = "my-cluster"
   instance_count         = 5
