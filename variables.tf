@@ -140,3 +140,8 @@ variable "use_num_suffix" {
   description = "Always append numerical suffix to instance name, even if instance_count is 1"
   default     = "false"
 }
+
+variable "name_with_num_format" {
+  description = "Format string for instance name when using count"
+  default     = "%s-%d"
+}
