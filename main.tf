@@ -30,11 +30,6 @@ resource "aws_instance" "this" {
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
       iops                  = lookup(root_block_device.value, "iops", null)
       volume_size           = lookup(root_block_device.value, "volume_size", null)
@@ -44,11 +39,6 @@ resource "aws_instance" "this" {
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
       encrypted             = lookup(ebs_block_device.value, "encrypted", null)
@@ -61,11 +51,6 @@ resource "aws_instance" "this" {
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       device_name  = ephemeral_block_device.value.device_name
       no_device    = lookup(ephemeral_block_device.value, "no_device", null)
       virtual_name = lookup(ephemeral_block_device.value, "virtual_name", null)
@@ -122,11 +107,6 @@ resource "aws_instance" "this_t2" {
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
       iops                  = lookup(root_block_device.value, "iops", null)
       volume_size           = lookup(root_block_device.value, "volume_size", null)
@@ -136,11 +116,6 @@ resource "aws_instance" "this_t2" {
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
       encrypted             = lookup(ebs_block_device.value, "encrypted", null)
@@ -153,11 +128,6 @@ resource "aws_instance" "this_t2" {
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       device_name  = ephemeral_block_device.value.device_name
       no_device    = lookup(ephemeral_block_device.value, "no_device", null)
       virtual_name = lookup(ephemeral_block_device.value, "virtual_name", null)
