@@ -52,7 +52,7 @@ variable "monitoring" {
 
 variable "vpc_security_group_ids" {
   description = "A list of security group IDs to associate with"
-  type        = "list"
+  type        = list(string)
 }
 
 variable "subnet_id" {
@@ -63,7 +63,7 @@ variable "subnet_id" {
 variable "subnet_ids" {
   description = "A list of VPC Subnet IDs to launch in"
   default     = []
-  type        = "list"
+  type        = list(string)
 }
 
 variable "associate_public_ip_address" {
@@ -140,3 +140,4 @@ variable "use_num_suffix" {
   description = "Always append numerical suffix to instance name, even if instance_count is 1"
   default     = "false"
 }
+
