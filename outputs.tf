@@ -1,7 +1,10 @@
 locals {
   this_id = compact(
     concat(
-      coalescelist(aws_instance.this.*.id, aws_instance.this_t2.*.id),
+      coalescelist(
+        aws_instance.this.*.id, 
+        aws_instance.this_t2.*.id,
+        [""]),
       [""],
     ),
   )
@@ -10,6 +13,7 @@ locals {
       coalescelist(
         aws_instance.this.*.availability_zone,
         aws_instance.this_t2.*.availability_zone,
+        [""]
       ),
       [""],
     ),
@@ -19,6 +23,7 @@ locals {
       coalescelist(
         aws_instance.this.*.key_name,
         aws_instance.this_t2.*.key_name,
+        [""]
       ),
       [""],
     ),
@@ -28,6 +33,7 @@ locals {
       coalescelist(
         aws_instance.this.*.public_dns,
         aws_instance.this_t2.*.public_dns,
+        [""]
       ),
       [""],
     ),
@@ -37,6 +43,7 @@ locals {
       coalescelist(
         aws_instance.this.*.public_ip,
         aws_instance.this_t2.*.public_ip,
+        [""]
       ),
       [""],
     ),
@@ -46,6 +53,7 @@ locals {
       coalescelist(
         aws_instance.this.*.primary_network_interface_id,
         aws_instance.this_t2.*.primary_network_interface_id,
+        [""]
       ),
       [""],
     ),
@@ -55,6 +63,7 @@ locals {
       coalescelist(
         aws_instance.this.*.private_dns,
         aws_instance.this_t2.*.private_dns,
+        [""]
       ),
       [""],
     ),
@@ -64,6 +73,7 @@ locals {
       coalescelist(
         aws_instance.this.*.private_ip,
         aws_instance.this_t2.*.private_ip,
+        [""]
       ),
       [""],
     ),
@@ -73,6 +83,7 @@ locals {
       coalescelist(
         flatten(aws_instance.this.*.security_groups),
         flatten(aws_instance.this_t2.*.security_groups),
+        [""]
       ),
       [""],
     ),
@@ -82,6 +93,7 @@ locals {
       coalescelist(
         flatten(aws_instance.this.*.vpc_security_group_ids),
         flatten(aws_instance.this_t2.*.vpc_security_group_ids),
+        [""]
       ),
       [""],
     ),
@@ -91,6 +103,7 @@ locals {
       coalescelist(
         aws_instance.this.*.subnet_id,
         aws_instance.this_t2.*.subnet_id,
+        [""]
       ),
       [""],
     ),
@@ -99,6 +112,7 @@ locals {
   this_tags = coalescelist(
     flatten(aws_instance.this.*.tags),
     flatten(aws_instance.this_t2.*.tags),
+    [""]
   )
 }
 
