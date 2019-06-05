@@ -119,6 +119,8 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | A mapping of tags to assign to the resource | map | `<map>` | no |
 | tenancy | The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host. | string | `"default"` | no |
 | use\_num\_suffix | Always append numerical suffix to instance name, even if instance_count is 1 | string | `"false"` | no |
+| num\_suffix\_format | Choose the format that will be displayed for the number in the suffix. Only used if use\_num\_suffix is true. | string | `"%s-%d"` | no |
+| start\_suffix\_index | Choose the value to start the suffix index count at.  Only used if use\_num\_suffix is true. | string | "1"` | no |
 | user\_data | The user data to provide when launching the instance | string | `""` | no |
 | volume\_tags | A mapping of tags to assign to the devices created by the instance at launch time | map | `<map>` | no |
 | vpc\_security\_group\_ids | A list of security group IDs to associate with | list | n/a | yes |
