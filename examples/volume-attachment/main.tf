@@ -61,6 +61,10 @@ module "ec2" {
   subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   associate_public_ip_address = true
+
+  use_num_suffix              = true
+  num_suffix_format           = "%s-%02d"   # Default is "%s-%d"
+  start_suffix_index          = 50          # Default is 1
 }
 
 resource "aws_volume_attachment" "this_ec2" {
