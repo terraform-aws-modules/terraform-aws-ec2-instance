@@ -37,7 +37,7 @@ data "aws_ami" "amazon_linux" {
 
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "2.7.0"
+  version = "~> 2.0"
 
   name        = "example"
   description = "Security group for example usage with EC2 instance"
@@ -53,6 +53,11 @@ resource "aws_eip" "this" {
   instance = "${module.ec2.id[0]}"
 }
 
+resource "aws_placement_group" "web" {
+  name     = "hunky-dory-pg"
+  strategy = "cluster"
+}
+
 module "ec2" {
   source = "../../"
 
@@ -64,6 +69,7 @@ module "ec2" {
   subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   associate_public_ip_address = true
+  placement_group             = "${aws_placement_group.web.id}"
 
   root_block_device = [{
     volume_type = "gp2"
@@ -85,16 +91,18 @@ module "ec2_with_t2_unlimited" {
   associate_public_ip_address = true
 }
 
-module "ec2_with_t3_unlimited" {
-  source = "../../"
+//
+//module "ec2_with_t3_unlimited" {
+//  source = "../../"
+//
+//  instance_count = 1
+//
+//  name                        = "example-t3-unlimited"
+//  ami                         = "${data.aws_ami.amazon_linux.id}"
+//  instance_type               = "t3.large"
+//  cpu_credits                 = "unlimited"
+//  subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
+//  vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
+//  associate_public_ip_address = true
+//}
 
-  instance_count = 1
-
-  name                        = "example-t3-unlimited"
-  ami                         = "${data.aws_ami.amazon_linux.id}"
-  instance_type               = "t3.large"
-  cpu_credits                 = "unlimited"
-  subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
-  vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
-  associate_public_ip_address = true
-}
