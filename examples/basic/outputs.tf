@@ -23,6 +23,11 @@ output "tags" {
   value       = "${module.ec2.tags}"
 }
 
+output "placement_group" {
+  description = "List of placement group"
+  value       = "${module.ec2.placement_group}"
+}
+
 output "instance_id" {
   description = "EC2 instance ID"
   value       = "${module.ec2.id[0]}"

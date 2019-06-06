@@ -7,6 +7,7 @@ locals {
   this_primary_network_interface_id = "${compact(concat(coalescelist(aws_instance.this.*.primary_network_interface_id, aws_instance.this_t2.*.primary_network_interface_id), list("")))}"
   this_private_dns                  = "${compact(concat(coalescelist(aws_instance.this.*.private_dns, aws_instance.this_t2.*.private_dns), list("")))}"
   this_private_ip                   = "${compact(concat(coalescelist(aws_instance.this.*.private_ip, aws_instance.this_t2.*.private_ip), list("")))}"
+  this_placement_group              = "${compact(concat(coalescelist(aws_instance.this.*.placement_group, aws_instance.this_t2.*.placement_group), list("")))}"
   this_security_groups              = "${compact(concat(coalescelist(flatten(aws_instance.this.*.security_groups), flatten(aws_instance.this_t2.*.security_groups)), list("")))}"
   this_vpc_security_group_ids       = "${compact(concat(coalescelist(flatten(aws_instance.this.*.vpc_security_group_ids), flatten(aws_instance.this_t2.*.vpc_security_group_ids)), list("")))}"
   this_subnet_id                    = "${compact(concat(coalescelist(aws_instance.this.*.subnet_id, aws_instance.this_t2.*.subnet_id), list("")))}"
@@ -25,11 +26,10 @@ output "availability_zone" {
   value       = ["${local.this_availability_zone}"]
 }
 
-// GH issue: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/8
-//output "placement_group" {
-//  description = "List of placement groups of instances"
-//  value       = ["${element(concat(aws_instance.this.*.placement_group, list("")), 0)}"]
-//}
+output "placement_group" {
+  description = "List of placement groups of instances"
+  value       = ["${local.this_placement_group}"]
+}
 
 output "key_name" {
   description = "List of key names of instances"

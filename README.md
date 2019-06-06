@@ -135,6 +135,7 @@ data "aws_ami" "ubuntu-xenial" {
 | credit\_specification | List of credit specification of instances |
 | id | List of IDs of instances |
 | key\_name | List of key names of instances |
+| placement\_group | List of placement groups of instances |
 | primary\_network\_interface\_id | List of IDs of the primary network interface of instances |
 | private\_dns | List of private DNS names assigned to the instances. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
 | private\_ip | List of private IP addresses assigned to the instances |
