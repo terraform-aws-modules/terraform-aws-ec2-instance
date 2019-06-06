@@ -143,6 +143,7 @@ data "aws_ami" "ubuntu-xenial" {
 | security\_groups | List of associated security groups of instances |
 | subnet\_id | List of IDs of VPC subnets of instances |
 | tags | List of tags of instances |
+| volume\_tags | List of tags of volumes of instances |
 | vpc\_security\_group\_ids | List of associated security groups of instances, if running in non-default VPC |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

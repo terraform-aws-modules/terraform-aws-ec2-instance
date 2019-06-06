@@ -23,7 +23,6 @@ resource "aws_instance" "this" {
   ipv6_addresses              = "${var.ipv6_addresses}"
 
   ebs_optimized          = "${var.ebs_optimized}"
-  volume_tags            = "${var.volume_tags}"
   root_block_device      = "${var.root_block_device}"
   ebs_block_device       = "${var.ebs_block_device}"
   ephemeral_block_device = "${var.ephemeral_block_device}"
@@ -34,7 +33,8 @@ resource "aws_instance" "this" {
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
 
-  tags = "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s-%d", var.name, count.index+1) : var.name), var.tags)}"
+  tags        = "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s-%d", var.name, count.index+1) : var.name), var.tags)}"
+  volume_tags = "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s-%d", var.name, count.index+1) : var.name), var.volume_tags)}"
 
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
@@ -62,7 +62,6 @@ resource "aws_instance" "this_t2" {
   ipv6_addresses              = "${var.ipv6_addresses}"
 
   ebs_optimized          = "${var.ebs_optimized}"
-  volume_tags            = "${var.volume_tags}"
   root_block_device      = "${var.root_block_device}"
   ebs_block_device       = "${var.ebs_block_device}"
   ephemeral_block_device = "${var.ephemeral_block_device}"
@@ -77,7 +76,8 @@ resource "aws_instance" "this_t2" {
     cpu_credits = "${var.cpu_credits}"
   }
 
-  tags = "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s-%d", var.name, count.index+1) : var.name), var.tags)}"
+  tags        = "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s-%d", var.name, count.index+1) : var.name), var.tags)}"
+  volume_tags = "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s-%d", var.name, count.index+1) : var.name), var.volume_tags)}"
 
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
