@@ -6,12 +6,18 @@ These types of resources are supported:
 
 * [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html)
 
+## Terraform versions
+
+Terraform 0.12. Pin module version to `~> v2.0`. Submit pull-requests to `master` branch.
+
+Terraform 0.11. Pin module version to `~> v1.0`. Submit pull-requests to `terraform011` branch.
+
 ## Usage
 
 ```hcl
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "1.21.0"
+  version                = "1.22.0"
 
   name                   = "my-cluster"
   instance_count         = 5
