@@ -3,9 +3,23 @@
 
 
 
+<a name="v1.23.0"></a>
+## [v1.23.0] - 2019-06-06
+
+- Add volume tags naming and output ([#82](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/82))
+
+
+<a name="v2.0.0"></a>
+## [v2.0.0] - 2019-06-06
+
+- Updated CHANGELOG
+- Terraform 0.12 update ([#93](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/93))
+
+
 <a name="v1.22.0"></a>
 ## [v1.22.0] - 2019-06-06
 
+- Updated CHANGELOG
 - Added CHANGELOG
 - Update module to the current version ([#88](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/88))
 
@@ -192,7 +206,9 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.22.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.23.0...HEAD
+[v1.23.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.0.0...v1.23.0
+[v2.0.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.22.0...v2.0.0
 [v1.22.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.20.0...v1.21.0
 [v1.20.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.19.0...v1.20.0
