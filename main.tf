@@ -71,7 +71,7 @@ resource "aws_instance" "this" {
 
   tags = merge(
     {
-      "Name" = var.instance_count > 1 || var.use_num_suffix == "true" ? format("%s-%d", var.name, count.index + 1) : var.name
+      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
     },
     var.tags,
   )
@@ -155,7 +155,7 @@ resource "aws_instance" "this_t2" {
 
   tags = merge(
     {
-      "Name" = var.instance_count > 1 || var.use_num_suffix == "true" ? format("%s-%d", var.name, count.index + 1) : var.name
+      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
     },
     var.tags,
   )
