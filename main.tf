@@ -1,12 +1,15 @@
 locals {
-  is_t_instance_type = replace(var.instance_type, "/^t[23]{1}\\..*$/", "1") == "1" ? "1" : "0"
+  is_t_instance_type = replace(var.instance_type, "/^t[23]{1}\\..*$/", "1") == "1" ? 1 : 0
+
+  instance_count   = var.instance_count * (1 - local.is_t_instance_type)
+  t_instance_count = var.instance_count * local.is_t_instance_type
 }
 
 ######
 # Note: network_interface can't be specified together with associate_public_ip_address
 ######
 resource "aws_instance" "this" {
-  count = var.instance_count * 1 - local.is_t_instance_type
+  count = local.instance_count > 0 ? local.instance_count : 0
 
   ami           = var.ami
   instance_type = var.instance_type
@@ -27,6 +30,7 @@ resource "aws_instance" "this" {
 
   ebs_optimized = var.ebs_optimized
   volume_tags   = var.volume_tags
+
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
@@ -36,6 +40,7 @@ resource "aws_instance" "this" {
       volume_type           = lookup(root_block_device.value, "volume_type", null)
     }
   }
+
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
@@ -48,6 +53,7 @@ resource "aws_instance" "this" {
       volume_type           = lookup(ebs_block_device.value, "volume_type", null)
     }
   }
+
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
     content {
@@ -83,7 +89,7 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_instance" "this_t2" {
-  count = var.instance_count * local.is_t_instance_type
+  count = local.t_instance_count > 0 ? local.t_instance_count : 0
 
   ami           = var.ami
   instance_type = var.instance_type
@@ -104,6 +110,7 @@ resource "aws_instance" "this_t2" {
 
   ebs_optimized = var.ebs_optimized
   volume_tags   = var.volume_tags
+
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
@@ -113,6 +120,7 @@ resource "aws_instance" "this_t2" {
       volume_type           = lookup(root_block_device.value, "volume_type", null)
     }
   }
+
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
@@ -125,6 +133,7 @@ resource "aws_instance" "this_t2" {
       volume_type           = lookup(ebs_block_device.value, "volume_type", null)
     }
   }
+
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
     content {
