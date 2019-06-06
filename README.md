@@ -17,7 +17,7 @@ Terraform 0.11. Pin module version to `~> v1.0`. Submit pull-requests to `terraf
 ```hcl
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "1.22.0"
+  version                = "~> 2.0"
 
   name                   = "my-cluster"
   instance_count         = 5
@@ -30,7 +30,7 @@ module "ec2_cluster" {
   subnet_id              = "subnet-eddcdzz4"
 
   tags = {
-    Terraform = "true"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
