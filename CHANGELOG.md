@@ -4,8 +4,9 @@
 
 
 <a name="v1.22.0"></a>
-## [v1.22.0] - 2019-05-20
+## [v1.22.0] - 2019-06-06
 
+- Added CHANGELOG
 - Update module to the current version ([#88](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/88))
 
 
