@@ -3,9 +3,34 @@
 
 
 
+<a name="v2.1.0"></a>
+## [v2.1.0] - 2019-06-08
+
+- Added support for placement group and volume tags ([#96](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/96))
+- Updated CHANGELOG
+- Terraform 0.12 update ([#93](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/93))
+
+
+<a name="v1.24.0"></a>
+## [v1.24.0] - 2019-06-06
+
+- Updated CHANGELOG
+- Added placement groups ([#94](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/94))
+- Revert example
+- Added placement groups
+
+
+<a name="v1.23.0"></a>
+## [v1.23.0] - 2019-06-06
+
+- Updated CHANGELOG
+- Add volume tags naming and output ([#82](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/82))
+
+
 <a name="v2.0.0"></a>
 ## [v2.0.0] - 2019-06-06
 
+- Updated CHANGELOG
 - Terraform 0.12 update ([#93](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/93))
 
 
@@ -199,7 +224,10 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.1.0...HEAD
+[v2.1.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.24.0...v2.1.0
+[v1.24.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.23.0...v1.24.0
+[v1.23.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.0.0...v1.23.0
 [v2.0.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.22.0...v2.0.0
 [v1.22.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.20.0...v1.21.0
