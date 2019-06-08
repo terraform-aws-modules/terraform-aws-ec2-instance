@@ -29,7 +29,6 @@ resource "aws_instance" "this" {
   ipv6_addresses              = var.ipv6_addresses
 
   ebs_optimized = var.ebs_optimized
-  volume_tags   = var.volume_tags
 
   dynamic "root_block_device" {
     for_each = var.root_block_device
@@ -76,6 +75,13 @@ resource "aws_instance" "this" {
     var.tags,
   )
 
+  volume_tags = merge(
+    {
+      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
+    },
+    var.volume_tags,
+  )
+
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
     # (eg, https://github.com/terraform-providers/terraform-provider-aws/issues/2036)
@@ -109,7 +115,6 @@ resource "aws_instance" "this_t2" {
   ipv6_addresses              = var.ipv6_addresses
 
   ebs_optimized = var.ebs_optimized
-  volume_tags   = var.volume_tags
 
   dynamic "root_block_device" {
     for_each = var.root_block_device
@@ -158,6 +163,13 @@ resource "aws_instance" "this_t2" {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
     },
     var.tags,
+  )
+
+  volume_tags = merge(
+    {
+      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
+    },
+    var.volume_tags,
   )
 
   lifecycle {

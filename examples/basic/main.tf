@@ -53,6 +53,11 @@ resource "aws_eip" "this" {
   instance = module.ec2.id[0]
 }
 
+resource "aws_placement_group" "web" {
+  name     = "hunky-dory-pg"
+  strategy = "cluster"
+}
+
 module "ec2" {
   source = "../../"
 
@@ -64,6 +69,7 @@ module "ec2" {
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
+  placement_group             = aws_placement_group.web.id
 
   root_block_device = [
     {
