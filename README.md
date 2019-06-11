@@ -6,12 +6,18 @@ These types of resources are supported:
 
 * [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html)
 
+## Terraform versions
+
+Terraform 0.12. Pin module version to `~> v2.0`. Submit pull-requests to `master` branch.
+
+Terraform 0.11. Pin module version to `~> v1.0`. Submit pull-requests to `terraform011` branch.
+
 ## Usage
 
 ```hcl
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "1.21.0"
+  version                = "~> 2.0"
 
   name                   = "my-cluster"
   instance_count         = 5
@@ -26,7 +32,7 @@ module "ec2_cluster" {
   use_num_suffix         = true
 
   tags = {
-    Terraform = "true"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
@@ -133,6 +139,7 @@ data "aws_ami" "ubuntu-xenial" {
 | credit\_specification | List of credit specification of instances |
 | id | List of IDs of instances |
 | key\_name | List of key names of instances |
+| placement\_group | List of placement groups of instances |
 | primary\_network\_interface\_id | List of IDs of the primary network interface of instances |
 | private\_dns | List of private DNS names assigned to the instances. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
 | private\_ip | List of private IP addresses assigned to the instances |
@@ -141,6 +148,7 @@ data "aws_ami" "ubuntu-xenial" {
 | security\_groups | List of associated security groups of instances |
 | subnet\_id | List of IDs of VPC subnets of instances |
 | tags | List of tags of instances |
+| volume\_tags | List of tags of volumes of instances |
 | vpc\_security\_group\_ids | List of associated security groups of instances, if running in non-default VPC |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
