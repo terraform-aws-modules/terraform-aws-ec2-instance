@@ -89,11 +89,11 @@ resource "aws_instance" "this" {
       ebs_block_device,
     ]
   }
-  #
-  dynamic "credit_specification" { #
-    for_each = local.credit_specification #
-    content { #
-      cpu_credits = credit_specification.value.cpu_credits #
-    } #
-  } #
-} #
+  
+  dynamic "credit_specification" {
+    for_each = local.credit_specification
+    content {
+      cpu_credits = credit_specification.value.cpu_credits
+    }
+  }
+}
