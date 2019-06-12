@@ -168,3 +168,20 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "use_az_designation" {
+  description = "Assign an Availability Zone numerical designation and increase num_suffix per AZ"
+  type        = bool
+  default     = false
+}
+
+variable "num_suffix_width" {
+  description = "The width of the num_suffix after padding with zeros"
+  type        = number
+  default     = 0
+}
+
+variable "num_suffix_delimiter" {
+  description = "The delimiter to use between the name prefix and the num suffix"
+  type        = string
+  default     = ""
+}

@@ -1,5 +1,13 @@
 locals {
   credit_specification = replace(var.instance_type, "/^t[23]{1}\\..+$/", "1") == "1" ? [{cpu_credits = var.cpu_credits}] : []
+
+  distinct_subnet_ids = distinct(compact(concat([var.subnet_id], var.subnet_ids)))
+  subnet_ids_sorted_by_az   = values(zipmap(data.aws_subnet.details[*].availability_zone, data.aws_subnet.details[*].id))
+}
+
+data "aws_subnet" "details" {
+  count = length(local.distinct_subnet_ids)
+  id    = local.distinct_subnet_ids[count.index]
 }
 
 ######
@@ -12,7 +20,7 @@ resource "aws_instance" "this" {
   instance_type = var.instance_type
   user_data     = var.user_data
   subnet_id = element(
-    distinct(compact(concat([var.subnet_id], var.subnet_ids))),
+    local.subnet_ids_sorted_by_az,
     count.index,
   )
   key_name               = var.key_name
@@ -67,14 +75,40 @@ resource "aws_instance" "this" {
 
   tags = merge(
     {
-      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
+      "Name" = (var.instance_count > 1) || var.use_num_suffix ? (
+        var.use_az_designation ? format(
+          "%s%s%d%0${var.num_suffix_width}d",
+          var.name,
+          var.num_suffix_delimiter,
+          (count.index % length(local.distinct_subnet_ids)) + 1,
+          floor(count.index / length(local.distinct_subnet_ids)) + 1,
+        ) : format(
+          "%s%s%d%0${var.num_suffix_width}d",
+          var.name,
+          var.num_suffix_delimiter,
+          count.index + 1,
+        )
+      ) : var.name
     },
     var.tags,
   )
 
   volume_tags = merge(
     {
-      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
+      "Name" = (var.instance_count > 1) || var.use_num_suffix ? (
+        var.use_az_designation ? format(
+          "%s%s%d%0${var.num_suffix_width}d",
+          var.name,
+          var.num_suffix_delimiter,
+          (count.index % length(local.distinct_subnet_ids)) + 1,
+          floor(count.index / length(local.distinct_subnet_ids)) + 1,
+        ) : format(
+          "%s%s%d%0${var.num_suffix_width}d",
+          var.name,
+          var.num_suffix_delimiter,
+          count.index + 1,
+        )
+      ) : var.name
     },
     var.volume_tags,
   )
