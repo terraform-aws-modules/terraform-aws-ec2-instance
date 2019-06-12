@@ -83,7 +83,7 @@ resource "aws_instance" "this" {
           (count.index % length(local.distinct_subnet_ids)) + 1,
           floor(count.index / length(local.distinct_subnet_ids)) + 1,
         ) : format(
-          "%s%s%d%0${var.num_suffix_width}d",
+          "%s%s%0${var.num_suffix_width}d",
           var.name,
           var.num_suffix_delimiter,
           count.index + 1,
@@ -103,7 +103,7 @@ resource "aws_instance" "this" {
           (count.index % length(local.distinct_subnet_ids)) + 1,
           floor(count.index / length(local.distinct_subnet_ids)) + 1,
         ) : format(
-          "%s%s%d%0${var.num_suffix_width}d",
+          "%s%s%0${var.num_suffix_width}d",
           var.name,
           var.num_suffix_delimiter,
           count.index + 1,
