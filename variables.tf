@@ -185,3 +185,9 @@ variable "num_suffix_delimiter" {
   type        = string
   default     = ""
 }
+
+variable "network_interface_tags" {
+  description = "A mapping of tags to assign to the network interface(s) created by the instance at launch time"
+  type        = map(string)
+  default     = {}
+}

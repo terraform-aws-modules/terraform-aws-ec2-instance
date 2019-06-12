@@ -72,3 +72,8 @@ output "volume_tags" {
   description = "List of tags of volumes of instances"
   value       = aws_instance.this[*].volume_tags
 }
+
+output "network_interface_tags" {
+  description = "List of tags of the primary network interface of instances"
+  value       = aws_network_interface.primary[*].tags
+}

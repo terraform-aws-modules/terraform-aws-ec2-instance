@@ -19,17 +19,11 @@ resource "aws_instance" "this" {
   ami           = var.ami
   instance_type = var.instance_type
   user_data     = var.user_data
-  subnet_id = element(
-    local.subnet_ids_sorted_by_az,
-    count.index,
-  )
   key_name               = var.key_name
   monitoring             = var.monitoring
-  vpc_security_group_ids = var.vpc_security_group_ids
   iam_instance_profile   = var.iam_instance_profile
 
   associate_public_ip_address = var.associate_public_ip_address
-  private_ip                  = var.private_ip
   ipv6_address_count          = var.ipv6_address_count
   ipv6_addresses              = var.ipv6_addresses
 
@@ -67,7 +61,6 @@ resource "aws_instance" "this" {
     }
   }
 
-  source_dest_check                    = var.source_dest_check
   disable_api_termination              = var.disable_api_termination
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
   placement_group                      = var.placement_group
@@ -130,4 +123,40 @@ resource "aws_instance" "this" {
       cpu_credits = credit_specification.value.cpu_credits
     }
   }
+  
+  network_interface {
+    network_interface_id = aws_network_interface.primary[count.index].id
+    device_index         = 0
+  }
 }
+
+resource "aws_network_interface" "primary" {
+  count = var.instance_count
+
+  subnet_id         = element(local.subnet_ids_sorted_by_az, count.index)
+  description       = "Primary network interface"
+  private_ips       = var.private_ip == "" ? null : [var.private_ip]
+  security_groups   = var.vpc_security_group_ids
+  source_dest_check = var.source_dest_check
+
+  tags = merge(
+    {
+      "Name" = (var.instance_count > 1) || var.use_num_suffix ? (
+        var.use_az_designation ? format(
+          "%s%s%d%0${var.num_suffix_width}d",
+          var.name,
+          var.num_suffix_delimiter,
+          (count.index % length(local.distinct_subnet_ids)) + 1,
+          floor(count.index / length(local.distinct_subnet_ids)) + 1,
+        ) : format(
+          "%s%s%0${var.num_suffix_width}d",
+          var.name,
+          var.num_suffix_delimiter,
+          count.index + 1,
+        )
+      ) : var.name
+    },
+    var.network_interface_tags,
+  )
+}
+
