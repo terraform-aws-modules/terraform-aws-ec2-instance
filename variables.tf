@@ -90,6 +90,12 @@ variable "private_ip" {
   default     = ""
 }
 
+variable "private_ips" {
+  description = "A list of private IP address to associate with the instance in a VPC. Should match the number of instances."
+  type        = list(string)
+  default     = []
+}
+
 variable "source_dest_check" {
   description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
   type        = bool
