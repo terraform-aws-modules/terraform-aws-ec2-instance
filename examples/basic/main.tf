@@ -67,6 +67,7 @@ module "ec2" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "c5.large"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
+  private_ip                  = ["123.0.0.1", "123.0.0.2"]
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
