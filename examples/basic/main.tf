@@ -63,11 +63,11 @@ module "ec2" {
 
   instance_count = 2
 
-  name                        = "example-normal"
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c5.large"
-  subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
-  private_ip                  = ["123.0.0.1", "123.0.0.2"]
+  name          = "example-normal"
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "c5.large"
+  subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
+  //  private_ips                 = ["172.31.32.5", "172.31.46.20"]
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
@@ -90,11 +90,12 @@ module "ec2_with_t2_unlimited" {
 
   instance_count = 1
 
-  name                        = "example-t2-unlimited"
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "t2.micro"
-  cpu_credits                 = "unlimited"
-  subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
+  name          = "example-t2-unlimited"
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t2.micro"
+  cpu_credits   = "unlimited"
+  subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
+  //  private_ip = "172.31.32.10"
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
 }
