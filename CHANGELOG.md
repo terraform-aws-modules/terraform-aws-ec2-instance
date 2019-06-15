@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.3.0"></a>
+## [v2.3.0] - 2019-06-15
+
+- Fixed when private_ips is empty (fixed [#103](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/103))
+
+
 <a name="v2.2.0"></a>
 ## [v2.2.0] - 2019-06-14
 
+- Updated CHANGELOG
 - Added support for the list of private_ips (fixes [#102](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/102)) ([#103](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/103))
 
 
@@ -231,7 +238,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.3.0...HEAD
+[v2.3.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.2.0...v2.3.0
 [v2.2.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.1.0...v2.2.0
 [v2.1.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.24.0...v2.1.0
 [v1.24.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.23.0...v1.24.0
