@@ -20,6 +20,7 @@ resource "aws_instance" "this" {
   )
   key_name               = var.key_name
   monitoring             = var.monitoring
+  get_password_data      = var.get_password_data
   vpc_security_group_ids = var.vpc_security_group_ids
   iam_instance_profile   = var.iam_instance_profile
 
@@ -105,6 +106,7 @@ resource "aws_instance" "this_t2" {
   )
   key_name               = var.key_name
   monitoring             = var.monitoring
+  get_password_data      = var.get_password_data
   vpc_security_group_ids = var.vpc_security_group_ids
   iam_instance_profile   = var.iam_instance_profile
 
