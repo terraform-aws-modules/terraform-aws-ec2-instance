@@ -14,6 +14,7 @@ locals {
   this_credit_specification         = flatten(aws_instance.this_t2.*.credit_specification)
   this_tags                         = coalescelist(aws_instance.this.*.tags, aws_instance.this_t2.*.tags, [""])
   this_volume_tags                  = coalescelist(aws_instance.this.*.volume_tags, aws_instance.this_t2.*.volume_tags, [""])
+  this_password_data                = coalescelist(aws_instance.this.*.password_data, aws_instance.this_t2.*.password_data, [""])
 }
 
 output "id" {
@@ -59,6 +60,11 @@ output "private_dns" {
 output "private_ip" {
   description = "List of private IP addresses assigned to the instances"
   value       = local.this_private_ip
+}
+
+output "password_data" {
+  description = "List of Base-64 encoded encrypted password data for the instance"
+  value       = local.this_password_data
 }
 
 output "security_groups" {

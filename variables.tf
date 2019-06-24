@@ -20,6 +20,12 @@ variable "placement_group" {
   default     = ""
 }
 
+variable "get_password_data" {
+  description = "If true, wait for password data to become available and retrieve it."
+  type        = bool
+  default     = false
+}
+
 variable "tenancy" {
   description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host."
   type        = string
