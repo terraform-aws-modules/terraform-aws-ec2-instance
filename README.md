@@ -159,3 +159,4 @@ Module managed by [Anton Babenko](https://github.com/antonbabenko).
 ## License
 
 Apache 2 Licensed. See LICENSE for full details.
+FOOBARTAG
