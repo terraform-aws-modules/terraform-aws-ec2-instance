@@ -7,7 +7,7 @@ locals {
   this_primary_network_interface_id = compact(coalescelist(aws_instance.this.*.primary_network_interface_id, aws_instance.this_t2.*.primary_network_interface_id, [""]))
   this_private_dns                  = compact(coalescelist(aws_instance.this.*.private_dns, aws_instance.this_t2.*.private_dns, [""]))
   this_private_ip                   = compact(coalescelist(aws_instance.this.*.private_ip, aws_instance.this_t2.*.private_ip, [""]))
-  this_placement_group              = compact(concat(coalescelist(aws_instance.this.*.placement_group, aws_instance.this_t2.*.placement_group), [""]))
+  this_placement_group              = compact(coalescelist(aws_instance.this.*.placement_group, aws_instance.this_t2.*.placement_group, [""]))
   this_security_groups              = coalescelist(aws_instance.this.*.security_groups, aws_instance.this_t2.*.security_groups, [""])
   this_vpc_security_group_ids       = coalescelist(flatten(aws_instance.this.*.vpc_security_group_ids), flatten(aws_instance.this_t2.*.vpc_security_group_ids), [""])
   this_subnet_id                    = compact(coalescelist(aws_instance.this.*.subnet_id, aws_instance.this_t2.*.subnet_id, [""]))

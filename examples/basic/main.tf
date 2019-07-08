@@ -114,3 +114,15 @@ module "ec2_with_t3_unlimited" {
   associate_public_ip_address = true
 }
 
+# This instance won't be created
+module "ec2_zero" {
+  source = "../../"
+
+  instance_count = 0
+
+  name                   = "example-zero"
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "c5.large"
+  subnet_id              = tolist(data.aws_subnet_ids.all.ids)[0]
+  vpc_security_group_ids = [module.security_group.this_security_group_id]
+}
