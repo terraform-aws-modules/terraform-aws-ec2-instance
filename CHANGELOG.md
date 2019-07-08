@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.5.0"></a>
+## [v2.5.0] - 2019-07-08
+
+- Fixed output of placement_group (fixed [#104](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/104)) ([#110](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/110))
+
+
 <a name="v2.4.0"></a>
 ## [v2.4.0] - 2019-06-24
 
+- Updated CHANGELOG
 - Add get_password_data ([#105](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/105))
 
 
@@ -245,7 +252,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.5.0...HEAD
+[v2.5.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.4.0...v2.5.0
 [v2.4.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.2.0...v2.3.0
 [v2.2.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.1.0...v2.2.0
