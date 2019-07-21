@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.6.0"></a>
+## [v2.6.0] - 2019-07-21
+
+- Remove T2 specifics to unify Terraform object names inside TF State ([#111](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/111))
+
+
 <a name="v2.5.0"></a>
 ## [v2.5.0] - 2019-07-08
 
+- Updated CHANGELOG
 - Fixed output of placement_group (fixed [#104](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/104)) ([#110](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/110))
 
 
@@ -252,7 +259,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.6.0...HEAD
+[v2.6.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.5.0...v2.6.0
 [v2.5.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.4.0...v2.5.0
 [v2.4.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.2.0...v2.3.0
