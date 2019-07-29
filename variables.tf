@@ -114,6 +114,12 @@ variable "user_data" {
   default     = ""
 }
 
+variable "user_data_base64" {
+  description = "The user data base64-encoded to provide when launching the instance"
+  type        = string
+  default     = ""
+}
+
 variable "iam_instance_profile" {
   description = "The IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile."
   type        = string
@@ -179,4 +185,3 @@ variable "use_num_suffix" {
   type        = bool
   default     = false
 }
-

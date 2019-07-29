@@ -8,9 +8,9 @@ locals {
 resource "aws_instance" "this" {
   count = var.instance_count
 
-  ami           = var.ami
-  instance_type = var.instance_type
-  user_data     = var.user_data
+  ami                    = var.ami
+  instance_type          = var.instance_type
+  user_data_base64       = var.user_data == "" ? var.user_data_base64 : base64gzip(var.user_data)
   subnet_id = element(
     distinct(compact(concat([var.subnet_id], var.subnet_ids))),
     count.index,
