@@ -96,3 +96,8 @@ output "volume_tags" {
   description = "List of tags of volumes of instances"
   value       = local.this_volume_tags
 }
+
+output "instance_count" {
+  description = "Number of instances to launch specified as argument to this module"
+  value       = var.instance_count
+}
