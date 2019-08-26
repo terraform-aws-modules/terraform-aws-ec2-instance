@@ -150,8 +150,14 @@ variable "root_block_device" {
   default     = []
 }
 
+variable "attached_block_device" {
+  description = "Additional EBS block devices to attach after the instance creation. Either use this variable or ebs_block_device but not both"
+  type        = list(map(string))
+  default     = []
+}
+
 variable "ebs_block_device" {
-  description = "Additional EBS block devices to attach to the instance"
+  description = "Additional EBS block devices to attach to the instance. Either use this variable or attached_block_device but not both"
   type        = list(map(string))
   default     = []
 }
