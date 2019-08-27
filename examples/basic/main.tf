@@ -58,10 +58,13 @@ resource "aws_placement_group" "web" {
   strategy = "cluster"
 }
 
+resource "aws_kms_key" "this" {
+}
+
 module "ec2" {
   source = "../../"
 
-  instance_count = 2
+  instance_count = 1
 
   name          = "example-normal"
   ami           = data.aws_ami.amazon_linux.id
@@ -77,6 +80,16 @@ module "ec2" {
       volume_type = "gp2"
       volume_size = 10
     },
+  ]
+
+  ebs_block_device = [
+    {
+      device_name = "/dev/sdf"
+      volume_type = "gp2"
+      volume_size = 5
+      encrypted   = true
+      kms_key_id  = aws_kms_key.this.arn
+    }
   ]
 
   tags = {
