@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.8.0"></a>
+## [v2.8.0] - 2019-08-27
+
+- Track all changes (remove ignore_changes lifecycle) ([#125](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/125))
+
+
 <a name="v2.7.0"></a>
 ## [v2.7.0] - 2019-08-27
 
+- Updated CHANGELOG
 - Add encrypted and kms_key_id arguments to the ebs_* and root_* block ([#124](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/124))
 
 
@@ -266,7 +273,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.7.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.8.0...HEAD
+[v2.8.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.7.0...v2.8.0
 [v2.7.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.6.0...v2.7.0
 [v2.6.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.5.0...v2.6.0
 [v2.5.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.4.0...v2.5.0
