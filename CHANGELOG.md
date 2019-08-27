@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.7.0"></a>
+## [v2.7.0] - 2019-08-27
+
+- Add encrypted and kms_key_id arguments to the ebs_* and root_* block ([#124](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/124))
+
+
 <a name="v2.6.0"></a>
 ## [v2.6.0] - 2019-07-21
 
+- Updated CHANGELOG
 - Remove T2 specifics to unify Terraform object names inside TF State ([#111](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/111))
 
 
@@ -259,7 +266,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.7.0...HEAD
+[v2.7.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.6.0...v2.7.0
 [v2.6.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.5.0...v2.6.0
 [v2.5.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.4.0...v2.5.0
 [v2.4.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.3.0...v2.4.0
