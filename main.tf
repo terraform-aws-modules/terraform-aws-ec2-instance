@@ -134,13 +134,16 @@ resource "aws_ebs_volume" "this" {
     count.index % local.attached_block_device_count
 
   ], "volume_size", null)
+
   snapshot_id = lookup(var.attached_block_device[
     count.index % local.attached_block_device_count
 
   ], "snapshot_id", null)
+
   type = lookup(var.attached_block_device[
     count.index % local.attached_block_device_count
   ], "volume_type", null)
+
   tags = merge(
     {
       Name = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, floor(count.index / local.attached_block_device_count) + 1) : var.name

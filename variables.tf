@@ -151,7 +151,24 @@ variable "root_block_device" {
 }
 
 variable "attached_block_device" {
-  description = "Additional EBS block devices to attach after the instance creation. Either use this variable or ebs_block_device but not both"
+  description = <<EOF
+    List of additional EBS block devices to attach after an instance
+    has been created. Either use this variable or `ebs_block_device`,
+    but not both.
+
+    Each element of the list suports the foloowing volume configuration items
+    (provided as a map):
+
+    * `encrypted`<br>
+    * `iops`<br>
+    * `kms_key_id`<br>
+    * `volume_size`<br>
+    * `snapshot_id`<br>
+    * `volume_type`<br>
+
+    For a description of the configration items see
+    [aws_ebs_volume](https://www.terraform.io/docs/providers/aws/r/ebs_volume.html#argument-reference)
+  EOF
   type        = list(map(string))
   default     = []
 }
@@ -185,4 +202,3 @@ variable "use_num_suffix" {
   type        = bool
   default     = false
 }
-

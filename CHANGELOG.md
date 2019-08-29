@@ -1,7 +1,7 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
-
+- Fixed creation and attachment of additional EBS volumes ([#1](https://github.com/WildBeavers/terraform-aws-ec2-instance/issues/1))
 
 <a name="v2.6.0"></a>
 ## [v2.6.0] - 2019-07-21
