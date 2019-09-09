@@ -15,6 +15,7 @@ locals {
   this_tags                         = coalescelist(aws_instance.this.*.tags, [""])
   this_volume_tags                  = coalescelist(aws_instance.this.*.volume_tags, [""])
   this_password_data                = coalescelist(aws_instance.this.*.password_data, [""])
+  this_ipv6_addresses               = compact(coalescelist(aws_instance.this.*.ipv6_addresses, [""]))
 }
 
 output "id" {
@@ -95,4 +96,9 @@ output "tags" {
 output "volume_tags" {
   description = "List of tags of volumes of instances"
   value       = local.this_volume_tags
+}
+
+output "ipv6_addresses" {
+  description = "A list of assigned IPv6 addresses, if any."
+  value       = local.this_ipv6_addresses
 }

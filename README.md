@@ -136,6 +136,7 @@ data "aws_ami" "ubuntu-xenial" {
 | availability\_zone | List of availability zones of instances |
 | credit\_specification | List of credit specification of instances |
 | id | List of IDs of instances |
+| ipv6\_addresses | A list of assigned IPv6 addresses, if any. |
 | key\_name | List of key names of instances |
 | password\_data | List of Base-64 encoded encrypted password data for the instance |
 | placement\_group | List of placement groups of instances |
