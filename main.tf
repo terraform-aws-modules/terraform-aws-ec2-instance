@@ -83,7 +83,11 @@ resource "aws_instance" "this" {
     var.volume_tags,
   )
 
-  credit_specification {
-    cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
+  dynamic "credit_specification" {
+    for_each = local.is_t_instance_type ? [var.cpu_credits] : []
+ 
+    content {
+      cpu_credits = credit_specification.value
+    }
   }
 }
