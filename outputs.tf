@@ -1,12 +1,12 @@
 locals {
-  this_id                           = compact(coalescelist(aws_instance.this.*.id, [""]))
+  this_id                           = aws_instance.this.*.id
   this_availability_zone            = compact(coalescelist(aws_instance.this.*.availability_zone, [""]))
   this_key_name                     = compact(coalescelist(aws_instance.this.*.key_name, [""]))
   this_public_dns                   = compact(coalescelist(aws_instance.this.*.public_dns, [""]))
   this_public_ip                    = compact(coalescelist(aws_instance.this.*.public_ip, [""]))
   this_primary_network_interface_id = compact(coalescelist(aws_instance.this.*.primary_network_interface_id, [""]))
   this_private_dns                  = compact(coalescelist(aws_instance.this.*.private_dns, [""]))
-  this_private_ip                   = compact(coalescelist(aws_instance.this.*.private_ip, [""]))
+  this_private_ip                   = aws_instance.this.*.private_ip
   this_placement_group              = compact(coalescelist(aws_instance.this.*.placement_group, [""]))
   this_security_groups              = coalescelist(aws_instance.this.*.security_groups, [""])
   this_vpc_security_group_ids       = coalescelist(flatten(aws_instance.this.*.vpc_security_group_ids), [""])
