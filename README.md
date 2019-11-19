@@ -154,6 +154,7 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | List of tags of instances |
 | volume\_tags | List of tags of volumes of instances |
 | vpc\_security\_group\_ids | List of associated security groups of instances, if running in non-default VPC |
+| instance\_count | Number of instances to launch specified as argument to this module |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
