@@ -138,6 +138,7 @@ data "aws_ami" "ubuntu-xenial" {
 | credit\_specification | List of credit specification of instances |
 | ebs\_block\_device\_volume\_ids | List of volume IDs of EBS block devices of instances |
 | id | List of IDs of instances |
+| instance\_count | Number of instances to launch specified as argument to this module |
 | instance\_state | List of instance states of instances |
 | ipv6\_addresses | List of assigned IPv6 addresses of instances |
 | key\_name | List of key names of instances |
@@ -154,7 +155,6 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | List of tags of instances |
 | volume\_tags | List of tags of volumes of instances |
 | vpc\_security\_group\_ids | List of associated security groups of instances, if running in non-default VPC |
-| instance\_count | Number of instances to launch specified as argument to this module |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
