@@ -2,16 +2,13 @@ locals {
   is_t_instance_type = replace(var.instance_type, "/^t[23]{1}\\..*$/", "1") == "1" ? true : false
 }
 
-######
-# Note: network_interface can't be specified together with associate_public_ip_address
-######
 resource "aws_instance" "this" {
   count = var.instance_count
 
   ami           = var.ami
   instance_type = var.instance_type
   user_data     = var.user_data
-  subnet_id = element(
+  subnet_id = length(var.network_interface) > 0 ? null : element(
     distinct(compact(concat([var.subnet_id], var.subnet_ids))),
     count.index,
   )
@@ -63,7 +60,16 @@ resource "aws_instance" "this" {
     }
   }
 
-  source_dest_check                    = var.source_dest_check
+  dynamic "network_interface" {
+    for_each = var.network_interface
+    content {
+      device_index          = network_interface.value.device_index
+      network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
+      delete_on_termination = lookup(network_interface.value, "delete_on_termination", false)
+    }
+  }
+
+  source_dest_check                    = length(var.network_interface) > 0 ? null : var.source_dest_check
   disable_api_termination              = var.disable_api_termination
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
   placement_group                      = var.placement_group
