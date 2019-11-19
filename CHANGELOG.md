@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.11.0"></a>
+## [v2.11.0] - 2019-11-19
+
+- Added user_data_base64 (fixed [#117](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/117)) ([#137](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/137))
+
+
 <a name="v2.10.0"></a>
 ## [v2.10.0] - 2019-11-19
 
+- Updated CHANGELOG
 - Added support for network_interface and arn ([#136](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/136))
 
 
@@ -287,7 +294,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.10.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.11.0...HEAD
+[v2.11.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.10.0...v2.11.0
 [v2.10.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.9.0...v2.10.0
 [v2.9.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.8.0...v2.9.0
 [v2.8.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.7.0...v2.8.0
