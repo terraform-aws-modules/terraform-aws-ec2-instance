@@ -2,6 +2,13 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+locals {
+  user_data = <<EOF
+#!/bin/bash
+echo "Hello Terraform!"
+EOF
+}
+
 ##################################################################
 # Data sources to get VPC, subnet, security group and AMI details
 ##################################################################
@@ -70,7 +77,7 @@ resource "aws_network_interface" "this" {
 module "ec2" {
   source = "../../"
 
-  instance_count = 2
+  instance_count = 1
 
   name          = "example-normal"
   ami           = data.aws_ami.amazon_linux.id
@@ -80,6 +87,8 @@ module "ec2" {
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
+
+  user_data_base64 = base64encode(local.user_data)
 
   root_block_device = [
     {

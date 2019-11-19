@@ -124,7 +124,8 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | A mapping of tags to assign to the resource | map(string) | `{}` | no |
 | tenancy | The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host. | string | `"default"` | no |
 | use\_num\_suffix | Always append numerical suffix to instance name, even if instance_count is 1 | bool | `"false"` | no |
-| user\_data | The user data to provide when launching the instance | string | `""` | no |
+| user\_data | The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead. | string | `"null"` | no |
+| user\_data\_base64 | Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption. | string | `"null"` | no |
 | volume\_tags | A mapping of tags to assign to the devices created by the instance at launch time | map(string) | `{}` | no |
 | vpc\_security\_group\_ids | A list of security group IDs to associate with | list(string) | `"null"` | no |
 
