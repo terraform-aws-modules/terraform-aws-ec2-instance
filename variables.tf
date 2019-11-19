@@ -70,6 +70,7 @@ variable "monitoring" {
 variable "vpc_security_group_ids" {
   description = "A list of security group IDs to associate with"
   type        = list(string)
+  default     = null
 }
 
 variable "subnet_id" {
@@ -87,13 +88,13 @@ variable "subnet_ids" {
 variable "associate_public_ip_address" {
   description = "If true, the EC2 instance will have associated public IP address"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "private_ip" {
   description = "Private IP address to associate with the instance in a VPC"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "private_ips" {
@@ -123,13 +124,13 @@ variable "iam_instance_profile" {
 variable "ipv6_address_count" {
   description = "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet."
   type        = number
-  default     = 0
+  default     = null
 }
 
 variable "ipv6_addresses" {
   description = "Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface"
   type        = list(string)
-  default     = []
+  default     = null
 }
 
 variable "tags" {

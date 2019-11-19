@@ -3,6 +3,11 @@ output "id" {
   value       = aws_instance.this.*.id
 }
 
+output "arn" {
+  description = "List of ARNs of instances"
+  value       = aws_instance.this.*.arn
+}
+
 output "availability_zone" {
   description = "List of availability zones of instances"
   value       = aws_instance.this.*.availability_zone
@@ -18,6 +23,11 @@ output "key_name" {
   value       = aws_instance.this.*.key_name
 }
 
+output "password_data" {
+  description = "List of Base-64 encoded encrypted password data for the instance"
+  value       = aws_instance.this.*.password_data
+}
+
 output "public_dns" {
   description = "List of public DNS names assigned to the instances. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
   value       = aws_instance.this.*.public_dns
@@ -26,6 +36,11 @@ output "public_dns" {
 output "public_ip" {
   description = "List of public IP addresses assigned to the instances, if applicable"
   value       = aws_instance.this.*.public_ip
+}
+
+output "ipv6_addresses" {
+  description = "List of assigned IPv6 addresses of instances"
+  value       = aws_instance.this.*.ipv6_addresses
 }
 
 output "primary_network_interface_id" {
@@ -41,11 +56,6 @@ output "private_dns" {
 output "private_ip" {
   description = "List of private IP addresses assigned to the instances"
   value       = aws_instance.this.*.private_ip
-}
-
-output "password_data" {
-  description = "List of Base-64 encoded encrypted password data for the instance"
-  value       = aws_instance.this.*.password_data
 }
 
 output "security_groups" {
@@ -66,6 +76,21 @@ output "subnet_id" {
 output "credit_specification" {
   description = "List of credit specification of instances"
   value       = aws_instance.this.*.credit_specification
+}
+
+output "instance_state" {
+  description = "List of instance states of instances"
+  value       = aws_instance.this.*.instance_state
+}
+
+output "root_block_device_volume_ids" {
+  description = "List of volume IDs of root block devices of instances"
+  value       = [for device in aws_instance.this.*.root_block_device : device.*.volume_id]
+}
+
+output "ebs_block_device_volume_ids" {
+  description = "List of volume IDs of EBS block devices of instances"
+  value       = [for device in aws_instance.this.*.ebs_block_device : device.*.volume_id]
 }
 
 output "tags" {
