@@ -38,20 +38,6 @@ resource "aws_instance" "this" {
     }
   }
 
-  dynamic "ebs_block_device" {
-    for_each = var.ebs_block_device
-    content {
-      delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
-      device_name           = ebs_block_device.value.device_name
-      encrypted             = lookup(ebs_block_device.value, "encrypted", null)
-      iops                  = lookup(ebs_block_device.value, "iops", null)
-      kms_key_id            = lookup(ebs_block_device.value, "kms_key_id", null)
-      snapshot_id           = lookup(ebs_block_device.value, "snapshot_id", null)
-      volume_size           = lookup(ebs_block_device.value, "volume_size", null)
-      volume_type           = lookup(ebs_block_device.value, "volume_type", null)
-    }
-  }
-
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
     content {
@@ -93,4 +79,30 @@ resource "aws_instance" "this" {
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
   }
+}
+
+resource "aws_ebs_volume" "this" {
+  count = var.instance_count * length(var.ebs_block_device)
+
+  availability_zone = aws_instance.this[floor(count.index / length(var.ebs_block_device))].availability_zone
+  encrypted         = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "encrypted", null)
+  iops              = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "iops", null)
+  size              = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "volume_size", null)
+  snapshot_id       = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "snapshot_id", null)
+  type              = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "volume_type", null)
+  kms_key_id        = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "kms_key_id", null)
+
+  tags = merge(
+    {
+      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d-%d", var.name, floor(count.index / length(var.ebs_block_device)) + 1, count.index % length(var.ebs_block_device) + 1) : var.name
+    },
+    var.volume_tags,
+  )
+}
+
+resource "aws_volume_attachment" "this" {
+  count       = var.instance_count * length(var.ebs_block_device)
+  device_name = lookup(var.ebs_block_device[count.index % length(var.ebs_block_device)], "device_name", null)
+  volume_id   = aws_ebs_volume.this[count.index].id
+  instance_id = aws_instance.this[floor(count.index / length(var.ebs_block_device))].id
 }

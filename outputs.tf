@@ -107,3 +107,13 @@ output "instance_count" {
   description = "Number of instances to launch specified as argument to this module"
   value       = var.instance_count
 }
+
+output "ebs_id" {
+  description = "List of IDs of EBS volumes"
+  value       = aws_ebs_volume.this.*.id
+}
+
+output "ebs_arn" {
+  description = "List of ARNs of EBS volumes"
+  value       = aws_ebs_volume.this.*.arn
+}
