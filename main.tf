@@ -1,6 +1,5 @@
 locals {
   is_t_instance_type = "${replace(var.instance_type, "/^t[23]{1}\\..*$/", "1") == "1" ? "1" : "0"}"
-  name = (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s0%d", var.name, count.index+1) : var.name)
 }
 
 ######
@@ -35,14 +34,8 @@ resource "aws_instance" "this" {
   placement_group                      = "${var.placement_group}"
   tenancy                              = "${var.tenancy}"
 
-#tags =  "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s0%d", var.name, count.index+1) : var.name), var.tags, map("ellevation:Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s0%d", lower(var.name), count.index+1) : lower(var.name)), var.tags)}"
-  tags = "${merge(
-    map(
-        "Name", local.name,
-        "ellevation:Name", lower(local.name),
-    ),
-    var.tags
-)}"
+tags =  "${merge(map("Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s0%d", var.name, count.index+1) : var.name), var.tags, map("ellevation:Name", (var.instance_count > 1) || (var.use_num_suffix == "true") ? format("%s0%d", lower(var.name), count.index+1) : lower(var.name)), var.tags)}"
+
 
   lifecycle {
     # Due to several known issues in Terraform AWS provider related to arguments of aws_instance:
