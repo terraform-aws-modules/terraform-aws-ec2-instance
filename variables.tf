@@ -187,3 +187,20 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "create_before_destroy" {
+  description = "A new replacement object is created first, and then the prior object is destroyed only once the replacement is created."
+  type        = bool
+  default     = false
+}
+
+variable "prevent_destroy" {
+  description = "This meta-argument, when set to true, will cause Terraform to reject with an error any plan that would destroy the infrastructure object associated with the resource, as long as the argument remains present in the configuration."
+  type        = bool
+  default     = false
+}
+
+variable "ignore_changes" {
+  description = "Specifies resource attributes that Terraform should ignore when planning updates to the associated remote object. The arguments corresponding to the given attribute names are considered when planning a create operation, but are ignored when planning an update." # https://www.terraform.io/docs/configuration/resources.html#ignore_changes
+  type        = list
+  default     = list()
+}

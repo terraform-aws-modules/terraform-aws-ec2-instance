@@ -93,4 +93,10 @@ resource "aws_instance" "this" {
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
   }
+
+  lifecycle {
+    create_before_destroy = var.create_before_destroy
+    prevent_destroy       = var.prevent_destroy
+    ignore_changes        = var.ignore_changes
+  }
 }
