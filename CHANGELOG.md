@@ -3,9 +3,116 @@
 
 
 
+<a name="v1.25.0"></a>
+## [v1.25.0] - 2020-03-05
+
+- Updated t instance type check to include t3a type ([#146](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/146))
+- Updated CHANGELOG
+- Added placement groups ([#94](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/94))
+- Revert example
+- Added placement groups
+- Updated CHANGELOG
+- Add volume tags naming and output ([#82](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/82))
+
+
+<a name="v2.13.0"></a>
+## [v2.13.0] - 2020-03-05
+
+- Updated CHANGELOG
+- Updated t instance type check to include t3a type ([#145](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/145))
+
+
+<a name="v2.12.0"></a>
+## [v2.12.0] - 2019-11-19
+
+- Updated CHANGELOG
+- Updated README
+- Instance count as output ([#121](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/121))
+
+
+<a name="v2.11.0"></a>
+## [v2.11.0] - 2019-11-19
+
+- Updated CHANGELOG
+- Added user_data_base64 (fixed [#117](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/117)) ([#137](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/137))
+
+
+<a name="v2.10.0"></a>
+## [v2.10.0] - 2019-11-19
+
+- Updated CHANGELOG
+- Added support for network_interface and arn ([#136](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/136))
+
+
+<a name="v2.9.0"></a>
+## [v2.9.0] - 2019-11-19
+
+- Updated CHANGELOG
+- Update outputs to remove unneeded function wrappers ([#135](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/135))
+
+
+<a name="v2.8.0"></a>
+## [v2.8.0] - 2019-08-27
+
+- Updated CHANGELOG
+- Track all changes (remove ignore_changes lifecycle) ([#125](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/125))
+
+
+<a name="v2.7.0"></a>
+## [v2.7.0] - 2019-08-27
+
+- Updated CHANGELOG
+- Add encrypted and kms_key_id arguments to the ebs_* and root_* block ([#124](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/124))
+
+
+<a name="v2.6.0"></a>
+## [v2.6.0] - 2019-07-21
+
+- Updated CHANGELOG
+- Remove T2 specifics to unify Terraform object names inside TF State ([#111](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/111))
+
+
+<a name="v2.5.0"></a>
+## [v2.5.0] - 2019-07-08
+
+- Updated CHANGELOG
+- Fixed output of placement_group (fixed [#104](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/104)) ([#110](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/110))
+
+
+<a name="v2.4.0"></a>
+## [v2.4.0] - 2019-06-24
+
+- Updated CHANGELOG
+- Add get_password_data ([#105](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/105))
+
+
+<a name="v2.3.0"></a>
+## [v2.3.0] - 2019-06-15
+
+- Updated CHANGELOG
+- Fixed when private_ips is empty (fixed [#103](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/103))
+
+
+<a name="v2.2.0"></a>
+## [v2.2.0] - 2019-06-14
+
+- Updated CHANGELOG
+- Added support for the list of private_ips (fixes [#102](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/102)) ([#103](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/103))
+
+
+<a name="v2.1.0"></a>
+## [v2.1.0] - 2019-06-08
+
+- Updated CHANGELOG
+- Added support for placement group and volume tags ([#96](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/96))
+- Updated CHANGELOG
+- Terraform 0.12 update ([#93](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/93))
+
+
 <a name="v1.24.0"></a>
 ## [v1.24.0] - 2019-06-06
 
+- Updated CHANGELOG
 - Added placement groups ([#94](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/94))
 - Revert example
 - Added placement groups
@@ -215,7 +322,21 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.24.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.25.0...HEAD
+[v1.25.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.13.0...v1.25.0
+[v2.13.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.12.0...v2.13.0
+[v2.12.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.11.0...v2.12.0
+[v2.11.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.10.0...v2.11.0
+[v2.10.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.9.0...v2.10.0
+[v2.9.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.8.0...v2.9.0
+[v2.8.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.7.0...v2.8.0
+[v2.7.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.6.0...v2.7.0
+[v2.6.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.5.0...v2.6.0
+[v2.5.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.4.0...v2.5.0
+[v2.4.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.3.0...v2.4.0
+[v2.3.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.2.0...v2.3.0
+[v2.2.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.1.0...v2.2.0
+[v2.1.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.24.0...v2.1.0
 [v1.24.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.23.0...v1.24.0
 [v1.23.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.0.0...v1.23.0
 [v2.0.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.22.0...v2.0.0
