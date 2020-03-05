@@ -3,9 +3,16 @@
 
 
 
+<a name="v2.13.0"></a>
+## [v2.13.0] - 2020-03-05
+
+- Updated t instance type check to include t3a type ([#145](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/145))
+
+
 <a name="v2.12.0"></a>
 ## [v2.12.0] - 2019-11-19
 
+- Updated CHANGELOG
 - Updated README
 - Instance count as output ([#121](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/121))
 
@@ -302,7 +309,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.12.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.13.0...HEAD
+[v2.13.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.12.0...v2.13.0
 [v2.12.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.11.0...v2.12.0
 [v2.11.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.10.0...v2.11.0
 [v2.10.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.9.0...v2.10.0
