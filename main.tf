@@ -1,5 +1,6 @@
 locals {
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
+  hostname           = var.hostname != "" ? var.hostname : var.tags.Role
 }
 
 resource "aws_instance" "this" {
@@ -25,6 +26,12 @@ resource "aws_instance" "this" {
   ipv6_addresses              = var.ipv6_addresses
 
   ebs_optimized = var.ebs_optimized
+
+  user_data = << EOF
+    #! /bin/bash -e
+    hostnamectl set-hostname ${local.hostname}-${count.index + 1}
+  EOF
+  }
 
   dynamic "root_block_device" {
     for_each = var.root_block_device

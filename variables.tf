@@ -187,3 +187,7 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "hostname" {
+  description = "Name to be used on all instances's hostname as prefix"
+  default     = ""
+}
