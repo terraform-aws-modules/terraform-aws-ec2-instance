@@ -1,3 +1,4 @@
+
 # AWS EC2 Instance Terraform module
 
 Terraform module which creates EC2 instance(s) on AWS.
@@ -87,7 +88,7 @@ data "aws_ami" "ubuntu-xenial" {
 
 ## Notes
 
-* `network_interface` can't be specified together with `vpc_security_group_ids`, `associate_public_ip_address`, `subnet_id`. See [basic example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic) for details. 
+* `network_interface` can't be specified together with `vpc_security_group_ids`, `associate_public_ip_address`, `subnet_id`. See [basic example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic) for details.
 * Changes in `ebs_block_device` argument will be ignored. Use [aws_volume_attachment](https://www.terraform.io/docs/providers/aws/r/volume_attachment.html) resource to attach and detach volumes from AWS EC2 instances. See [this example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment).
 * One of `subnet_id` or `subnet_ids` is required. If both are provided, the value of `subnet_id` is prepended to the value of `subnet_ids`.
 
@@ -128,6 +129,16 @@ data "aws_ami" "ubuntu-xenial" {
 | user\_data\_base64 | Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption. | string | `"null"` | no |
 | volume\_tags | A mapping of tags to assign to the devices created by the instance at launch time | map(string) | `{}` | no |
 | vpc\_security\_group\_ids | A list of security group IDs to associate with | list(string) | `"null"` | no |
+| instance\_request\_type | The Instance Request Type must be on_demand OR spot | string | `"on_demand"` | no |
+| spot\_price | The maximum price to request on the spot market (Default: On-demand price) | string | `"null"` | no |
+| spot\_wait\_for\_fulfillment | If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached | bool | `true` | no |
+| spot\_type | If set to one-time, after the instance is terminated, the spot request will be closed | string | `"persistent"` | no |
+| spot\_timeouts | The timeouts block allows you to specify timeouts for certain actions | set(object({}) | `[]` | no |
+| spot\_valid\_from | The start date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ) | string | `"null"` | no |
+| spot\_valid\_until | The end date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ). At this point, no new Spot instance requests are placed or enabled to fulfill the request | string | `"null"` | no |
+| spot\_instance\_interruption\_behaviour | Indicates whether a Spot instance stops or terminates when it is interrupted | string | `"stop"` | no |
+| spot\_block\_duration\_minutes | he required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360). The duration period starts as soon as your Spot instance receives its instance ID. At the end of the duration period, Amazon EC2 marks the Spot instance for termination and provides a Spot instance termination notice, which gives the instance a two-minute warning before it terminates. Note that you can't specify an Availability Zone group or a launch group if you specify a duration | number | `"null"` | no |
+| spot\_launch\_group | A launch group is a group of spot instances that launch together and terminate together. If left empty instances are launched and terminated individually | string | `"null"` | no |
 
 ## Outputs
 
@@ -155,6 +166,8 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | List of tags of instances |
 | volume\_tags | List of tags of volumes of instances |
 | vpc\_security\_group\_ids | List of associated security groups of instances, if running in non-default VPC |
+| spot\_bid\_status | The current bid status of the Spot Instance Request |
+| spot\_request\_state | The current request state of the Spot Instance Request |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

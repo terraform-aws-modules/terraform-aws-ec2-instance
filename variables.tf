@@ -1,3 +1,9 @@
+variable "instance_request_type" {
+  description = "The Instance Request Type must be on_demand OR spot"
+  type        = string
+  default     = "on_demand"
+}
+
 variable "name" {
   description = "Name to be used on all resources as prefix"
   type        = string
@@ -187,3 +193,61 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "spot_price" {
+  description = "The maximum price to request on the spot market (Default: On-demand price)"
+  type        = string
+  default     = null
+}
+
+variable "spot_wait_for_fulfillment" {
+  description = "If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached"
+  type        = bool
+  default     = true
+}
+
+variable "spot_type" {
+  description = "If set to one-time, after the instance is terminated, the spot request will be closed"
+  type        = string
+  default     = "persistent"
+}
+
+variable "spot_timeouts" {
+  description = "The timeouts block allows you to specify timeouts for certain actions"
+  type = set(object(
+    {
+      create = string
+      delete = string
+    }
+  ))
+  default = []
+}
+
+variable "spot_valid_from" {
+  description = "The start date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
+  type        = string
+  default     = null
+}
+
+variable "spot_valid_until" {
+  description = "The end date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ). At this point, no new Spot instance requests are placed or enabled to fulfill the request"
+  type        = string
+  default     = null
+}
+
+variable "spot_instance_interruption_behaviour" {
+  description = "Indicates whether a Spot instance stops or terminates when it is interrupted"
+  type        = string
+  default     = "stop"
+}
+
+variable "spot_block_duration_minutes" {
+  description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360). The duration period starts as soon as your Spot instance receives its instance ID. At the end of the duration period, Amazon EC2 marks the Spot instance for termination and provides a Spot instance termination notice, which gives the instance a two-minute warning before it terminates. Note that you can't specify an Availability Zone group or a launch group if you specify a duration"
+  type        = number
+  default     = null
+}
+
+variable "spot_launch_group" {
+  description = "A launch group is a group of spot instances that launch together and terminate together. If left empty instances are launched and terminated individually"
+  type        = string
+  default     = null
+}
