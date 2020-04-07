@@ -93,4 +93,10 @@ resource "aws_instance" "this" {
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
   }
+
+  metadata_options {
+    http_endpoint               = var.metadata_http_endpoint
+    http_tokens                 = var.metadata_http_tokens
+    http_put_response_hop_limit = var.metadata_http_put_response_hop_limit
+  }
 }

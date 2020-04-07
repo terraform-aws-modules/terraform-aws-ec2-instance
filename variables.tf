@@ -187,3 +187,21 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "metadata_http_endpoint" {
+  type        = string
+  default     = "enabled"
+  description = "Whether the EC2 metadata service is available: 'enabled' or 'disabled'. (Default: 'enabled')"
+}
+
+variable "metadata_http_tokens" {
+  type        = string
+  default     = "optional"
+  description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2. Can be 'optional' or 'required'. (Default: 'optional')."
+}
+
+variable "metadata_http_put_response_hop_limit" {
+  type        = number
+  default     = 1
+  description = "The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further instance metadata requests can travel. Can be an integer from 1 to 64. (Default: 1)."
+}
+
