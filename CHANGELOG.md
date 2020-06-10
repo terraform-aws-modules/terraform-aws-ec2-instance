@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v2.15.0"></a>
+## [v2.15.0] - 2020-06-10
+
+- feat: Add "num_suffix_format" variable for instance naming ([#147](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/147))
+
+
 <a name="v2.14.0"></a>
 ## [v2.14.0] - 2020-06-10
 
@@ -319,7 +325,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.14.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.15.0...HEAD
+[v2.15.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.14.0...v2.15.0
 [v2.14.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.25.0...v2.14.0
 [v1.25.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.13.0...v1.25.0
 [v2.13.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.12.0...v2.13.0
