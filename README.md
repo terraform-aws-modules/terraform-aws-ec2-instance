@@ -124,6 +124,7 @@ No requirements.
 | monitoring | If true, the launched EC2 instance will have detailed monitoring enabled | `bool` | `false` | no |
 | name | Name to be used on all resources as prefix | `string` | n/a | yes |
 | network\_interface | Customize network interfaces to be attached at instance boot time | `list(map(string))` | `[]` | no |
+| num\_suffix\_format | Numerical suffix format used as the volume and EC2 instance name suffix | `string` | `"-%d"` | no |
 | placement\_group | The Placement Group to start the instance in | `string` | `""` | no |
 | private\_ip | Private IP address to associate with the instance in a VPC | `string` | `null` | no |
 | private\_ips | A list of private IP address to associate with the instance in a VPC. Should match the number of instances. | `list(string)` | `[]` | no |

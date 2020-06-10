@@ -187,3 +187,10 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "num_suffix_format" {
+  description = "Numerical suffix format used as the volume and EC2 instance name suffix"
+  type        = string
+  default     = "-%d"
+}
+
+
