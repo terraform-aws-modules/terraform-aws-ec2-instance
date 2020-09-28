@@ -75,6 +75,8 @@ resource "aws_instance" "this" {
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
   placement_group                      = var.placement_group
   tenancy                              = var.tenancy
+  cpu_core_count                       = var.cpu_core_count
+  cpu_threads_per_core                 = var.cpu_threads_per_core
 
   tags = merge(
     {
