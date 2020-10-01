@@ -108,7 +108,9 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | ami | ID of AMI to use for the instance | `string` | n/a | yes |
 | associate\_public\_ip\_address | If true, the EC2 instance will have associated public IP address | `bool` | `null` | no |
+| cpu\_core\_count | Sets the number of CPU cores for an instance. | `number` | `null` | no |
 | cpu\_credits | The credit option for CPU usage (unlimited or standard) | `string` | `"standard"` | no |
+| cpu\_threads\_per\_core | Sets the number of CPU threads per core for an instance (has no effect unless cpu\_core\_count is also set). | `number` | `2` | no |
 | disable\_api\_termination | If true, enables EC2 Instance Termination Protection | `bool` | `false` | no |
 | ebs\_block\_device | Additional EBS block devices to attach to the instance | `list(map(string))` | `[]` | no |
 | ebs\_optimized | If true, the launched EC2 instance will be EBS-optimized | `bool` | `false` | no |
