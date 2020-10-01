@@ -173,3 +173,35 @@ module "ec2_zero" {
   subnet_id              = tolist(data.aws_subnet_ids.all.ids)[0]
   vpc_security_group_ids = [module.security_group.this_security_group_id]
 }
+
+module "ec2_optimize_cpu" {
+  source = "../../"
+
+  instance_count = 1
+
+  name          = "example-optimize-cpu"
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "c4.2xlarge"
+  subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
+
+  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  associate_public_ip_address = true
+  placement_group             = aws_placement_group.web.id
+
+  user_data_base64 = base64encode(local.user_data)
+
+  root_block_device = [
+    {
+      volume_type = "gp2"
+      volume_size = 10
+    },
+  ]
+  cpu_core_count       = 2 # default 4
+  cpu_threads_per_core = 1 # default 2
+
+
+  tags = {
+    "Env"      = "Private"
+    "Location" = "Secret"
+  }
+}
