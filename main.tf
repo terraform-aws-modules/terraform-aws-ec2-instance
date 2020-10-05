@@ -76,6 +76,15 @@ resource "aws_instance" "this" {
   placement_group                      = var.placement_group
   tenancy                              = var.tenancy
 
+
+  metadata_options {
+
+          http_endpoint = lookup(var.metadata_options, "http_endpoint" , "enabled")
+          http_tokens = lookup(var.metadata_options, "http_tokens" , "optional" )
+          http_put_response_hop_limit = lookup(var.metadata_options, "http_put_response_hop_limit" , 1 )
+    
+  }
+
   tags = merge(
     {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name

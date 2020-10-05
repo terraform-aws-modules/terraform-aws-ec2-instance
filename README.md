@@ -122,6 +122,7 @@ No requirements.
 | ipv6\_addresses | Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface | `list(string)` | `null` | no |
 | key\_name | The key name to use for the instance | `string` | `""` | no |
 | monitoring | If true, the launched EC2 instance will have detailed monitoring enabled | `bool` | `false` | no |
+| metadata_options | Map of values for metadata_options (IMDSv2 related) | `map` | `[]` | no |
 | name | Name to be used on all resources as prefix | `string` | n/a | yes |
 | network\_interface | Customize network interfaces to be attached at instance boot time | `list(map(string))` | `[]` | no |
 | num\_suffix\_format | Numerical suffix format used as the volume and EC2 instance name suffix | `string` | `"-%d"` | no |

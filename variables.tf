@@ -193,4 +193,8 @@ variable "num_suffix_format" {
   default     = "-%d"
 }
 
-
+variable "metadata_options" {
+  description = "Map of values for metadata_options (IMDSv2 related)"
+  type = map(string)
+  default = {}
+}
