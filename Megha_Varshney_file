@@ -1,0 +1,84 @@
+provider "aws" {
+  region    = "ap-south-1"
+}
+
+resource "aws_security_group" "security" {
+  name        = "security_group"
+
+   ingress {
+    description = "http"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+
+  ingress {
+    description = "ssh"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    name       = "security_group"
+  }
+}
+
+resource "aws_instance" "OS"{
+  ami             = "ami-07a8c73a650069cf3"
+  instance_type   = "t2.micro"
+  key_name        = "my_key"
+  security_groups = ["security_group"] 
+
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    private_key = file("C:/Users/New/my_key.pem")
+    host     = aws_instance.OS.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum install httpd php git -y",
+      "sudo service httpd restart",
+    ]
+  }
+
+  
+  tags = {
+    Name = "FinalOS"
+  }
+}  
+output "outaz" {
+ value = aws_instance.OS.availability_zone
+}
+
+resource "aws_ebs_volume" "example" {
+  availability_zone = aws_instance.OS.availability_zone
+  size              = 1
+
+  tags = {
+    Name = "pd1"
+  }
+}
+
+resource "aws_volume_attachment" "ebs" {
+  device_name = "/dev/sdd"
+  volume_id   = aws_ebs_volume.example.id
+  instance_id = aws_instance.OS.id
+}
+
+
+output "os_ip" {
+  value = aws_instance.OS.public_ip
+}
