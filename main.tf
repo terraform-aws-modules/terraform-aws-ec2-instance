@@ -88,9 +88,49 @@ resource "aws_instance" "this" {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
     },
     var.volume_tags,
+    var.tags,
   )
 
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
   }
+
+  lifecycle {
+    ignore_changes = [
+      # Prevents clobbering the tags of attached EBS volumes
+      volume_tags
+    ]
+  }
+
+}
+
+resource  "aws_ebs_volume" "this" {
+
+  for_each          = var.aws_ebs_volume
+  availability_zone = aws_instance.this[0].availability_zone
+  encrypted         = lookup(each.value, "encrypted", null)
+  iops              = lookup(each.value, "iops", null)
+  kms_key_id        = lookup(each.value, "kms_key_id", null)
+  snapshot_id       = lookup(each.value, "snapshot_id", null)
+  size              = lookup(each.value, "volume_size", null)
+  type              = lookup(each.value, "volume_type", null)
+
+
+  tags = merge(
+    {
+      "Name" = format("%s-%s", var.name,each.key)
+    },
+    var.tags,
+  )
+
+}
+
+resource  "aws_volume_attachment" "this" {
+
+  for_each    = var.aws_ebs_volume
+  device_name = lookup(each.value, "device_name")
+  instance_id = aws_instance.this[0].id
+  volume_id   = aws_ebs_volume.this[each.key].id
+
+
 }

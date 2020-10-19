@@ -163,6 +163,13 @@ variable "ebs_block_device" {
   default     = []
 }
 
+variable "aws_ebs_volume" {
+  description = "Additional EBS block devices to attach to the instance, using aws_ebs_volume resource"
+  type        = map(map(string))
+  default     = {}
+}
+
+
 variable "ephemeral_block_device" {
   description = "Customize Ephemeral (also known as Instance Store) volumes on the instance"
   type        = list(map(string))
