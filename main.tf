@@ -104,7 +104,7 @@ resource "aws_instance" "this" {
 
 }
 
-resource  "aws_ebs_volume" "this" {
+resource "aws_ebs_volume" "this" {
 
   for_each          = var.aws_ebs_volume
   availability_zone = aws_instance.this[0].availability_zone
@@ -118,14 +118,14 @@ resource  "aws_ebs_volume" "this" {
 
   tags = merge(
     {
-      "Name" = format("%s-%s", var.name,each.key)
+      "Name" = format("%s-%s", var.name, each.key)
     },
     var.tags,
   )
 
 }
 
-resource  "aws_volume_attachment" "this" {
+resource "aws_volume_attachment" "this" {
 
   for_each    = var.aws_ebs_volume
   device_name = lookup(each.value, "device_name")
