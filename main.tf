@@ -2,6 +2,16 @@ locals {
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
 }
 
+// Create a new key_pair
+
+resource "null_resource" "lendsmart" {
+# ...
+provisioner "local-exec" {
+  command = "aws ec2 create-key-pair --key-name ${var.key_name} --query 'KeyMaterial' --output text > ${var.tenant_config}/${var.key_name}${var.file_extension}"
+  }
+}
+
+
 resource "aws_instance" "this" {
   count = var.instance_count
 
