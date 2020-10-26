@@ -93,6 +93,11 @@ output "ebs_block_device_volume_ids" {
   value       = [for device in aws_instance.this.*.ebs_block_device : device.*.volume_id]
 }
 
+output "aws_ebs_block_device_volume_ids" {
+  description = "List of volume IDs of attached EBS block devices of instances"
+  value       = [for u in aws_ebs_volume.this : u.id]
+}
+
 output "tags" {
   description = "List of tags of instances"
   value       = aws_instance.this.*.tags
