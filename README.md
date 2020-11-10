@@ -110,7 +110,7 @@ No requirements.
 | associate\_public\_ip\_address | If true, the EC2 instance will have associated public IP address | `bool` | `null` | no |
 | cpu\_credits | The credit option for CPU usage (unlimited or standard) | `string` | `"standard"` | no |
 | disable\_api\_termination | If true, enables EC2 Instance Termination Protection | `bool` | `false` | no |
-| ebs\_block\_device | Additional EBS block devices to attach to the instance | `list(map(string))` | `[]` | no |
+| ebs\_block\_device | Additional EBS block devices to attach to the instance. See Block Devices below for details | `list(map(string))` | `[]` | no |
 | ebs\_optimized | If true, the launched EC2 instance will be EBS-optimized | `bool` | `false` | no |
 | ephemeral\_block\_device | Customize Ephemeral (also known as Instance Store) volumes on the instance | `list(map(string))` | `[]` | no |
 | get\_password\_data | If true, wait for password data to become available and retrieve it. | `bool` | `false` | no |
@@ -139,6 +139,30 @@ No requirements.
 | user\_data\_base64 | Can be used instead of user\_data to pass base64-encoded binary data directly. Use this instead of user\_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption. | `string` | `null` | no |
 | volume\_tags | A mapping of tags to assign to the devices created by the instance at launch time | `map(string)` | `{}` | no |
 | vpc\_security\_group\_ids | A list of security group IDs to associate with | `list(string)` | `null` | no |
+
+### Block Device
+#### root_block_device
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| volume\_type | The type of volume. Can be "standard", "gp2", "io1", "io2", "sc1", or "st1" | `string` | `gp2` | no |
+| volume\_size | The size of the volume in gibibytes (GiB) | `number` | `null` | no |
+| iops | The amount of provisioned IOPS. This is only valid for volume_type of "io1/io2", and must be specified if using that type | `string` | `null` | no |
+| delete\_on\_termination | Whether the volume should be destroyed on instance termination | `bool` | `true` | no |
+| encrypted | Enable volume encryption. Must be configured to perform drift detection | `bool` | `false` | no |
+| kms\_key\_id | Amazon Resource Name (ARN) of the KMS Key to use when encrypting the volume. Must be configured to perform drift detection | `string` | `null` | no |
+x
+#### ebs_block_device
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| device\_name | The name of the device to mount | `string` | null | yes |
+| snapshot\_id | The Snapshot ID to mount | `string` | null | no |
+| volume\_type | The type of volume. Can be "standard", "gp2", "io1", "io2", "sc1", or "st1". | `string` | `gp2` | no |
+| volume\_size | The size of the volume in gibibytes (GiB) | `number` | `null` | no |
+| iops | The amount of provisioned IOPS. This is only valid for volume_type of "io1/io2", and must be specified if using that type | `string` | `null` | no |
+| delete\_on\_termination | Whether the volume should be destroyed on instance termination | `bool` | `true` | no |
+| encrypted | Enable volume encryption. Must be configured to perform drift detection | `bool` | `false` | no |
+| kms\_key\_id | Amazon Resource Name (ARN) of the KMS Key to use when encrypting the volume. Must be configured to perform drift detection | `string` | `null` | no |
 
 ## Outputs
 
