@@ -88,7 +88,6 @@ resource "aws_instance" "this" {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
     },
     var.volume_tags,
-    var.tags,
   )
 
   credit_specification {
@@ -101,7 +100,6 @@ resource "aws_instance" "this" {
       volume_tags
     ]
   }
-
 }
 
 resource "aws_ebs_volume" "this" {
@@ -115,14 +113,12 @@ resource "aws_ebs_volume" "this" {
   size              = lookup(each.value, "volume_size", null)
   type              = lookup(each.value, "volume_type", null)
 
-
   tags = merge(
     {
       "Name" = format("%s-%s", var.name, each.key)
     },
-    var.tags,
+    var.volume_tags,
   )
-
 }
 
 resource "aws_volume_attachment" "this" {
@@ -131,6 +127,4 @@ resource "aws_volume_attachment" "this" {
   device_name = lookup(each.value, "device_name")
   instance_id = aws_instance.this[0].id
   volume_id   = aws_ebs_volume.this[each.key].id
-
-
 }

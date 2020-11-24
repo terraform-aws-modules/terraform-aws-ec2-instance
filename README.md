@@ -147,6 +147,7 @@ No requirements.
 |------|-------------|
 | arn | List of ARNs of instances |
 | availability\_zone | List of availability zones of instances |
+| aws\_ebs\_block\_device\_volume\_ids | List of volume IDs of attached EBS block devices of instances |
 | credit\_specification | List of credit specification of instances |
 | ebs\_block\_device\_volume\_ids | List of volume IDs of EBS block devices of instances |
 | id | List of IDs of instances |
