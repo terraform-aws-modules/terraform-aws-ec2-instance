@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 <a name="unreleased"></a>
 ## [Unreleased]
 
-
+- Fix associate_public_ip_address setting behavior based on whether network_interface is specified ([#188](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/188))
 
 <a name="v2.15.0"></a>
 ## [v2.15.0] - 2020-06-10
