@@ -19,7 +19,7 @@ resource "aws_instance" "this" {
   vpc_security_group_ids = var.vpc_security_group_ids
   iam_instance_profile   = var.iam_instance_profile
 
-  associate_public_ip_address = var.associate_public_ip_address
+  associate_public_ip_address = length(var.network_interface) > 0 ? null : var.associate_public_ip_address
   private_ip                  = length(var.private_ips) > 0 ? element(var.private_ips, count.index) : var.private_ip
   ipv6_address_count          = var.ipv6_address_count
   ipv6_addresses              = var.ipv6_addresses
