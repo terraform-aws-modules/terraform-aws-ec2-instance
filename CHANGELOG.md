@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 <a name="unreleased"></a>
 ## [Unreleased]
 
-
+- feat: Add support for "metadata_options" argument ([#191](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/191))
 
 <a name="v2.15.0"></a>
 ## [v2.15.0] - 2020-06-10
