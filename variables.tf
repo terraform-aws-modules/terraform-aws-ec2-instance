@@ -181,6 +181,12 @@ variable "cpu_credits" {
   default     = "standard"
 }
 
+variable "metadata_options" {
+  description = "Customize the metadata options of the instance"
+  type        = map(string)
+  default     = {}
+}
+
 variable "use_num_suffix" {
   description = "Always append numerical suffix to instance name, even if instance_count is 1"
   type        = bool
@@ -192,5 +198,3 @@ variable "num_suffix_format" {
   type        = string
   default     = "-%d"
 }
-
-
