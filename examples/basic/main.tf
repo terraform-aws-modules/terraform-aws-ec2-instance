@@ -154,11 +154,11 @@ module "ec2_with_metadata_options" {
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
 
-  metadata_options = [{
+  metadata_options = {
     http_endpoint               = "enabled"
     http_tokens                 = "required"
     http_put_response_hop_limit = 8
-  }]
+  }
 }
 
 module "ec2_with_network_interface" {

@@ -183,8 +183,8 @@ variable "cpu_credits" {
 
 variable "metadata_options" {
   description = "Customize the metadata options of the instance"
-  type        = list(map(string))
-  default     = []
+  type        = map(string)
+  default     = {}
 }
 
 variable "use_num_suffix" {
