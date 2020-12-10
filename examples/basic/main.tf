@@ -149,16 +149,16 @@ module "ec2_with_metadata_options" {
 
   name                        = "example-metadata_options"
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c5.large"
+  instance_type               = "t2.small"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
 
-  metadata_options = {
+  metadata_options = [{
     http_endpoint               = "enabled"
     http_tokens                 = "required"
     http_put_response_hop_limit = 8
-  }
+  }]
 }
 
 module "ec2_with_network_interface" {

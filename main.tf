@@ -61,10 +61,13 @@ resource "aws_instance" "this" {
     }
   }
 
-  metadata_options {
-    http_endpoint               = var.metadata_options["http_endpoint"]
-    http_tokens                 = var.metadata_options["http_tokens"]
-    http_put_response_hop_limit = var.metadata_options["http_put_response_hop_limit"]
+  dynamic "metadata_options" {
+    for_each = var.metadata_options
+    content {
+      http_endpoint               = lookup(metadata_options.value, "http_endpoint", "enabled")
+      http_tokens                 = lookup(metadata_options.value, "http_tokens", "optional")
+      http_put_response_hop_limit = tonumber(lookup(metadata_options.value, "http_put_response_hop_limit", "1"))
+    }
   }
 
   dynamic "network_interface" {

@@ -183,16 +183,8 @@ variable "cpu_credits" {
 
 variable "metadata_options" {
   description = "Customize the metadata options of the instance"
-  type        = object({
-    http_endpoint               = string
-    http_tokens                 = string
-    http_put_response_hop_limit = number
-  })
-  default     = {
-    http_endpoint               = "enabled"
-    http_tokens                 = "optional"
-    http_put_response_hop_limit = 1
-  }
+  type        = list(map(string))
+  default     = []
 }
 
 variable "use_num_suffix" {

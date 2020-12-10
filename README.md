@@ -121,7 +121,7 @@ No requirements.
 | ipv6\_address\_count | A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet. | `number` | `null` | no |
 | ipv6\_addresses | Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface | `list(string)` | `null` | no |
 | key\_name | The key name to use for the instance | `string` | `""` | no |
-| metadata\_options | Customize the metadata options of the instance | <code>object({<br>&nbsp;&nbsp;http_endpoint = string<br>&nbsp;&nbsp;http_tokens = string<br>&nbsp;&nbsp;http_put_response_hop_limit = number<br>})</code> | <code>{<br>&nbsp;&nbsp;http_endpoint = "enabled"<br>&nbsp;&nbsp;http_tokens = "optional"<br>&nbsp;&nbsp;http_put_response_hop_limit = 1<br>}</code> | no |
+| metadata\_options | Customize the metadata options of the instance | `list(map(string))` | `[]` | no |
 | monitoring | If true, the launched EC2 instance will have detailed monitoring enabled | `bool` | `false` | no |
 | name | Name to be used on all resources as prefix | `string` | n/a | yes |
 | network\_interface | Customize network interfaces to be attached at instance boot time | `list(map(string))` | `[]` | no |
