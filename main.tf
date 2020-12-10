@@ -61,6 +61,12 @@ resource "aws_instance" "this" {
     }
   }
 
+  metadata_options {
+    http_endpoint               = var.metadata_options["http_endpoint"]
+    http_tokens                 = var.metadata_options["http_tokens"]
+    http_put_response_hop_limit = var.metadata_options["http_put_response_hop_limit"]
+  }
+
   dynamic "network_interface" {
     for_each = var.network_interface
     content {
