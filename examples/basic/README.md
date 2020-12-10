@@ -17,13 +17,16 @@ Note that this example may create resources which can cost money. Run `terraform
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12.6 |
+| aws | >= 2.65 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.65 |
 
 ## Inputs
 
@@ -40,6 +43,8 @@ No input.
 | ids\_t2 | List of IDs of t2-type instances |
 | instance\_id | EC2 instance ID |
 | instance\_public\_dns | Public DNS name assigned to the EC2 instance |
+| metadata\_options | Metadata options for the instance |
+| metadata\_options\_custom | Customized metadata options for the instance |
 | placement\_group | List of placement group |
 | public\_dns | List of public DNS names assigned to the instances |
 | root\_block\_device\_volume\_ids | List of volume IDs of root block devices of instances |

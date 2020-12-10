@@ -2,10 +2,6 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-variable "instances_number" {
-  default = 1
-}
-
 ##################################################################
 # Data sources to get VPC, subnet, security group and AMI details
 ##################################################################
