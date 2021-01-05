@@ -21,19 +21,22 @@ Note that this example may create resources which can cost money. Run `terraform
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12.6 |
+| aws | >= 2.65 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.65 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| instances\_number | n/a | `number` | `1` | no |
+| instances\_number | NUmber of instances | `number` | `1` | no |
 
 ## Outputs
 

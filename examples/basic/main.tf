@@ -83,7 +83,7 @@ module "ec2" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "c5.large"
   subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
-  //  private_ips                 = ["172.31.32.5", "172.31.46.20"]
+  #  private_ips                 = ["172.31.32.5", "172.31.46.20"]
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
@@ -123,7 +123,7 @@ module "ec2_with_t2_unlimited" {
   instance_type = "t2.micro"
   cpu_credits   = "unlimited"
   subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
-  //  private_ip = "172.31.32.10"
+  #  private_ip = "172.31.32.10"
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
 }
@@ -140,6 +140,25 @@ module "ec2_with_t3_unlimited" {
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
   vpc_security_group_ids      = [module.security_group.this_security_group_id]
   associate_public_ip_address = true
+}
+
+module "ec2_with_metadata_options" {
+  source = "../../"
+
+  instance_count = 1
+
+  name                        = "example-metadata_options"
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "t2.small"
+  subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
+  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  associate_public_ip_address = true
+
+  metadata_options = {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 8
+  }
 }
 
 module "ec2_with_network_interface" {

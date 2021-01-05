@@ -78,6 +78,11 @@ output "credit_specification" {
   value       = aws_instance.this.*.credit_specification
 }
 
+output "metadata_options" {
+  description = "List of metadata options of instances"
+  value       = aws_instance.this.*.metadata_options
+}
+
 output "instance_state" {
   description = "List of instance states of instances"
   value       = aws_instance.this.*.instance_state
