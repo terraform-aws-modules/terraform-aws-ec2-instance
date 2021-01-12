@@ -151,6 +151,12 @@ variable "volume_tags" {
   default     = {}
 }
 
+variable "lifecycle_ignore_volume_tags" {
+  description = "When set, the aws_instance is created and further volume_tag changes are ignored. Note: toggling this flag on existing resource is destructive."
+  type    = bool
+  default = false
+}
+
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details"
   type        = list(map(string))
@@ -198,3 +204,5 @@ variable "num_suffix_format" {
   type        = string
   default     = "-%d"
 }
+
+
