@@ -35,6 +35,12 @@ resource "aws_instance" "this" {
       kms_key_id            = lookup(root_block_device.value, "kms_key_id", null)
       volume_size           = lookup(root_block_device.value, "volume_size", null)
       volume_type           = lookup(root_block_device.value, "volume_type", null)
+      tags = merge(
+        {
+          "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
+        },
+        var.volume_tags,
+      )
     }
   }
 
@@ -49,6 +55,12 @@ resource "aws_instance" "this" {
       snapshot_id           = lookup(ebs_block_device.value, "snapshot_id", null)
       volume_size           = lookup(ebs_block_device.value, "volume_size", null)
       volume_type           = lookup(ebs_block_device.value, "volume_type", null)
+      tags = merge(
+        {
+          "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
+        },
+        var.volume_tags,
+      )
     }
   }
 
@@ -90,13 +102,6 @@ resource "aws_instance" "this" {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
     },
     var.tags,
-  )
-
-  volume_tags = merge(
-    {
-      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
-    },
-    var.volume_tags,
   )
 
   credit_specification {
