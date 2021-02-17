@@ -105,6 +105,16 @@ data "aws_ami" "ubuntu-xenial" {
 |------|---------|
 | aws | >= 2.65 |
 
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [aws_instance](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/instance) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -171,7 +181,6 @@ data "aws_ami" "ubuntu-xenial" {
 | tags | List of tags of instances |
 | volume\_tags | List of tags of volumes of instances |
 | vpc\_security\_group\_ids | List of associated security groups of instances, if running in non-default VPC |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Authors
