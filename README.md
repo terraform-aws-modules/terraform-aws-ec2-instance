@@ -113,7 +113,7 @@ No Modules.
 
 | Name |
 |------|
-| [aws_instance](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/instance) |
+| [aws_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) |
 
 ## Inputs
 

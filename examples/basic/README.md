@@ -44,13 +44,13 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name |
 |------|
-| [aws_ami](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/data-sources/ami) |
-| [aws_eip](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/eip) |
-| [aws_kms_key](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/kms_key) |
-| [aws_network_interface](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/network_interface) |
-| [aws_placement_group](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/placement_group) |
-| [aws_subnet_ids](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/data-sources/subnet_ids) |
-| [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/data-sources/vpc) |
+| [aws_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) |
+| [aws_eip](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) |
+| [aws_kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) |
+| [aws_network_interface](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface) |
+| [aws_placement_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/placement_group) |
+| [aws_subnet_ids](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) |
+| [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) |
 
 ## Inputs
 
