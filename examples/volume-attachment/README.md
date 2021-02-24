@@ -43,11 +43,11 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name |
 |------|
-| [aws_ami](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/data-sources/ami) |
-| [aws_ebs_volume](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/ebs_volume) |
-| [aws_subnet_ids](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/data-sources/subnet_ids) |
-| [aws_volume_attachment](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/resources/volume_attachment) |
-| [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/2.65/docs/data-sources/vpc) |
+| [aws_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) |
+| [aws_ebs_volume](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume) |
+| [aws_subnet_ids](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) |
+| [aws_volume_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment) |
+| [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) |
 
 ## Inputs
 
