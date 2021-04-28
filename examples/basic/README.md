@@ -38,7 +38,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | <a name="module_ec2_with_t2_unlimited"></a> [ec2\_with\_t2\_unlimited](#module\_ec2\_with\_t2\_unlimited) | ../../ |  |
 | <a name="module_ec2_with_t3_unlimited"></a> [ec2\_with\_t3\_unlimited](#module\_ec2\_with\_t3\_unlimited) | ../../ |  |
 | <a name="module_ec2_zero"></a> [ec2\_zero](#module\_ec2\_zero) | ../../ |  |
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 3.0 |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
 
 ## Resources
 
