@@ -2,16 +2,6 @@
 
 Terraform module which creates EC2 instance(s) on AWS.
 
-These types of resources are supported:
-
-* [EC2 instance](https://www.terraform.io/docs/providers/aws/r/instance.html)
-
-## Terraform versions
-
-Terraform 0.12. Pin module version to `~> v2.0`. Submit pull-requests to `master` branch.
-
-Terraform 0.11. Pin module version to `~> v1.0`. Submit pull-requests to `terraform011` branch.
-
 ## Usage
 
 ```hcl
@@ -38,15 +28,14 @@ module "ec2_cluster" {
 
 ## Examples
 
-* [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
-* [EC2 instance with EBS volume attachment](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment)
+- [Basic EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic)
+- [EC2 instance with EBS volume attachment](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment)
 
 ## Make an encrypted AMI for use
 
 This module does not support encrypted AMI's out of the box however it is easy enough for you to generate one for use
 
 This example creates an encrypted image from the latest ubuntu 16.04 base image.
-
 
 ```hcl
 resource "aws_ami_copy" "ubuntu-xenial-encrypted-ami" {
@@ -84,12 +73,11 @@ data "aws_ami" "ubuntu-xenial" {
 }
 ```
 
-
 ## Notes
 
-* `network_interface` can't be specified together with `vpc_security_group_ids`, `associate_public_ip_address`, `subnet_id`. See [basic example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic) for details. 
-* Changes in `ebs_block_device` argument will be ignored. Use [aws_volume_attachment](https://www.terraform.io/docs/providers/aws/r/volume_attachment.html) resource to attach and detach volumes from AWS EC2 instances. See [this example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment).
-* One of `subnet_id` or `subnet_ids` is required. If both are provided, the value of `subnet_id` is prepended to the value of `subnet_ids`.
+- `network_interface` can't be specified together with `vpc_security_group_ids`, `associate_public_ip_address`, `subnet_id`. See [basic example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/basic) for details.
+- Changes in `ebs_block_device` argument will be ignored. Use [aws_volume_attachment](https://www.terraform.io/docs/providers/aws/r/volume_attachment.html) resource to attach and detach volumes from AWS EC2 instances. See [this example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment).
+- One of `subnet_id` or `subnet_ids` is required. If both are provided, the value of `subnet_id` is prepended to the value of `subnet_ids`.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -185,8 +173,8 @@ No modules.
 
 ## Authors
 
-Module managed by [Anton Babenko](https://github.com/antonbabenko).
+Module is maintained by [Anton Babenko](https://github.com/antonbabenko) with help from [these awesome contributors](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/graphs/contributors).
 
 ## License
 
-Apache 2 Licensed. See LICENSE for full details.
+Apache 2 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/LICENSE) for full details.
