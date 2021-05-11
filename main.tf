@@ -36,7 +36,6 @@ resource "aws_instance" "this" {
       volume_size           = lookup(root_block_device.value, "volume_size", null)
       volume_type           = lookup(root_block_device.value, "volume_type", null)
       tags                  = lookup(root_block_device.value, "tags", null)
-
     }
   }
 
