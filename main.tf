@@ -35,6 +35,7 @@ resource "aws_instance" "this" {
       kms_key_id            = lookup(root_block_device.value, "kms_key_id", null)
       volume_size           = lookup(root_block_device.value, "volume_size", null)
       volume_type           = lookup(root_block_device.value, "volume_type", null)
+      tags                  = lookup(root_block_device.value, "tags", null)
     }
   }
 
