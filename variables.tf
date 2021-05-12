@@ -145,6 +145,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "enable_volume_tags" {
+  description = "Whether to enable volume tags (if enabled it conflicts with root_block_device tags)"
+  type        = bool
+  default     = true
+}
+
 variable "volume_tags" {
   description = "A mapping of tags to assign to the devices created by the instance at launch time"
   type        = map(string)
@@ -153,7 +159,7 @@ variable "volume_tags" {
 
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details"
-  type        = list(map(string))
+  type        = list(any)
   default     = []
 }
 
