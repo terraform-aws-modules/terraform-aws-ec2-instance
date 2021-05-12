@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v2.19.0"></a>
+## [v2.19.0] - 2021-05-12
+
+- fix: root_block_device tags conflicts ([#220](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/220))
+
+
 <a name="v2.18.0"></a>
 ## [v2.18.0] - 2021-05-11
 
@@ -367,7 +373,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.18.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.19.0...HEAD
+[v2.19.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.18.0...v2.19.0
 [v2.18.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.17.0...v2.18.0
 [v2.17.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.16.0...v2.17.0
 [v2.16.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.15.0...v2.16.0
