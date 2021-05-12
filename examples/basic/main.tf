@@ -90,10 +90,14 @@ module "ec2" {
 
   user_data_base64 = base64encode(local.user_data)
 
+  enable_volume_tags = false
   root_block_device = [
     {
       volume_type = "gp2"
       volume_size = 10
+      tags = {
+        Name = "my-root-block"
+      }
     },
   ]
 
