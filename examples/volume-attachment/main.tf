@@ -37,7 +37,7 @@ data "aws_ami" "amazon_linux" {
 
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   name        = "example"
   description = "Security group for example usage with EC2 instance"
@@ -57,11 +57,11 @@ module "ec2" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "c5.large"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
-  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 }
 
-resource "aws_volume_attachment" "this_ec2" {
+resource "aws_volume_attachment" "this" {
   count = var.instances_number
 
   device_name = "/dev/sdh"

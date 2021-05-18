@@ -35,6 +35,7 @@ resource "aws_instance" "this" {
       kms_key_id            = lookup(root_block_device.value, "kms_key_id", null)
       volume_size           = lookup(root_block_device.value, "volume_size", null)
       volume_type           = lookup(root_block_device.value, "volume_type", null)
+      tags                  = lookup(root_block_device.value, "tags", null)
     }
   }
 
@@ -92,12 +93,12 @@ resource "aws_instance" "this" {
     var.tags,
   )
 
-  volume_tags = merge(
+  volume_tags = var.enable_volume_tags ? merge(
     {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
     },
     var.volume_tags,
-  )
+  ) : null
 
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null

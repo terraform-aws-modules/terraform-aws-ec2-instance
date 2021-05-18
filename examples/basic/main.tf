@@ -44,7 +44,7 @@ data "aws_ami" "amazon_linux" {
 
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   name        = "example"
   description = "Security group for example usage with EC2 instance"
@@ -84,16 +84,20 @@ module "ec2" {
   instance_type = "c5.large"
   subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
   #  private_ips                 = ["172.31.32.5", "172.31.46.20"]
-  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
 
   user_data_base64 = base64encode(local.user_data)
 
+  enable_volume_tags = false
   root_block_device = [
     {
       volume_type = "gp2"
       volume_size = 10
+      tags = {
+        Name = "my-root-block"
+      }
     },
   ]
 
@@ -124,7 +128,7 @@ module "ec2_with_t2_unlimited" {
   cpu_credits   = "unlimited"
   subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
   #  private_ip = "172.31.32.10"
-  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 }
 
@@ -138,7 +142,7 @@ module "ec2_with_t3_unlimited" {
   instance_type               = "t3.large"
   cpu_credits                 = "unlimited"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
-  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 }
 
@@ -151,7 +155,7 @@ module "ec2_with_metadata_options" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.small"
   subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
-  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
   metadata_options = {
@@ -190,5 +194,5 @@ module "ec2_zero" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "c5.large"
   subnet_id              = tolist(data.aws_subnet_ids.all.ids)[0]
-  vpc_security_group_ids = [module.security_group.this_security_group_id]
+  vpc_security_group_ids = [module.security_group.security_group_id]
 }
