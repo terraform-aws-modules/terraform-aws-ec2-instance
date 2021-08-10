@@ -153,28 +153,16 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_arn"></a> [arn](#output\_arn) | List of ARNs of instances |
-| <a name="output_availability_zone"></a> [availability\_zone](#output\_availability\_zone) | List of availability zones of instances |
-| <a name="output_credit_specification"></a> [credit\_specification](#output\_credit\_specification) | List of credit specification of instances |
-| <a name="output_ebs_block_device_volume_ids"></a> [ebs\_block\_device\_volume\_ids](#output\_ebs\_block\_device\_volume\_ids) | List of volume IDs of EBS block devices of instances |
-| <a name="output_id"></a> [id](#output\_id) | List of IDs of instances |
-| <a name="output_instance_state"></a> [instance\_state](#output\_instance\_state) | List of instance states of instances |
-| <a name="output_ipv6_addresses"></a> [ipv6\_addresses](#output\_ipv6\_addresses) | List of assigned IPv6 addresses of instances |
-| <a name="output_key_name"></a> [key\_name](#output\_key\_name) | List of key names of instances |
-| <a name="output_metadata_options"></a> [metadata\_options](#output\_metadata\_options) | List of metadata options of instances |
-| <a name="output_password_data"></a> [password\_data](#output\_password\_data) | List of Base-64 encoded encrypted password data for the instance |
-| <a name="output_placement_group"></a> [placement\_group](#output\_placement\_group) | List of placement groups of instances |
-| <a name="output_primary_network_interface_id"></a> [primary\_network\_interface\_id](#output\_primary\_network\_interface\_id) | List of IDs of the primary network interface of instances |
-| <a name="output_private_dns"></a> [private\_dns](#output\_private\_dns) | List of private DNS names assigned to the instances. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
-| <a name="output_private_ip"></a> [private\_ip](#output\_private\_ip) | List of private IP addresses assigned to the instances |
-| <a name="output_public_dns"></a> [public\_dns](#output\_public\_dns) | List of public DNS names assigned to the instances. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
-| <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | List of public IP addresses assigned to the instances, if applicable |
-| <a name="output_root_block_device_volume_ids"></a> [root\_block\_device\_volume\_ids](#output\_root\_block\_device\_volume\_ids) | List of volume IDs of root block devices of instances |
-| <a name="output_security_groups"></a> [security\_groups](#output\_security\_groups) | List of associated security groups of instances |
-| <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | List of IDs of VPC subnets of instances |
-| <a name="output_tags"></a> [tags](#output\_tags) | List of tags of instances |
-| <a name="output_volume_tags"></a> [volume\_tags](#output\_volume\_tags) | List of tags of volumes of instances |
-| <a name="output_vpc_security_group_ids"></a> [vpc\_security\_group\_ids](#output\_vpc\_security\_group\_ids) | List of associated security groups of instances, if running in non-default VPC |
+| <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the instance |
+| <a name="output_capacity_reservation_specification"></a> [capacity\_reservation\_specification](#output\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_instance_state"></a> [instance\_state](#output\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
+| <a name="output_outpost_arn"></a> [outpost\_arn](#output\_outpost\_arn) | The ARN of the Outpost the instance is assigned to |
+| <a name="output_password_data"></a> [password\_data](#output\_password\_data) | Base-64 encoded encrypted password data for the instance. Useful for getting the administrator password for instances running Microsoft Windows. This attribute is only exported if `get_password_data` is true |
+| <a name="output_primary_network_interface_id"></a> [primary\_network\_interface\_id](#output\_primary\_network\_interface\_id) | The ID of the instance's primary network interface |
+| <a name="output_private_dns"></a> [private\_dns](#output\_private\_dns) | The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_public_dns"></a> [public\_dns](#output\_public\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_tags_all"></a> [tags\_all](#output\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Authors

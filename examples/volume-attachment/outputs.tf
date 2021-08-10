@@ -12,4 +12,3 @@ output "ebs_volume_attachment_instance_id" {
   description = "The instance ID"
   value       = aws_volume_attachment.this.*.instance_id
 }
-
