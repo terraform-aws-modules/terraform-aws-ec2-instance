@@ -3,10 +3,10 @@ provider "aws" {
 }
 
 locals {
-  user_data = <<EOF
-#!/bin/bash
-echo "Hello Terraform!"
-EOF
+  user_data = <<-EOT
+  #!/bin/bash
+  echo "Hello Terraform!"
+  EOT
 }
 
 ##################################################################
@@ -22,23 +22,11 @@ data "aws_subnet_ids" "all" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
-
-  owners = ["amazon"]
-
-  filter {
-    name = "name"
-
-    values = [
-      "amzn-ami-hvm-*-x86_64-gp2",
-    ]
-  }
+  owners      = ["amazon"]
 
   filter {
-    name = "owner-alias"
-
-    values = [
-      "amazon",
-    ]
+    name   = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"]
   }
 }
 
@@ -69,9 +57,7 @@ resource "aws_kms_key" "this" {
 }
 
 resource "aws_network_interface" "this" {
-  count = 1
-
-  subnet_id = tolist(data.aws_subnet_ids.all.ids)[count.index]
+  subnet_id = element(data.aws_subnet_ids.all.ids, 0)
 }
 
 module "ec2" {
@@ -80,7 +66,7 @@ module "ec2" {
   name          = "example-normal"
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "c5.large"
-  subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
+  subnet_id     = element(data.aws_subnet_ids.all.ids, 0)
   #  private_ips                 = ["172.31.32.5", "172.31.46.20"]
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
@@ -122,7 +108,7 @@ module "ec2_with_t2_unlimited" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
   cpu_credits   = "unlimited"
-  subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
+  subnet_id     = element(data.aws_subnet_ids.all.ids, 0)
   #  private_ip = "172.31.32.10"
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
@@ -135,7 +121,7 @@ module "ec2_with_t3_unlimited" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.large"
   cpu_credits                 = "unlimited"
-  subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
+  subnet_id                   = element(data.aws_subnet_ids.all.ids, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 }
@@ -146,7 +132,7 @@ module "ec2_with_metadata_options" {
   name                        = "example-metadata_options"
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.small"
-  subnet_id                   = tolist(data.aws_subnet_ids.all.ids)[0]
+  subnet_id                   = element(data.aws_subnet_ids.all.ids, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
@@ -168,7 +154,7 @@ module "ec2_with_network_interface" {
   network_interface = [
     {
       device_index          = 0
-      network_interface_id  = aws_network_interface.this[0].id
+      network_interface_id  = aws_network_interface.this.id
       delete_on_termination = false
     }
   ]
@@ -181,6 +167,6 @@ module "ec2_zero" {
   name                   = "example-zero"
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "c5.large"
-  subnet_id              = tolist(data.aws_subnet_ids.all.ids)[0]
+  subnet_id              = element(data.aws_subnet_ids.all.ids, 0)
   vpc_security_group_ids = [module.security_group.security_group_id]
 }
