@@ -107,8 +107,3 @@ output "volume_tags" {
   description = "List of tags of volumes of instances"
   value       = aws_instance.this.*.volume_tags
 }
-
-output "instance_count" {
-  description = "Number of instances to launch specified as argument to this module"
-  value       = var.instance_count
-}

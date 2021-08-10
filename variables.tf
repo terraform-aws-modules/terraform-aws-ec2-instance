@@ -3,12 +3,6 @@ variable "name" {
   type        = string
 }
 
-variable "instance_count" {
-  description = "Number of instances to launch"
-  type        = number
-  default     = 1
-}
-
 variable "ami" {
   description = "ID of AMI to use for the instance"
   type        = string
@@ -79,12 +73,6 @@ variable "subnet_id" {
   default     = ""
 }
 
-variable "subnet_ids" {
-  description = "A list of VPC Subnet IDs to launch in"
-  type        = list(string)
-  default     = []
-}
-
 variable "associate_public_ip_address" {
   description = "If true, the EC2 instance will have associated public IP address"
   type        = bool
@@ -97,8 +85,8 @@ variable "private_ip" {
   default     = null
 }
 
-variable "private_ips" {
-  description = "A list of private IP address to associate with the instance in a VPC. Should match the number of instances."
+variable "secondary_private_ips" {
+  description = "A list of secondary private IPv4 addresses to assign to the instance's primary network interface (eth0) in a VPC. Can only be assigned to the primary network interface (eth0) attached at instance creation, not a pre-existing network interface i.e. referenced in a `network_interface block`"
   type        = list(string)
   default     = []
 }
@@ -193,14 +181,56 @@ variable "metadata_options" {
   default     = {}
 }
 
-variable "use_num_suffix" {
-  description = "Always append numerical suffix to instance name, even if instance_count is 1"
+variable "availability_zone" {
+  description = "AZ to start the instance in"
+  type        = string
+  default     = null
+}
+
+variable "cpu_core_count" {
+  description = "Sets the number of CPU cores for an instance. This option is only supported on creation of instance type that support CPU Options"
+  type        = number
+  default     = null
+}
+
+variable "cpu_threads_per_core" {
+  description = "(Has no effect unless `cpu_core_count` is also set) If set to to 1, hyperthreading is disabled on the launched instance. Defaults to 2 if not set."
+  type        = number
+  default     = null
+}
+
+variable "enclave_options_enabled" {
+  description = "Whether Nitro Enclaves will be enabled on the instance. Defaults to `false`"
   type        = bool
   default     = false
 }
 
-variable "num_suffix_format" {
-  description = "Numerical suffix format used as the volume and EC2 instance name suffix"
+variable "hibernation" {
+  description = "If true, the launched EC2 instance will support hibernation"
+  type        = bool
+  default     = null
+}
+
+variable "host_id" {
+  description = "ID of a dedicated host that the instance will be assigned to. Use when an instance is to be launched on a specific dedicated host"
   type        = string
-  default     = "-%d"
+  default     = null
+}
+
+variable "launch_template" {
+  description = "Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template"
+  type        = map(string)
+  default     = null
+}
+
+variable "timeouts" {
+  description = "Define maximum timeout for creating, updating, and deleting EC2 instance resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "capacity_reservation_specification" {
+  description = "Describes an instance's Capacity Reservation targeting option"
+  type        = map(string)
+  default     = null
 }

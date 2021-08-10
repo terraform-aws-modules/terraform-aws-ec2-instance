@@ -77,8 +77,6 @@ resource "aws_network_interface" "this" {
 module "ec2" {
   source = "../../"
 
-  instance_count = 1
-
   name          = "example-normal"
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "c5.large"
@@ -120,8 +118,6 @@ module "ec2" {
 module "ec2_with_t2_unlimited" {
   source = "../../"
 
-  instance_count = 1
-
   name          = "example-t2-unlimited"
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
@@ -135,8 +131,6 @@ module "ec2_with_t2_unlimited" {
 module "ec2_with_t3_unlimited" {
   source = "../../"
 
-  instance_count = 1
-
   name                        = "example-t3-unlimited"
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.large"
@@ -148,8 +142,6 @@ module "ec2_with_t3_unlimited" {
 
 module "ec2_with_metadata_options" {
   source = "../../"
-
-  instance_count = 1
 
   name                        = "example-metadata_options"
   ami                         = data.aws_ami.amazon_linux.id
@@ -168,8 +160,6 @@ module "ec2_with_metadata_options" {
 module "ec2_with_network_interface" {
   source = "../../"
 
-  instance_count = 1
-
   name            = "example-network"
   ami             = data.aws_ami.amazon_linux.id
   instance_type   = "c5.large"
@@ -187,8 +177,6 @@ module "ec2_with_network_interface" {
 # This instance won't be created
 module "ec2_zero" {
   source = "../../"
-
-  instance_count = 0
 
   name                   = "example-zero"
   ami                    = data.aws_ami.amazon_linux.id
