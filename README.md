@@ -84,8 +84,8 @@ data "aws_ami" "ubuntu-xenial" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.6 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.24 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.51 |
 
 ## Providers
 
