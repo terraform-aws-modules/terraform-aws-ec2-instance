@@ -30,7 +30,7 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.53.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.54.0 |
 
 ## Modules
 

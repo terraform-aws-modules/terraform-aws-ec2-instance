@@ -3,8 +3,9 @@ provider "aws" {
 }
 
 locals {
-  name   = "example-ec2-volume-attachment"
-  region = "eu-west-1"
+  availability_zone = "eu-west-1a"
+  name              = "example-ec2-volume-attachment"
+  region            = "eu-west-1"
   tags = {
     Owner       = "user"
     Environment = "dev"
@@ -65,6 +66,7 @@ module "ec2" {
   name                        = local.name
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "c5.large"
+  availability_zone           = local.availability_zone
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
@@ -79,7 +81,7 @@ resource "aws_volume_attachment" "this" {
 }
 
 resource "aws_ebs_volume" "this" {
-  availability_zone = module.ec2.availability_zone
+  availability_zone = local.availability_zone
   size              = 1
 
   tags = local.tags

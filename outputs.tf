@@ -1,3 +1,8 @@
+output "id" {
+  description = "The ID of the instance"
+  value       = element(concat(aws_instance.this.*.id, [""]), 0)
+}
+
 output "arn" {
   description = "The ARN of the instance"
   value       = element(concat(aws_instance.this.*.arn, [""]), 0)
