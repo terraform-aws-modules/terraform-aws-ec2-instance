@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v2.20.0"></a>
+## [v2.20.0] - 2021-08-25
+
+- feat: Add cpu optimization options ([#181](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/181))
+
+
 <a name="v2.19.0"></a>
 ## [v2.19.0] - 2021-05-12
 
@@ -46,18 +52,6 @@ All notable changes to this project will be documented in this file.
 ## [v2.14.0] - 2020-06-10
 
 - Updated README
-- Merge pull request [#156](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/156) from terraform-aws-modules/terraform-provider-githubfile-1584635168624791000
-- [ci skip] Create ".chglog/CHANGELOG.tpl.md".
-- Merge pull request [#154](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/154) from terraform-aws-modules/terraform-provider-githubfile-1584536327863703000
-- [ci skip] Create "LICENSE".
-- Merge pull request [#152](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/152) from terraform-aws-modules/terraform-provider-githubfile-1584536291202089000
-- Merge pull request [#150](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/150) from terraform-aws-modules/terraform-provider-githubfile-1584536291202112000
-- Merge pull request [#151](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/151) from terraform-aws-modules/terraform-provider-githubfile-1584536291202090000
-- Merge pull request [#149](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/149) from terraform-aws-modules/terraform-provider-githubfile-1584536291202409000
-- [ci skip] Create "Makefile".
-- [ci skip] Create ".pre-commit-config.yaml".
-- [ci skip] Create ".editorconfig".
-- [ci skip] Create ".gitignore".
 - Updated t instance type check to include t3a type ([#145](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/145))
 - Updated README
 - Instance count as output ([#121](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/121))
@@ -298,37 +292,31 @@ All notable changes to this project will be documented in this file.
 ## [v1.5.0] - 2018-04-04
 
 - Minor formatting fix
-- Merge pull request [#26](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/26) from otassetti/master
 - Modify tag name management to add -%d suffixe only if instance_count > 1
 
 
 <a name="v1.4.0"></a>
 ## [v1.4.0] - 2018-04-04
 
-- Merge pull request [#27](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/27) from Normo/master
 - Stop ignoring changes in vpc_security_group_ids
 
 
 <a name="v1.3.0"></a>
 ## [v1.3.0] - 2018-03-06
 
-- Merge pull request [#25](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/25) from terraform-aws-modules/renamed-count
 - Renamed count to instance_count (fixes [#23](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/23))
-- Merge pull request [#24](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/24) from mhd999/fix/readme
 - Fix: add missing variable to the usage example
 
 
 <a name="v1.2.1"></a>
 ## [v1.2.1] - 2018-03-01
 
-- Merge pull request [#21](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/21) from terraform-aws-modules/added-eip-to-example
 - Added aws_eip to example and pre-commit hooks
 
 
 <a name="v1.2.0"></a>
 ## [v1.2.0] - 2018-01-19
 
-- Merge pull request [#14](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/14) from 2solt/master
 - Add tags to output variables
 
 
@@ -347,7 +335,6 @@ All notable changes to this project will be documented in this file.
 <a name="v1.0.3"></a>
 ## [v1.0.3] - 2017-11-15
 
-- Merge pull request [#7](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/7) from apparentlymart/patch-1
 - Fix incorrect subnet_id output expression
 - Updated example with all-icmp security group rule
 
@@ -373,7 +360,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.19.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.20.0...HEAD
+[v2.20.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.19.0...v2.20.0
 [v2.19.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.18.0...v2.19.0
 [v2.18.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.17.0...v2.18.0
 [v2.17.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.16.0...v2.17.0
