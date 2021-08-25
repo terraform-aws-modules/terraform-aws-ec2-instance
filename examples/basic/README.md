@@ -33,6 +33,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ec2"></a> [ec2](#module\_ec2) | ../../ | n/a |
+| <a name="module_ec2_optimize_cpu"></a> [ec2\_optimize\_cpu](#module\_ec2\_optimize\_cpu) | ../../ | n/a |
 | <a name="module_ec2_with_metadata_options"></a> [ec2\_with\_metadata\_options](#module\_ec2\_with\_metadata\_options) | ../../ | n/a |
 | <a name="module_ec2_with_network_interface"></a> [ec2\_with\_network\_interface](#module\_ec2\_with\_network\_interface) | ../../ | n/a |
 | <a name="module_ec2_with_t2_unlimited"></a> [ec2\_with\_t2\_unlimited](#module\_ec2\_with\_t2\_unlimited) | ../../ | n/a |
