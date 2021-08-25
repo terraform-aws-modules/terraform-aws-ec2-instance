@@ -63,3 +63,12 @@ output "credit_specification_t2_unlimited" {
   value       = module.ec2_with_t2_unlimited.credit_specification
 }
 
+output "metadata_options" {
+  description = "Metadata options for the instance"
+  value       = module.ec2.metadata_options
+}
+
+output "metadata_options_custom" {
+  description = "Customized metadata options for the instance"
+  value       = module.ec2_with_metadata_options.metadata_options
+}
