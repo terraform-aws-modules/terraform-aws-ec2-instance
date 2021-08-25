@@ -32,13 +32,10 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ec2"></a> [ec2](#module\_ec2) | ../../ | n/a |
-| <a name="module_ec2_optimize_cpu"></a> [ec2\_optimize\_cpu](#module\_ec2\_optimize\_cpu) | ../../ | n/a |
-| <a name="module_ec2_with_metadata_options"></a> [ec2\_with\_metadata\_options](#module\_ec2\_with\_metadata\_options) | ../../ | n/a |
-| <a name="module_ec2_with_network_interface"></a> [ec2\_with\_network\_interface](#module\_ec2\_with\_network\_interface) | ../../ | n/a |
-| <a name="module_ec2_with_t2_unlimited"></a> [ec2\_with\_t2\_unlimited](#module\_ec2\_with\_t2\_unlimited) | ../../ | n/a |
-| <a name="module_ec2_with_t3_unlimited"></a> [ec2\_with\_t3\_unlimited](#module\_ec2\_with\_t3\_unlimited) | ../../ | n/a |
-| <a name="module_ec2_zero"></a> [ec2\_zero](#module\_ec2\_zero) | ../../ | n/a |
+| <a name="module_ec2_complete"></a> [ec2\_complete](#module\_ec2\_complete) | ../../ | n/a |
+| <a name="module_ec2_disabled"></a> [ec2\_disabled](#module\_ec2\_disabled) | ../../ | n/a |
+| <a name="module_ec2_t2_unlimited"></a> [ec2\_t2\_unlimited](#module\_ec2\_t2\_unlimited) | ../../ | n/a |
+| <a name="module_ec2_t3_unlimited"></a> [ec2\_t3\_unlimited](#module\_ec2\_t3\_unlimited) | ../../ | n/a |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
 
@@ -46,7 +43,6 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Type |
 |------|------|
-| [aws_eip.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
 | [aws_kms_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_network_interface.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface) | resource |
 | [aws_placement_group.web](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/placement_group) | resource |
@@ -60,19 +56,31 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_credit_specification"></a> [credit\_specification](#output\_credit\_specification) | Credit specification of EC2 instance (empty list for not t2 instance types) |
-| <a name="output_credit_specification_t2_unlimited"></a> [credit\_specification\_t2\_unlimited](#output\_credit\_specification\_t2\_unlimited) | Credit specification of t2-type EC2 instance |
-| <a name="output_ebs_block_device_volume_ids"></a> [ebs\_block\_device\_volume\_ids](#output\_ebs\_block\_device\_volume\_ids) | List of volume IDs of EBS block devices of instances |
-| <a name="output_ids"></a> [ids](#output\_ids) | List of IDs of instances |
-| <a name="output_ids_t2"></a> [ids\_t2](#output\_ids\_t2) | List of IDs of t2-type instances |
-| <a name="output_instance_id"></a> [instance\_id](#output\_instance\_id) | EC2 instance ID |
-| <a name="output_instance_public_dns"></a> [instance\_public\_dns](#output\_instance\_public\_dns) | Public DNS name assigned to the EC2 instance |
-| <a name="output_metadata_options"></a> [metadata\_options](#output\_metadata\_options) | Metadata options for the instance |
-| <a name="output_metadata_options_custom"></a> [metadata\_options\_custom](#output\_metadata\_options\_custom) | Customized metadata options for the instance |
-| <a name="output_placement_group"></a> [placement\_group](#output\_placement\_group) | List of placement group |
-| <a name="output_public_dns"></a> [public\_dns](#output\_public\_dns) | List of public DNS names assigned to the instances |
-| <a name="output_root_block_device_volume_ids"></a> [root\_block\_device\_volume\_ids](#output\_root\_block\_device\_volume\_ids) | List of volume IDs of root block devices of instances |
-| <a name="output_t2_instance_id"></a> [t2\_instance\_id](#output\_t2\_instance\_id) | EC2 instance ID |
-| <a name="output_tags"></a> [tags](#output\_tags) | List of tags |
-| <a name="output_vpc_security_group_ids"></a> [vpc\_security\_group\_ids](#output\_vpc\_security\_group\_ids) | List of VPC security group ids assigned to the instances |
+| <a name="output_ec2_complete_arn"></a> [ec2\_complete\_arn](#output\_ec2\_complete\_arn) | The ARN of the instance |
+| <a name="output_ec2_complete_capacity_reservation_specification"></a> [ec2\_complete\_capacity\_reservation\_specification](#output\_ec2\_complete\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ec2_complete_id"></a> [ec2\_complete\_id](#output\_ec2\_complete\_id) | The ID of the instance |
+| <a name="output_ec2_complete_instance_state"></a> [ec2\_complete\_instance\_state](#output\_ec2\_complete\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
+| <a name="output_ec2_complete_primary_network_interface_id"></a> [ec2\_complete\_primary\_network\_interface\_id](#output\_ec2\_complete\_primary\_network\_interface\_id) | The ID of the instance's primary network interface |
+| <a name="output_ec2_complete_private_dns"></a> [ec2\_complete\_private\_dns](#output\_ec2\_complete\_private\_dns) | The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_complete_public_dns"></a> [ec2\_complete\_public\_dns](#output\_ec2\_complete\_public\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_complete_public_ip"></a> [ec2\_complete\_public\_ip](#output\_ec2\_complete\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_ec2_complete_tags_all"></a> [ec2\_complete\_tags\_all](#output\_ec2\_complete\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
+| <a name="output_ec2_t2_unlimitedarn"></a> [ec2\_t2\_unlimitedarn](#output\_ec2\_t2\_unlimitedarn) | The ARN of the instance |
+| <a name="output_ec2_t2_unlimitedcapacity_reservation_specification"></a> [ec2\_t2\_unlimitedcapacity\_reservation\_specification](#output\_ec2\_t2\_unlimitedcapacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ec2_t2_unlimitedid"></a> [ec2\_t2\_unlimitedid](#output\_ec2\_t2\_unlimitedid) | The ID of the instance |
+| <a name="output_ec2_t2_unlimitedinstance_state"></a> [ec2\_t2\_unlimitedinstance\_state](#output\_ec2\_t2\_unlimitedinstance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
+| <a name="output_ec2_t2_unlimitedprimary_network_interface_id"></a> [ec2\_t2\_unlimitedprimary\_network\_interface\_id](#output\_ec2\_t2\_unlimitedprimary\_network\_interface\_id) | The ID of the instance's primary network interface |
+| <a name="output_ec2_t2_unlimitedprivate_dns"></a> [ec2\_t2\_unlimitedprivate\_dns](#output\_ec2\_t2\_unlimitedprivate\_dns) | The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_t2_unlimitedpublic_dns"></a> [ec2\_t2\_unlimitedpublic\_dns](#output\_ec2\_t2\_unlimitedpublic\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_t2_unlimitedpublic_ip"></a> [ec2\_t2\_unlimitedpublic\_ip](#output\_ec2\_t2\_unlimitedpublic\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_ec2_t2_unlimitedtags_all"></a> [ec2\_t2\_unlimitedtags\_all](#output\_ec2\_t2\_unlimitedtags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
+| <a name="output_ec2_t3_unlimitedarn"></a> [ec2\_t3\_unlimitedarn](#output\_ec2\_t3\_unlimitedarn) | The ARN of the instance |
+| <a name="output_ec2_t3_unlimitedcapacity_reservation_specification"></a> [ec2\_t3\_unlimitedcapacity\_reservation\_specification](#output\_ec2\_t3\_unlimitedcapacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ec2_t3_unlimitedid"></a> [ec2\_t3\_unlimitedid](#output\_ec2\_t3\_unlimitedid) | The ID of the instance |
+| <a name="output_ec2_t3_unlimitedinstance_state"></a> [ec2\_t3\_unlimitedinstance\_state](#output\_ec2\_t3\_unlimitedinstance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
+| <a name="output_ec2_t3_unlimitedprimary_network_interface_id"></a> [ec2\_t3\_unlimitedprimary\_network\_interface\_id](#output\_ec2\_t3\_unlimitedprimary\_network\_interface\_id) | The ID of the instance's primary network interface |
+| <a name="output_ec2_t3_unlimitedprivate_dns"></a> [ec2\_t3\_unlimitedprivate\_dns](#output\_ec2\_t3\_unlimitedprivate\_dns) | The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_t3_unlimitedpublic_dns"></a> [ec2\_t3\_unlimitedpublic\_dns](#output\_ec2\_t3\_unlimitedpublic\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_t3_unlimitedpublic_ip"></a> [ec2\_t3\_unlimitedpublic\_ip](#output\_ec2\_t3\_unlimitedpublic\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_ec2_t3_unlimitedtags_all"></a> [ec2\_t3\_unlimitedtags\_all](#output\_ec2\_t3\_unlimitedtags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 locals {
-  availability_zone = "eu-west-1a"
+  availability_zone = "${local.region}a"
   name              = "example-ec2-volume-attachment"
   region            = "eu-west-1"
   tags = {
@@ -45,7 +45,7 @@ module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 4.0"
 
-  name        = "example"
+  name        = local.name
   description = "Security group for example usage with EC2 instance"
   vpc_id      = module.vpc.vpc_id
 

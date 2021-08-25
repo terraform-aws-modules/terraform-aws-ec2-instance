@@ -1,74 +1,137 @@
-output "ids" {
-  description = "List of IDs of instances"
-  value       = module.ec2.id
+# EC2 Complete
+output "ec2_complete_id" {
+  description = "The ID of the instance"
+  value       = module.ec2_complete.id
 }
 
-output "ids_t2" {
-  description = "List of IDs of t2-type instances"
-  value       = module.ec2_with_t2_unlimited.id
+output "ec2_complete_arn" {
+  description = "The ARN of the instance"
+  value       = module.ec2_complete.arn
 }
 
-output "public_dns" {
-  description = "List of public DNS names assigned to the instances"
-  value       = module.ec2.public_dns
+output "ec2_complete_capacity_reservation_specification" {
+  description = "Capacity reservation specification of the instance"
+  value       = module.ec2_complete.capacity_reservation_specification
 }
 
-output "vpc_security_group_ids" {
-  description = "List of VPC security group ids assigned to the instances"
-  value       = module.ec2.vpc_security_group_ids
+output "ec2_complete_instance_state" {
+  description = "The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped`"
+  value       = module.ec2_complete.instance_state
 }
 
-output "root_block_device_volume_ids" {
-  description = "List of volume IDs of root block devices of instances"
-  value       = module.ec2.root_block_device_volume_ids
+output "ec2_complete_primary_network_interface_id" {
+  description = "The ID of the instance's primary network interface"
+  value       = module.ec2_complete.primary_network_interface_id
 }
 
-output "ebs_block_device_volume_ids" {
-  description = "List of volume IDs of EBS block devices of instances"
-  value       = module.ec2.ebs_block_device_volume_ids
+output "ec2_complete_private_dns" {
+  description = "The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC"
+  value       = module.ec2_complete.private_dns
 }
 
-output "tags" {
-  description = "List of tags"
-  value       = module.ec2.tags
+output "ec2_complete_public_dns" {
+  description = "The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
+  value       = module.ec2_complete.public_dns
 }
 
-output "placement_group" {
-  description = "List of placement group"
-  value       = module.ec2.placement_group
+output "ec2_complete_public_ip" {
+  description = "The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached"
+  value       = module.ec2_complete.public_ip
 }
 
-output "instance_id" {
-  description = "EC2 instance ID"
-  value       = module.ec2.id[0]
+output "ec2_complete_tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
+  value       = module.ec2_complete.tags_all
 }
 
-output "t2_instance_id" {
-  description = "EC2 instance ID"
-  value       = module.ec2_with_t2_unlimited.id[0]
+# EC2 T2 Unlimited
+output "ec2_t2_unlimitedid" {
+  description = "The ID of the instance"
+  value       = module.ec2_t2_unlimited.id
 }
 
-output "instance_public_dns" {
-  description = "Public DNS name assigned to the EC2 instance"
-  value       = module.ec2.public_dns[0]
+output "ec2_t2_unlimitedarn" {
+  description = "The ARN of the instance"
+  value       = module.ec2_t2_unlimited.arn
 }
 
-output "credit_specification" {
-  description = "Credit specification of EC2 instance (empty list for not t2 instance types)"
-  value       = module.ec2.credit_specification
+output "ec2_t2_unlimitedcapacity_reservation_specification" {
+  description = "Capacity reservation specification of the instance"
+  value       = module.ec2_t2_unlimited.capacity_reservation_specification
 }
 
-output "credit_specification_t2_unlimited" {
-  description = "Credit specification of t2-type EC2 instance"
-  value       = module.ec2_with_t2_unlimited.credit_specification
+output "ec2_t2_unlimitedinstance_state" {
+  description = "The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped`"
+  value       = module.ec2_t2_unlimited.instance_state
 }
 
-output "metadata_options" {
-  description = "Metadata options for the instance"
-  value       = module.ec2.metadata_options
+output "ec2_t2_unlimitedprimary_network_interface_id" {
+  description = "The ID of the instance's primary network interface"
+  value       = module.ec2_t2_unlimited.primary_network_interface_id
 }
 
-output "metadata_options_custom" {
-  description = "Customized metadata options for the instance"
-  value       = module.ec2_with_metadata_options.metadata_options
+output "ec2_t2_unlimitedprivate_dns" {
+  description = "The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC"
+  value       = module.ec2_t2_unlimited.private_dns
+}
+
+output "ec2_t2_unlimitedpublic_dns" {
+  description = "The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
+  value       = module.ec2_t2_unlimited.public_dns
+}
+
+output "ec2_t2_unlimitedpublic_ip" {
+  description = "The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached"
+  value       = module.ec2_t2_unlimited.public_ip
+}
+
+output "ec2_t2_unlimitedtags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
+  value       = module.ec2_t2_unlimited.tags_all
+}
+
+# EC2 T3 Unlimited
+output "ec2_t3_unlimitedid" {
+  description = "The ID of the instance"
+  value       = module.ec2_t3_unlimited.id
+}
+
+output "ec2_t3_unlimitedarn" {
+  description = "The ARN of the instance"
+  value       = module.ec2_t3_unlimited.arn
+}
+
+output "ec2_t3_unlimitedcapacity_reservation_specification" {
+  description = "Capacity reservation specification of the instance"
+  value       = module.ec2_t3_unlimited.capacity_reservation_specification
+}
+
+output "ec2_t3_unlimitedinstance_state" {
+  description = "The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped`"
+  value       = module.ec2_t3_unlimited.instance_state
+}
+
+output "ec2_t3_unlimitedprimary_network_interface_id" {
+  description = "The ID of the instance's primary network interface"
+  value       = module.ec2_t3_unlimited.primary_network_interface_id
+}
+
+output "ec2_t3_unlimitedprivate_dns" {
+  description = "The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC"
+  value       = module.ec2_t3_unlimited.private_dns
+}
+
+output "ec2_t3_unlimitedpublic_dns" {
+  description = "The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
+  value       = module.ec2_t3_unlimited.public_dns
+}
+
+output "ec2_t3_unlimitedpublic_ip" {
+  description = "The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached"
+  value       = module.ec2_t3_unlimited.public_ip
+}
+
+output "ec2_t3_unlimitedtags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
+  value       = module.ec2_t3_unlimited.tags_all
 }

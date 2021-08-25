@@ -2,8 +2,6 @@
 
 Configuration in this directory creates EC2 instances, EBS volume and attach it together.
 
-Unspecified arguments for security group id and subnet are inherited from the default VPC.
-
 This example outputs instance id and EBS volume id.
 
 ## Usage
@@ -30,7 +28,7 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.54.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.55.0 |
 
 ## Modules
 
@@ -56,7 +54,13 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ebs_volume_attachment_id"></a> [ebs\_volume\_attachment\_id](#output\_ebs\_volume\_attachment\_id) | The volume ID |
-| <a name="output_ebs_volume_attachment_instance_id"></a> [ebs\_volume\_attachment\_instance\_id](#output\_ebs\_volume\_attachment\_instance\_id) | The instance ID |
-| <a name="output_instances_public_ips"></a> [instances\_public\_ips](#output\_instances\_public\_ips) | Public IPs assigned to the EC2 instance |
+| <a name="output_ec2_arn"></a> [ec2\_arn](#output\_ec2\_arn) | The ARN of the instance |
+| <a name="output_ec2_capacity_reservation_specification"></a> [ec2\_capacity\_reservation\_specification](#output\_ec2\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ec2_id"></a> [ec2\_id](#output\_ec2\_id) | The ID of the instance |
+| <a name="output_ec2_instance_state"></a> [ec2\_instance\_state](#output\_ec2\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
+| <a name="output_ec2_primary_network_interface_id"></a> [ec2\_primary\_network\_interface\_id](#output\_ec2\_primary\_network\_interface\_id) | The ID of the instance's primary network interface |
+| <a name="output_ec2_private_dns"></a> [ec2\_private\_dns](#output\_ec2\_private\_dns) | The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_public_dns"></a> [ec2\_public\_dns](#output\_ec2\_public\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
+| <a name="output_ec2_public_ip"></a> [ec2\_public\_ip](#output\_ec2\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_ec2_tags_all"></a> [ec2\_tags\_all](#output\_ec2\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

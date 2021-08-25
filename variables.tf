@@ -13,7 +13,7 @@ variable "name" {
 variable "ami" {
   description = "ID of AMI to use for the instance"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "associate_public_ip_address" {
@@ -31,18 +31,6 @@ variable "availability_zone" {
 variable "capacity_reservation_specification" {
   description = "Describes an instance's Capacity Reservation targeting option"
   type        = map(string)
-  default     = null
-}
-
-variable "cpu_core_count" {
-  description = "Sets the number of CPU cores for an instance. This option is only supported on creation of instance type that support CPU Options"
-  type        = number
-  default     = null
-}
-
-variable "cpu_threads_per_core" {
-  description = "(Has no effect unless `cpu_core_count` is also set) If set to to 1, hyperthreading is disabled on the launched instance. Defaults to 2 if not set."
-  type        = number
   default     = null
 }
 
@@ -115,7 +103,7 @@ variable "instance_initiated_shutdown_behavior" {
 variable "instance_type" {
   description = "The type of instance to start"
   type        = string
-  default     = null
+  default     = "t3.micro"
 }
 
 variable "ipv6_address_count" {
