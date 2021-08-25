@@ -1,23 +1,40 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = local.region
 }
 
 locals {
+  availability_zone = "eu-west-1a"
+  name              = "example-ec2-basic"
+  region            = "eu-west-1"
+
   user_data = <<-EOT
   #!/bin/bash
   echo "Hello Terraform!"
   EOT
+
+  tags = {
+    Owner       = "user"
+    Environment = "dev"
+  }
 }
 
-##################################################################
-# Data sources to get VPC, subnet, security group and AMI details
-##################################################################
-data "aws_vpc" "default" {
-  default = true
-}
+################################################################################
+# Supporting Resources
+################################################################################
 
-data "aws_subnet_ids" "all" {
-  vpc_id = data.aws_vpc.default.id
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 3.0"
+
+  name = local.name
+  cidr = "10.99.0.0/18"
+
+  azs              = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  public_subnets   = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
+  private_subnets  = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
+  database_subnets = ["10.99.7.0/24", "10.99.8.0/24", "10.99.9.0/24"]
+
+  tags = local.tags
 }
 
 data "aws_ami" "amazon_linux" {
@@ -36,11 +53,13 @@ module "security_group" {
 
   name        = "example"
   description = "Security group for example usage with EC2 instance"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["http-80-tcp", "all-icmp"]
   egress_rules        = ["all-all"]
+
+  tags = local.tags
 }
 
 resource "aws_eip" "this" {
@@ -57,7 +76,23 @@ resource "aws_kms_key" "this" {
 }
 
 resource "aws_network_interface" "this" {
-  subnet_id = element(data.aws_subnet_ids.all.ids, 0)
+  subnet_id = element(module.vpc.private_subnets, 0)
+}
+
+################################################################################
+# EC2 Module
+################################################################################
+module "ec2_zero" {
+  source = "../../"
+  # This instance won't be created
+
+  name                   = "example-zero"
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "c5.large"
+  subnet_id              = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.security_group.security_group_id]
+
+  tags = local.tags
 }
 
 module "ec2" {
@@ -66,8 +101,8 @@ module "ec2" {
   name          = "example-normal"
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "c5.large"
-  subnet_id     = element(data.aws_subnet_ids.all.ids, 0)
-  #  private_ips                 = ["172.31.32.5", "172.31.46.20"]
+  subnet_id     = element(module.vpc.private_subnets, 0)
+  # private_ips                 = ["172.31.32.5", "172.31.46.20"]
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
@@ -95,10 +130,7 @@ module "ec2" {
     }
   ]
 
-  tags = {
-    "Env"      = "Private"
-    "Location" = "Secret"
-  }
+  tags = local.tags
 }
 
 module "ec2_with_t2_unlimited" {
@@ -108,10 +140,12 @@ module "ec2_with_t2_unlimited" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
   cpu_credits   = "unlimited"
-  subnet_id     = element(data.aws_subnet_ids.all.ids, 0)
-  #  private_ip = "172.31.32.10"
+  subnet_id     = element(module.vpc.private_subnets, 0)
+  # private_ip                  = "172.31.32.10"
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
+
+  tags = local.tags
 }
 
 module "ec2_with_t3_unlimited" {
@@ -121,9 +155,11 @@ module "ec2_with_t3_unlimited" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.large"
   cpu_credits                 = "unlimited"
-  subnet_id                   = element(data.aws_subnet_ids.all.ids, 0)
+  subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
+
+  tags = local.tags
 }
 
 module "ec2_with_metadata_options" {
@@ -132,7 +168,7 @@ module "ec2_with_metadata_options" {
   name                        = "example-metadata_options"
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.small"
-  subnet_id                   = element(data.aws_subnet_ids.all.ids, 0)
+  subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
@@ -141,6 +177,8 @@ module "ec2_with_metadata_options" {
     http_tokens                 = "required"
     http_put_response_hop_limit = 8
   }
+
+  tags = local.tags
 }
 
 module "ec2_with_network_interface" {
@@ -158,15 +196,6 @@ module "ec2_with_network_interface" {
       delete_on_termination = false
     }
   ]
-}
 
-# This instance won't be created
-module "ec2_zero" {
-  source = "../../"
-
-  name                   = "example-zero"
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "c5.large"
-  subnet_id              = element(data.aws_subnet_ids.all.ids, 0)
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  tags = local.tags
 }
