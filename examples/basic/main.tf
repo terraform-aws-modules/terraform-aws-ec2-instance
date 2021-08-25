@@ -207,7 +207,7 @@ module "ec2_optimize_cpu" {
   instance_type = "c4.2xlarge"
   subnet_id     = tolist(data.aws_subnet_ids.all.ids)[0]
 
-  vpc_security_group_ids      = [module.security_group.this_security_group_id]
+  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
 
@@ -221,7 +221,6 @@ module "ec2_optimize_cpu" {
   ]
   cpu_core_count       = 2 # default 4
   cpu_threads_per_core = 1 # default 2
-
 
   tags = {
     "Env"      = "Private"
