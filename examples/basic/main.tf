@@ -93,8 +93,9 @@ module "ec2" {
   enable_volume_tags = false
   root_block_device = [
     {
-      volume_type = "gp2"
+      volume_type = "gp3"
       volume_size = 10
+      throughput  = 200
       tags = {
         Name = "my-root-block"
       }
@@ -104,8 +105,9 @@ module "ec2" {
   ebs_block_device = [
     {
       device_name = "/dev/sdf"
-      volume_type = "gp2"
+      volume_type = "gp3"
       volume_size = 5
+      throughput  = 200
       encrypted   = true
       kms_key_id  = aws_kms_key.this.arn
     }
