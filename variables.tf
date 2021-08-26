@@ -48,7 +48,7 @@ variable "disable_api_termination" {
 
 variable "ebs_block_device" {
   description = "Additional EBS block devices to attach to the instance"
-  type        = list(map(string))
+  type        = list(any)
   default     = []
 }
 
@@ -242,4 +242,10 @@ variable "cpu_threads_per_core" {
   description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)."
   type        = number
   default     = null
+}
+
+variable "use_ebs_volume_resource" {
+  description = "Use aws_ebs_volume resource block for EBS volumes as opposed to inline block in instance."
+  type        = bool
+  default     = false
 }
