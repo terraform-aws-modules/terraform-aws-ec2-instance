@@ -88,7 +88,7 @@ resource "aws_ami_copy" "ubuntu_encrypted_ami" {
   description       = "An encrypted root ami based off ${data.aws_ami.ubuntu.id}"
   source_ami_id     = data.aws_ami.ubuntu.id
   source_ami_region = "eu-west-2"
-  encrypted         = "true"
+  encrypted         = true
 
   tags = { Name = "ubuntu-encrypted-ami" }
 }
