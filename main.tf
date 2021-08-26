@@ -1,6 +1,5 @@
 locals {
-  is_t_instance_type     = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
-  ebs_block_device_pairs = { for pair in setproduct(range(var.instance_count), var.ebs_block_device) : format("%d_%s", pair[0], pair[1].device_name) => merge(pair[1], { instance_index = pair[0] }) }
+  is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
 }
 
 resource "aws_instance" "this" {
@@ -60,7 +59,7 @@ resource "aws_instance" "this" {
   }
 
   dynamic "ebs_block_device" {
-    for_each = { for k, v in var.ebs_block_device : k => v if !var.use_ebs_volume_resource }
+    for_each = !var.use_ebs_volume_resource ? var.ebs_block_device : []
     content {
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
@@ -136,9 +135,9 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_ebs_volume" "this" {
-  for_each = { for k, v in local.ebs_block_device_pairs : k => v if var.use_ebs_volume_resource }
+  for_each = { for volume in var.ebs_block_device : volume.device_name => volume if var.use_ebs_volume_resource }
 
-  availability_zone = aws_instance.this[each.value.instance_index].availability_zone
+  availability_zone = aws_instance.this[0].availability_zone
   encrypted         = lookup(each.value, "encrypted", null)
   iops              = lookup(each.value, "iops", null)
   kms_key_id        = lookup(each.value, "kms_key_id", null)
@@ -146,17 +145,13 @@ resource "aws_ebs_volume" "this" {
   size              = lookup(each.value, "volume_size", null)
   type              = lookup(each.value, "volume_type", null)
 
-  tags = merge(
-    { Name = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, var.count_beginning) : var.name },
-    lookup(each.value, "tags", null),
-    var.volume_tags
-  )
+  tags = merge({ "Name" = var.name }, var.volume_tags, lookup(each.value, "tags", null))
 }
 
 resource "aws_volume_attachment" "this" {
-  for_each = { for k, v in local.ebs_block_device_pairs : k => v if var.use_ebs_volume_resource }
+  for_each = { for volume in var.ebs_block_device : volume.device_name => volume if var.use_ebs_volume_resource }
 
   device_name = each.value.device_name
-  instance_id = aws_instance.this[each.value.instance_index].id
+  instance_id = aws_instance.this[0].id
   volume_id   = aws_ebs_volume.this[each.key].id
 }

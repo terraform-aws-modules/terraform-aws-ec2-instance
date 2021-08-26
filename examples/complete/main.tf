@@ -136,6 +136,60 @@ module "ec2_complete" {
   tags = local.tags
 }
 
+module "ec2_complete_ebs_volume_resource" {
+  source = "../../"
+
+  name = local.name
+
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "c5.4xlarge"
+  availability_zone           = element(module.vpc.azs, 0)
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  placement_group             = aws_placement_group.web.id
+  associate_public_ip_address = true
+
+  # only one of these can be enabled at a time
+  hibernation = true
+  # enclave_options_enabled = true
+
+  user_data_base64 = base64encode(local.user_data)
+
+  cpu_core_count       = 2 # default 4
+  cpu_threads_per_core = 1 # default 2
+
+  capacity_reservation_specification = {
+    capacity_reservation_preference = "open"
+  }
+
+  enable_volume_tags = false
+  root_block_device = [
+    {
+      encrypted   = true
+      volume_type = "gp3"
+      throughput  = 200
+      volume_size = 50
+      tags = {
+        Name = "my-root-block"
+      }
+    },
+  ]
+
+  use_ebs_volume_resource = true
+  ebs_block_device = [
+    {
+      device_name = "/dev/sdf"
+      volume_type = "gp3"
+      volume_size = 5
+      throughput  = 200
+      encrypted   = true
+      kms_key_id  = aws_kms_key.this.arn
+    }
+  ]
+
+  tags = local.tags
+}
+
 module "ec2_network_interface" {
   source = "../../"
 
