@@ -1,15 +1,42 @@
 # AWS EC2 Instance Terraform module
 
-Terraform module which creates EC2 instance(s) on AWS.
+Terraform module which creates an EC2 instance on AWS.
 
 ## Usage
 
-```hcl
-module "ec2_cluster" {
-  source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "~> 2.0"
+### Single EC2 Instance
 
-  name                   = "my-cluster"
+```hcl
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
+
+  name = "single-instance"
+
+  ami                    = "ami-ebd02392"
+  instance_type          = "t2.micro"
+  key_name               = "user1"
+  monitoring             = true
+  vpc_security_group_ids = ["sg-12345678"]
+  subnet_id              = "subnet-eddcdzz4"
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
+```
+
+### Multiple EC2 Instance
+
+```hcl
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
+
+  for_each = toset(["one", "two", "three"])
+
+  name = "instance-${each.key}"
 
   ami                    = "ami-ebd02392"
   instance_type          = "t2.micro"
