@@ -95,7 +95,7 @@ module "ec2" {
     {
       volume_type = "gp3"
       volume_size = 10
-      throughput = 200
+      throughput  = 200
       tags = {
         Name = "my-root-block"
       }
@@ -107,7 +107,7 @@ module "ec2" {
       device_name = "/dev/sdf"
       volume_type = "gp3"
       volume_size = 5
-      throughput = 200
+      throughput  = 200
       encrypted   = true
       kms_key_id  = aws_kms_key.this.arn
     }
