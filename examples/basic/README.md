@@ -26,19 +26,19 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.55.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.65 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ec2"></a> [ec2](#module\_ec2) | ../../ | n/a |
-| <a name="module_ec2_optimize_cpu"></a> [ec2\_optimize\_cpu](#module\_ec2\_optimize\_cpu) | ../../ | n/a |
-| <a name="module_ec2_with_metadata_options"></a> [ec2\_with\_metadata\_options](#module\_ec2\_with\_metadata\_options) | ../../ | n/a |
-| <a name="module_ec2_with_network_interface"></a> [ec2\_with\_network\_interface](#module\_ec2\_with\_network\_interface) | ../../ | n/a |
-| <a name="module_ec2_with_t2_unlimited"></a> [ec2\_with\_t2\_unlimited](#module\_ec2\_with\_t2\_unlimited) | ../../ | n/a |
-| <a name="module_ec2_with_t3_unlimited"></a> [ec2\_with\_t3\_unlimited](#module\_ec2\_with\_t3\_unlimited) | ../../ | n/a |
-| <a name="module_ec2_zero"></a> [ec2\_zero](#module\_ec2\_zero) | ../../ | n/a |
+| <a name="module_ec2"></a> [ec2](#module\_ec2) | ../../ |  |
+| <a name="module_ec2_optimize_cpu"></a> [ec2\_optimize\_cpu](#module\_ec2\_optimize\_cpu) | ../../ |  |
+| <a name="module_ec2_with_metadata_options"></a> [ec2\_with\_metadata\_options](#module\_ec2\_with\_metadata\_options) | ../../ |  |
+| <a name="module_ec2_with_network_interface"></a> [ec2\_with\_network\_interface](#module\_ec2\_with\_network\_interface) | ../../ |  |
+| <a name="module_ec2_with_t2_unlimited"></a> [ec2\_with\_t2\_unlimited](#module\_ec2\_with\_t2\_unlimited) | ../../ |  |
+| <a name="module_ec2_with_t3_unlimited"></a> [ec2\_with\_t3\_unlimited](#module\_ec2\_with\_t3\_unlimited) | ../../ |  |
+| <a name="module_ec2_zero"></a> [ec2\_zero](#module\_ec2\_zero) | ../../ |  |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
 
 ## Resources
