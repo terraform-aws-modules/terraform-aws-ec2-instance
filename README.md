@@ -89,7 +89,7 @@ data "aws_ami" "ubuntu-xenial" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.53.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.55.0 |
 
 ## Modules
 
