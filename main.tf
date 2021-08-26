@@ -3,28 +3,46 @@ locals {
 }
 
 resource "aws_instance" "this" {
-  count = var.instance_count
+  count = var.create ? 1 : 0
 
-  ami              = var.ami
-  instance_type    = var.instance_type
-  user_data        = var.user_data
-  user_data_base64 = var.user_data_base64
-  subnet_id = length(var.network_interface) > 0 ? null : element(
-    distinct(compact(concat([var.subnet_id], var.subnet_ids))),
-    count.index,
-  )
-  key_name               = var.key_name
-  monitoring             = var.monitoring
-  get_password_data      = var.get_password_data
+  ami                  = var.ami
+  instance_type        = var.instance_type
+  cpu_core_count       = var.cpu_core_count
+  cpu_threads_per_core = var.cpu_threads_per_core
+  user_data            = var.user_data
+  user_data_base64     = var.user_data_base64
+  hibernation          = var.hibernation
+
+  availability_zone      = var.availability_zone
+  subnet_id              = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
-  iam_instance_profile   = var.iam_instance_profile
+
+  key_name             = var.key_name
+  monitoring           = var.monitoring
+  get_password_data    = var.get_password_data
+  iam_instance_profile = var.iam_instance_profile
 
   associate_public_ip_address = var.associate_public_ip_address
-  private_ip                  = length(var.private_ips) > 0 ? element(var.private_ips, count.index) : var.private_ip
+  private_ip                  = var.private_ip
+  secondary_private_ips       = var.secondary_private_ips
   ipv6_address_count          = var.ipv6_address_count
   ipv6_addresses              = var.ipv6_addresses
 
   ebs_optimized = var.ebs_optimized
+
+  dynamic "capacity_reservation_specification" {
+    for_each = var.capacity_reservation_specification != null ? [var.capacity_reservation_specification] : []
+    content {
+      capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", null)
+
+      dynamic "capacity_reservation_target" {
+        for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
+        content {
+          capacity_reservation_id = lookup(capacity_reservation_target.value, "capacity_reservation_id", null)
+        }
+      }
+    }
+  }
 
   dynamic "root_block_device" {
     for_each = var.root_block_device
@@ -65,7 +83,7 @@ resource "aws_instance" "this" {
   }
 
   dynamic "metadata_options" {
-    for_each = length(keys(var.metadata_options)) == 0 ? [] : [var.metadata_options]
+    for_each = var.metadata_options != null ? [var.metadata_options] : []
     content {
       http_endpoint               = lookup(metadata_options.value, "http_endpoint", "enabled")
       http_tokens                 = lookup(metadata_options.value, "http_tokens", "optional")
@@ -82,29 +100,36 @@ resource "aws_instance" "this" {
     }
   }
 
+  dynamic "launch_template" {
+    for_each = var.launch_template != null ? [var.launch_template] : []
+    content {
+      id      = lookup(var.launch_template, "id", null)
+      name    = lookup(var.launch_template, "name", null)
+      version = lookup(var.launch_template, "version", null)
+    }
+  }
+
+  enclave_options {
+    enabled = var.enclave_options_enabled
+  }
+
   source_dest_check                    = length(var.network_interface) > 0 ? null : var.source_dest_check
   disable_api_termination              = var.disable_api_termination
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
   placement_group                      = var.placement_group
   tenancy                              = var.tenancy
-  cpu_core_count                       = var.cpu_core_count
-  cpu_threads_per_core                 = var.cpu_threads_per_core
-
-  tags = merge(
-    {
-      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
-    },
-    var.tags,
-  )
-
-  volume_tags = var.enable_volume_tags ? merge(
-    {
-      "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s${var.num_suffix_format}", var.name, count.index + 1) : var.name
-    },
-    var.volume_tags,
-  ) : null
+  host_id                              = var.host_id
 
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
   }
+
+  timeouts {
+    create = lookup(var.timeouts, "create", null)
+    update = lookup(var.timeouts, "update", null)
+    delete = lookup(var.timeouts, "delete", null)
+  }
+
+  tags        = merge({ "Name" = var.name }, var.tags)
+  volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
 }
