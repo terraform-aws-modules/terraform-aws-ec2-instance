@@ -64,16 +64,33 @@ This module does not support encrypted AMI's out of the box however it is easy e
 This example creates an encrypted image from the latest ubuntu 16.04 base image.
 
 ```hcl
-resource "aws_ami_copy" "ubuntu-xenial-encrypted-ami" {
-  name              = "ubuntu-xenial-encrypted-ami"
-  description       = "An encrypted root ami based off ${data.aws_ami.ubuntu-xenial.id}"
-  source_ami_id     = "${data.aws_ami.ubuntu-xenial.id}"
-  source_ami_region = "eu-west-2"
-  encrypted         = "true"
+provider "aws" {
+  region = "us-west-2"
+}
 
-  tags {
-    Name = "ubuntu-xenial-encrypted-ami"
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["679593333241"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-minimal/images/hvm-ssd/ubuntu-focal-20.04-*"]
   }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+resource "aws_ami_copy" "ubuntu_encrypted_ami" {
+  name              = "ubuntu-encrypted-ami"
+  description       = "An encrypted root ami based off ${data.aws_ami.ubuntu.id}"
+  source_ami_id     = data.aws_ami.ubuntu.id
+  source_ami_region = "eu-west-2"
+  encrypted         = true
+
+  tags = { Name = "ubuntu-encrypted-ami" }
 }
 
 data "aws_ami" "encrypted-ami" {
@@ -81,21 +98,10 @@ data "aws_ami" "encrypted-ami" {
 
   filter {
     name   = "name"
-    values = ["ubuntu-xenial-encrypted"]
+    values = [aws_ami_copy.ubuntu_encrypted_ami.id]
   }
 
   owners = ["self"]
-}
-
-data "aws_ami" "ubuntu-xenial" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
-  }
-
-  owners      = ["099720109477"]
 }
 ```
 
