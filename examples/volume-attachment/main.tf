@@ -63,7 +63,8 @@ module "security_group" {
 module "ec2" {
   source = "../../"
 
-  name                        = local.name
+  name = local.name
+
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "c5.large"
   availability_zone           = local.availability_zone

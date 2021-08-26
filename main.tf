@@ -34,7 +34,13 @@ resource "aws_instance" "this" {
     for_each = var.capacity_reservation_specification != null ? [var.capacity_reservation_specification] : []
     content {
       capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", null)
-      capacity_reservation_target     = lookup(capacity_reservation_specification.value, "capacity_reservation_target", null)
+
+      dynamic "capacity_reservation_target" {
+        for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
+        content {
+          capacity_reservation_id = lookup(capacity_reservation_target.value, "capacity_reservation_id", null)
+        }
+      }
     }
   }
 

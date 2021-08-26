@@ -30,7 +30,7 @@ variable "availability_zone" {
 
 variable "capacity_reservation_specification" {
   description = "Describes an instance's Capacity Reservation targeting option"
-  type        = map(string)
+  type        = any
   default     = null
 }
 
@@ -169,7 +169,7 @@ variable "root_block_device" {
 variable "secondary_private_ips" {
   description = "A list of secondary private IPv4 addresses to assign to the instance's primary network interface (eth0) in a VPC. Can only be assigned to the primary network interface (eth0) attached at instance creation, not a pre-existing network interface i.e. referenced in a `network_interface block`"
   type        = list(string)
-  default     = []
+  default     = null
 }
 
 variable "source_dest_check" {

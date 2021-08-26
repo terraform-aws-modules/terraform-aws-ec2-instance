@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 locals {
-  name   = "example-ec2-basic"
+  name   = "example-ec2-complete"
   region = "eu-west-1"
 
   user_data = <<-EOT
@@ -86,38 +86,35 @@ module "ec2_disabled" {
 module "ec2_complete" {
   source = "../../"
 
-  name                        = local.name
+  name = local.name
+
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "c5.4xlarge"
+  availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
-  associate_public_ip_address = true
   placement_group             = aws_placement_group.web.id
+  associate_public_ip_address = true
+
+  # only one of these can be enabled at a time
+  hibernation = true
+  # enclave_options_enabled = true
 
   user_data_base64 = base64encode(local.user_data)
 
   cpu_core_count       = 2 # default 4
   cpu_threads_per_core = 1 # default 2
 
-  metadata_options = {
-    http_endpoint               = "enabled"
-    http_tokens                 = "required"
-    http_put_response_hop_limit = 8
+  capacity_reservation_specification = {
+    capacity_reservation_preference = "open"
   }
-
-  network_interface = [
-    {
-      device_index          = 0
-      network_interface_id  = aws_network_interface.this.id
-      delete_on_termination = false
-    }
-  ]
 
   enable_volume_tags = false
   root_block_device = [
     {
+      encrypted   = true
       volume_type = "gp2"
-      volume_size = 10
+      volume_size = 50
       tags = {
         Name = "my-root-block"
       }
@@ -137,10 +134,49 @@ module "ec2_complete" {
   tags = local.tags
 }
 
+module "ec2_network_interface" {
+  source = "../../"
+
+  name = "${local.name}-network-interface"
+
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "c5.large"
+
+  network_interface = [
+    {
+      device_index          = 0
+      network_interface_id  = aws_network_interface.this.id
+      delete_on_termination = false
+    }
+  ]
+
+  tags = local.tags
+}
+
+module "ec2_metadata_options" {
+  source = "../../"
+
+  name = "${local.name}-metadata-options"
+
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "c5.4xlarge"
+  subnet_id              = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.security_group.security_group_id]
+
+  metadata_options = {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 8
+  }
+
+  tags = local.tags
+}
+
 module "ec2_t2_unlimited" {
   source = "../../"
 
-  name                        = "${local.name}-t2-unlimited"
+  name = "${local.name}-t2-unlimited"
+
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.micro"
   cpu_credits                 = "unlimited"
@@ -154,7 +190,8 @@ module "ec2_t2_unlimited" {
 module "ec2_t3_unlimited" {
   source = "../../"
 
-  name                        = "${local.name}-t3-unlimited"
+  name = "${local.name}-t3-unlimited"
+
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.micro"
   cpu_credits                 = "unlimited"

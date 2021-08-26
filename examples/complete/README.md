@@ -1,4 +1,4 @@
-# Basic EC2 instance
+# Complete EC2 instance
 
 Configuration in this directory creates EC2 instances with different sets of arguments (with Elastic IP, with network interface attached, with credit specifications).
 
@@ -34,6 +34,8 @@ Note that this example may create resources which can cost money. Run `terraform
 |------|--------|---------|
 | <a name="module_ec2_complete"></a> [ec2\_complete](#module\_ec2\_complete) | ../../ | n/a |
 | <a name="module_ec2_disabled"></a> [ec2\_disabled](#module\_ec2\_disabled) | ../../ | n/a |
+| <a name="module_ec2_metadata_options"></a> [ec2\_metadata\_options](#module\_ec2\_metadata\_options) | ../../ | n/a |
+| <a name="module_ec2_network_interface"></a> [ec2\_network\_interface](#module\_ec2\_network\_interface) | ../../ | n/a |
 | <a name="module_ec2_t2_unlimited"></a> [ec2\_t2\_unlimited](#module\_ec2\_t2\_unlimited) | ../../ | n/a |
 | <a name="module_ec2_t3_unlimited"></a> [ec2\_t3\_unlimited](#module\_ec2\_t3\_unlimited) | ../../ | n/a |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
