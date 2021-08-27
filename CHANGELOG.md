@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v3.1.0"></a>
+## [v3.1.0] - 2021-08-27
+
+- feat: add support for spot instances via spot instance requests ([#236](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/236))
+- chore: update `README.md` example for making an encrypted AMI ([#235](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/235))
+
+
 <a name="v3.0.0"></a>
 ## [v3.0.0] - 2021-08-26
 
@@ -372,7 +379,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.1.0...HEAD
+[v3.1.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.0.0...v3.1.0
 [v3.0.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.21.0...v3.0.0
 [v2.21.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.20.0...v2.21.0
 [v2.20.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.19.0...v2.20.0
