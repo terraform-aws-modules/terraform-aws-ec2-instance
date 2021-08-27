@@ -243,3 +243,58 @@ variable "cpu_threads_per_core" {
   type        = number
   default     = null
 }
+
+# Spot instance request
+variable "create_spot_instance" {
+  description = "Depicts if the instance is a spot instance"
+  type        = bool
+  default     = false
+}
+
+variable "spot_price" {
+  description = "The maximum price to request on the spot market. Defaults to on-demand price"
+  type        = string
+  default     = null
+}
+
+variable "spot_wait_for_fulfillment" {
+  description = "If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached"
+  type        = bool
+  default     = null
+}
+
+variable "spot_type" {
+  description = "If set to one-time, after the instance is terminated, the spot request will be closed. Default `persistent`"
+  type        = string
+  default     = null
+}
+
+variable "spot_launch_group" {
+  description = "A launch group is a group of spot instances that launch together and terminate together. If left empty instances are launched and terminated individually"
+  type        = string
+  default     = null
+}
+
+variable "spot_block_duration_minutes" {
+  description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)"
+  type        = number
+  default     = null
+}
+
+variable "spot_instance_interruption_behavior" {
+  description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
+  type        = string
+  default     = null
+}
+
+variable "spot_valid_until" {
+  description = "The end date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
+  type        = string
+  default     = null
+}
+
+variable "spot_valid_from" {
+  description = "The start date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
+  type        = string
+  default     = null
+}
