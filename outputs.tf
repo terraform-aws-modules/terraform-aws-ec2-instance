@@ -48,6 +48,11 @@ output "public_ip" {
   value       = element(concat(aws_instance.this.*.public_ip, aws_spot_instance_request.this.*.public_ip, [""]), 0)
 }
 
+output "private_ip" {
+  description = "The private IP address assigned to the instance."
+  value       = element(concat(aws_instance.this.*.private_ip, aws_spot_instance_request.this.*.private_ip, [""]), 0)
+}
+
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
   value       = element(concat(aws_instance.this.*.tags_all, aws_spot_instance_request.this.*.tags_all, [""]), 0)
