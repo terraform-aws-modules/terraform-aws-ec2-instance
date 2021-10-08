@@ -302,5 +302,5 @@ variable "spot_valid_from" {
 variable "ignore_changes" {
   description = "ignore changes in resource"
   type = list(string)
-  default = null
+  default = []
 }
