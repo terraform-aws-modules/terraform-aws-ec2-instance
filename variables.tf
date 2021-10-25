@@ -48,7 +48,7 @@ variable "disable_api_termination" {
 
 variable "ebs_block_device" {
   description = "Additional EBS block devices to attach to the instance"
-  type        = list(map(string))
+  type        = list(any)
   default     = []
 }
 
@@ -217,7 +217,7 @@ variable "volume_tags" {
 variable "enable_volume_tags" {
   description = "Whether to enable volume tags (if enabled it conflicts with root_block_device tags)"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "vpc_security_group_ids" {
