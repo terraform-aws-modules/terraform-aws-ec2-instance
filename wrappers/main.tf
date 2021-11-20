@@ -4,14 +4,14 @@ module "wrapper" {
   for_each = var.items
 
   create                               = lookup(each.value, "create", true)
-  name                                 = lookup(each.value, "name", false)
+  name                                 = lookup(each.value, "name", "")
   ami                                  = lookup(each.value, "ami", "")
   associate_public_ip_address          = lookup(each.value, "associate_public_ip_address", null)
   availability_zone                    = lookup(each.value, "availability_zone", null)
   capacity_reservation_specification   = lookup(each.value, "capacity_reservation_specification", null)
   cpu_credits                          = lookup(each.value, "cpu_credits", null)
   disable_api_termination              = lookup(each.value, "disable_api_termination", null)
-  ebs_block_device                     = lookup(each.value, "acl", [])
+  ebs_block_device                     = lookup(each.value, "ebs_block_device", [])
   ebs_optimized                        = lookup(each.value, "ebs_optimized", null)
   enclave_options_enabled              = lookup(each.value, "enclave_options_enabled", null)
   ephemeral_block_device               = lookup(each.value, "ephemeral_block_device", [])
