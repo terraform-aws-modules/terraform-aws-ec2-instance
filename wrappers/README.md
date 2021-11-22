@@ -46,26 +46,25 @@ module "wrapper" {
 }
 ```
 
-## Example: Manage multiple EC2 instances in one Terragrunt layer
+## Example: Manage multiple S3 buckets in one Terragrunt layer
 
-`eu-west-1/ec2-instances/terragrunt.hcl`:
+`eu-west-1/s3-buckets/terragrunt.hcl`:
 
 ```hcl
 terraform {
-  source = "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=master//wrappers"
+  source = "git::git@github.com:terraform-aws-modules/terraform-aws-s3-bucket.git?ref=master//wrappers"
 }
 
 inputs = {
   items = {
-    instance1 = {
-      name = "my-random-instance-1"
-      ami  = "ami-0123456789abcdef0"
+    bucket1 = {
+      bucket        = "my-random-bucket-1"
+      force_destroy = true
     }
-    instance2 = {
-      name = "my-random-instance-2"
-      ami  = "ami-fedcba9876543210f"
+    bucket2 = {
+      bucket        = "my-random-bucket-2"
+      force_destroy = true
     }
   }
 }
 ```
-
