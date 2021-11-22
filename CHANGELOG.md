@@ -1,11 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
-<a name="unreleased"></a>
-## [Unreleased]
+## [3.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.0...v3.2.1) (2021-11-22)
 
 
+### Bug Fixes
+
+* update CI/CD process to enable auto-release workflow ([#250](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/250)) ([1508c9e](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/1508c9ec45ba954828c734326366143a17434a0f))
 
 <a name="v3.2.0"></a>
 ## [v3.2.0] - 2021-10-07
