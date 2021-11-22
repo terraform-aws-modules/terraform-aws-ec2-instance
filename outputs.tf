@@ -53,6 +53,11 @@ output "private_ip" {
   value       = try(aws_instance.this[0].private_ip, aws_spot_instance_request.this[0].private_ip, "")
 }
 
+output "ipv6_addresses" {
+  description = "The IPv6 address assigned to the instance, if applicable."
+  value       = try(aws_instance.this[0].ipv6_addresses, [])
+}
+
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
   value       = try(aws_instance.this[0].tags_all, aws_spot_instance_request.this[0].tags_all, {})

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [3.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.1...v3.3.0) (2021-11-22)
+
+
+### Features
+
+* Add instance IPv6 addresses to the outputs ([#249](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/249)) ([08bdf6a](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/08bdf6af910f665149d8d64a19175b89a8fac447))
+
 ## [3.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.0...v3.2.1) (2021-11-22)
 
 
