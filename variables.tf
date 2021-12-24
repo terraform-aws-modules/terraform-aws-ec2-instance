@@ -3,6 +3,12 @@ variable "name" {
   type        = string
 }
 
+variable "fqdn" {
+  description = "Value for FQDN instance tag with fully qualified domain name"
+  type        = string
+  default     = ""
+}
+
 variable "instance_count" {
   description = "Number of instances to launch"
   type        = number
