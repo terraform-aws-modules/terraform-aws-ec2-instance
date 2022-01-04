@@ -193,3 +193,8 @@ variable "use_num_suffix" {
   default     = false
 }
 
+variable "format_fqdn" {
+  description = "format FQDN tag or use it as is"
+  type        = bool
+  default     = true
+}
