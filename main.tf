@@ -80,6 +80,9 @@ resource "aws_instance" "this" {
     {
       "Name" = var.instance_count > 1 || var.use_num_suffix ? format("%s-%d", var.name, count.index + 1) : var.name
     },
+    {
+      "FQDN" = var.instance_count > 1 || var.format_fqdn ? format(var.fqdn, count.index + 1) : var.fqdn
+    },
     var.tags,
   )
 
