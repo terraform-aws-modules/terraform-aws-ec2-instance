@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.3.0...v3.4.0) (2022-01-14)
+
+
+### Features
+
+* Add `instance_metadata_tags` attribute and bump AWS provider to support ([#254](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/254)) ([b2fb960](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/b2fb9604b32aa23d14a8a6e3cff761d6c69661b7))
+
 # [3.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.1...v3.3.0) (2021-11-22)
 
 
