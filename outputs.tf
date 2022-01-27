@@ -1,114 +1,79 @@
 output "id" {
-  description = "List of IDs of instances"
-  value       = aws_instance.this.*.id
+  description = "The ID of the instance"
+  value       = try(aws_instance.this[0].id, aws_spot_instance_request.this[0].id, "")
 }
 
 output "arn" {
-  description = "List of ARNs of instances"
-  value       = aws_instance.this.*.arn
+  description = "The ARN of the instance"
+  value       = try(aws_instance.this[0].arn, aws_spot_instance_request.this[0].arn, "")
 }
 
-output "availability_zone" {
-  description = "List of availability zones of instances"
-  value       = aws_instance.this.*.availability_zone
-}
-
-output "placement_group" {
-  description = "List of placement groups of instances"
-  value       = aws_instance.this.*.placement_group
-}
-
-output "key_name" {
-  description = "List of key names of instances"
-  value       = aws_instance.this.*.key_name
-}
-
-output "password_data" {
-  description = "List of Base-64 encoded encrypted password data for the instance"
-  value       = aws_instance.this.*.password_data
-}
-
-output "public_dns" {
-  description = "List of public DNS names assigned to the instances. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
-  value       = aws_instance.this.*.public_dns
-}
-
-output "public_ip" {
-  description = "List of public IP addresses assigned to the instances, if applicable"
-  value       = aws_instance.this.*.public_ip
-}
-
-output "ipv6_addresses" {
-  description = "List of assigned IPv6 addresses of instances"
-  value       = aws_instance.this.*.ipv6_addresses
-}
-
-output "primary_network_interface_id" {
-  description = "List of IDs of the primary network interface of instances"
-  value       = aws_instance.this.*.primary_network_interface_id
-}
-
-output "private_dns" {
-  description = "List of private DNS names assigned to the instances. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC"
-  value       = aws_instance.this.*.private_dns
-}
-
-output "private_ip" {
-  description = "List of private IP addresses assigned to the instances"
-  value       = aws_instance.this.*.private_ip
-}
-
-output "security_groups" {
-  description = "List of associated security groups of instances"
-  value       = aws_instance.this.*.security_groups
-}
-
-output "vpc_security_group_ids" {
-  description = "List of associated security groups of instances, if running in non-default VPC"
-  value       = aws_instance.this.*.vpc_security_group_ids
-}
-
-output "subnet_id" {
-  description = "List of IDs of VPC subnets of instances"
-  value       = aws_instance.this.*.subnet_id
-}
-
-output "credit_specification" {
-  description = "List of credit specification of instances"
-  value       = aws_instance.this.*.credit_specification
-}
-
-output "metadata_options" {
-  description = "List of metadata options of instances"
-  value       = aws_instance.this.*.metadata_options
+output "capacity_reservation_specification" {
+  description = "Capacity reservation specification of the instance"
+  value       = try(aws_instance.this[0].capacity_reservation_specification, aws_spot_instance_request.this[0].capacity_reservation_specification, "")
 }
 
 output "instance_state" {
-  description = "List of instance states of instances"
-  value       = aws_instance.this.*.instance_state
+  description = "The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped`"
+  value       = try(aws_instance.this[0].instance_state, aws_spot_instance_request.this[0].instance_state, "")
 }
 
-output "root_block_device_volume_ids" {
-  description = "List of volume IDs of root block devices of instances"
-  value       = [for device in aws_instance.this.*.root_block_device : device.*.volume_id]
+output "outpost_arn" {
+  description = "The ARN of the Outpost the instance is assigned to"
+  value       = try(aws_instance.this[0].outpost_arn, aws_spot_instance_request.this[0].outpost_arn, "")
 }
 
-output "ebs_block_device_volume_ids" {
-  description = "List of volume IDs of EBS block devices of instances"
-  value       = [for device in aws_instance.this.*.ebs_block_device : device.*.volume_id]
+output "password_data" {
+  description = "Base-64 encoded encrypted password data for the instance. Useful for getting the administrator password for instances running Microsoft Windows. This attribute is only exported if `get_password_data` is true"
+  value       = try(aws_instance.this[0].password_data, aws_spot_instance_request.this[0].password_data, "")
 }
 
-output "tags" {
-  description = "List of tags of instances"
-  value       = aws_instance.this.*.tags
+output "primary_network_interface_id" {
+  description = "The ID of the instance's primary network interface"
+  value       = try(aws_instance.this[0].primary_network_interface_id, aws_spot_instance_request.this[0].primary_network_interface_id, "")
 }
 
-output "volume_tags" {
-  description = "List of tags of volumes of instances"
-  value       = aws_instance.this.*.volume_tags
+output "private_dns" {
+  description = "The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC"
+  value       = try(aws_instance.this[0].private_dns, aws_spot_instance_request.this[0].private_dns, "")
 }
 
-output "instance_count" {
-  description = "Number of instances to launch specified as argument to this module"
-  value       = var.instance_count
+output "public_dns" {
+  description = "The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
+  value       = try(aws_instance.this[0].public_dns, aws_spot_instance_request.this[0].public_dns, "")
+}
+
+output "public_ip" {
+  description = "The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached"
+  value       = try(aws_instance.this[0].public_ip, aws_spot_instance_request.this[0].public_ip, "")
+}
+
+output "private_ip" {
+  description = "The private IP address assigned to the instance."
+  value       = try(aws_instance.this[0].private_ip, aws_spot_instance_request.this[0].private_ip, "")
+}
+
+output "ipv6_addresses" {
+  description = "The IPv6 address assigned to the instance, if applicable."
+  value       = try(aws_instance.this[0].ipv6_addresses, [])
+}
+
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
+  value       = try(aws_instance.this[0].tags_all, aws_spot_instance_request.this[0].tags_all, {})
+}
+
+output "spot_bid_status" {
+  description = "The current bid status of the Spot Instance Request"
+  value       = try(aws_spot_instance_request.this[0].spot_bid_status, "")
+}
+
+output "spot_request_state" {
+  description = "The current request state of the Spot Instance Request"
+  value       = try(aws_spot_instance_request.this[0].spot_request_state, "")
+}
+
+output "spot_instance_id" {
+  description = "The Instance ID (if any) that is currently fulfilling the Spot Instance request"
+  value       = try(aws_spot_instance_request.this[0].spot_instance_id, "")
 }

@@ -1,10 +1,80 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
-<a name="unreleased"></a>
-## [Unreleased]
+## [3.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.3.0...v3.4.0) (2022-01-14)
 
+
+### Features
+
+* Add `instance_metadata_tags` attribute and bump AWS provider to support ([#254](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/254)) ([b2fb960](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/b2fb9604b32aa23d14a8a6e3cff761d6c69661b7))
+
+# [3.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.1...v3.3.0) (2021-11-22)
+
+
+### Features
+
+* Add instance IPv6 addresses to the outputs ([#249](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/249)) ([08bdf6a](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/08bdf6af910f665149d8d64a19175b89a8fac447))
+
+## [3.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.0...v3.2.1) (2021-11-22)
+
+
+### Bug Fixes
+
+* update CI/CD process to enable auto-release workflow ([#250](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/250)) ([1508c9e](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/1508c9ec45ba954828c734326366143a17434a0f))
+
+<a name="v3.2.0"></a>
+## [v3.2.0] - 2021-10-07
+
+- feat: Add instance private IP to the outputs ([#241](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/241))
+
+
+<a name="v3.1.0"></a>
+## [v3.1.0] - 2021-08-27
+
+- feat: add support for spot instances via spot instance requests ([#236](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/236))
+- chore: update `README.md` example for making an encrypted AMI ([#235](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/235))
+
+
+<a name="v3.0.0"></a>
+## [v3.0.0] - 2021-08-26
+
+- BREAKING CHANGE: update module to include latest features and remove use of `count` for module `count`/`for_each` ([#234](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/234))
+
+
+<a name="v2.21.0"></a>
+## [v2.21.0] - 2021-08-26
+
+- feat: Add support for EBS GP3 throughput ([#233](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/233))
+
+
+<a name="v2.20.0"></a>
+## [v2.20.0] - 2021-08-25
+
+- feat: Add cpu optimization options ([#181](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/181))
+
+
+<a name="v2.19.0"></a>
+## [v2.19.0] - 2021-05-12
+
+- fix: root_block_device tags conflicts ([#220](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/220))
+
+
+<a name="v2.18.0"></a>
+## [v2.18.0] - 2021-05-11
+
+- feat: add tags support to root block device ([#218](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/218))
+- chore: update CI/CD to use stable `terraform-docs` release artifact and discoverable Apache2.0 license ([#217](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/217))
+- chore: Updated versions&comments in examples
+- chore: update documentation and pin `terraform_docs` version to avoid future changes ([#212](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/212))
+- chore: align ci-cd static checks to use individual minimum Terraform versions ([#207](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/207))
+- chore: add ci-cd workflow for pre-commit checks ([#201](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/201))
+
+
+<a name="v2.17.0"></a>
+## [v2.17.0] - 2021-02-20
+
+- chore: update documentation based on latest `terraform-docs` which includes module and resource sections ([#200](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/200))
 
 
 <a name="v2.16.0"></a>
@@ -331,7 +401,15 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.16.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.2.0...HEAD
+[v3.2.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.1.0...v3.2.0
+[v3.1.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.0.0...v3.1.0
+[v3.0.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.21.0...v3.0.0
+[v2.21.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.20.0...v2.21.0
+[v2.20.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.19.0...v2.20.0
+[v2.19.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.18.0...v2.19.0
+[v2.18.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.17.0...v2.18.0
+[v2.17.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.16.0...v2.17.0
 [v2.16.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.15.0...v2.16.0
 [v2.15.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v2.14.0...v2.15.0
 [v2.14.0]: https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v1.25.0...v2.14.0
