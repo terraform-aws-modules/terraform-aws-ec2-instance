@@ -110,6 +110,15 @@ resource "aws_instance" "this" {
     }
   }
 
+  dynamic "lifecycle" {
+    for_each       = var.ignore_user_data_changes == true ? [1] : []
+    content {
+      ignore_changes = [
+        user_data, user_data_base64
+      ]
+    }
+  }
+
   enclave_options {
     enabled = var.enclave_options_enabled
   }
@@ -129,12 +138,6 @@ resource "aws_instance" "this" {
     create = lookup(var.timeouts, "create", null)
     update = lookup(var.timeouts, "update", null)
     delete = lookup(var.timeouts, "delete", null)
-  }
-
-  lifecycle {
-    ignore_changes = [
-      user_data, user_data_base64
-    ]
   }
 
   tags        = merge({ "Name" = var.name }, var.tags)
@@ -259,6 +262,15 @@ resource "aws_spot_instance_request" "this" {
     }
   }
 
+  dynamic "lifecycle" {
+    for_each       = var.ignore_user_data_changes == true ? [1] : []
+    content {
+      ignore_changes = [
+        user_data, user_data_base64
+      ]
+    }
+  }
+
   enclave_options {
     enabled = var.enclave_options_enabled
   }
@@ -277,12 +289,6 @@ resource "aws_spot_instance_request" "this" {
   timeouts {
     create = lookup(var.timeouts, "create", null)
     delete = lookup(var.timeouts, "delete", null)
-  }
-
-  lifecycle {
-    ignore_changes = [
-      user_data, user_data_base64
-    ]
   }
 
   tags        = merge({ "Name" = var.name }, var.tags)

@@ -94,6 +94,12 @@ variable "iam_instance_profile" {
   default     = null
 }
 
+variable "ignore_user_data_changes" {
+  description = "Enable if you don't want that User Data changes will destroy your instance"
+  type        = bool
+  default     = false
+}
+
 variable "instance_initiated_shutdown_behavior" {
   description = "Shutdown behavior for the instance. Amazon defaults this to stop for EBS-backed instances and terminate for instance-store instances. Cannot be set on instance-store instance" # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingInstanceInitiatedShutdownBehavior
   type        = string
