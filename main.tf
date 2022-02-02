@@ -131,6 +131,12 @@ resource "aws_instance" "this" {
     delete = lookup(var.timeouts, "delete", null)
   }
 
+  lifecycle {
+    ignore_changes = [
+      user_data, user_data_base64
+    ]
+  }
+
   tags        = merge({ "Name" = var.name }, var.tags)
   volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
 }
@@ -271,6 +277,12 @@ resource "aws_spot_instance_request" "this" {
   timeouts {
     create = lookup(var.timeouts, "create", null)
     delete = lookup(var.timeouts, "delete", null)
+  }
+
+  lifecycle {
+    ignore_changes = [
+      user_data, user_data_base64
+    ]
   }
 
   tags        = merge({ "Name" = var.name }, var.tags)
