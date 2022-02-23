@@ -10,7 +10,9 @@ resource "aws_instance" "this" {
   user_data        = var.user_data
   user_data_base64 = var.user_data_base64
   subnet_id = length(var.network_interface) > 0 ? null : element(
-    distinct(compact(concat([var.subnet_id], var.subnet_ids))),
+    distinct(
+     compact(concat([var.subnet_id], var.subnet_ids))
+    ),
     count.index,
   )
   key_name               = var.key_name
@@ -92,5 +94,11 @@ resource "aws_instance" "this" {
 
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
+  }
+
+  lifecycle {
+    ignore_changes = [
+      subnet_id
+    ]
   }
 }
