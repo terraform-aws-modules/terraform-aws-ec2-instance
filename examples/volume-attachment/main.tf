@@ -82,7 +82,7 @@ resource "aws_volume_attachment" "this" {
 }
 
 resource "aws_ebs_volume" "this" {
-  availability_zone = local.availability_zone
+  availability_zone = module.ec2.availability_zone
   size              = 1
 
   tags = local.tags
