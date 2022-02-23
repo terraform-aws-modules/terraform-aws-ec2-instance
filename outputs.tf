@@ -8,6 +8,11 @@ output "arn" {
   value       = try(aws_instance.this[0].arn, aws_spot_instance_request.this[0].arn, "")
 }
 
+output "availability_zone" {
+  description = "The availability zone of the instance"
+  value       = try(aws_instance.this[0].availability_zone, aws_spot_instance_request.this[0].availability_zone, "")
+}
+
 output "capacity_reservation_specification" {
   description = "Capacity reservation specification of the instance"
   value       = try(aws_instance.this[0].capacity_reservation_specification, aws_spot_instance_request.this[0].capacity_reservation_specification, "")
