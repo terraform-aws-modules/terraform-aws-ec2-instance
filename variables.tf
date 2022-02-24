@@ -52,6 +52,12 @@ variable "ebs_block_device" {
   default     = []
 }
 
+variable "override_ebs_mapping" {
+  description = "Override non-root EBS block devices for the instance"
+  type        = bool
+  default     = true
+}
+
 variable "ebs_optimized" {
   description = "If true, the launched EC2 instance will be EBS-optimized"
   type        = bool

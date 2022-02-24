@@ -13,6 +13,11 @@ output "capacity_reservation_specification" {
   value       = try(aws_instance.this[0].capacity_reservation_specification, aws_spot_instance_request.this[0].capacity_reservation_specification, "")
 }
 
+output "external_ebs_block_device" {
+  description = "If override_ebs_mapping is false, EBS devices assigned along side the instance"
+  value       = try(aws_ebs_volume.this.*.id, [])
+}
+
 output "instance_state" {
   description = "The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped`"
   value       = try(aws_instance.this[0].instance_state, aws_spot_instance_request.this[0].instance_state, "")

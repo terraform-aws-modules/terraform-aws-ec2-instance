@@ -59,7 +59,7 @@ resource "aws_instance" "this" {
   }
 
   dynamic "ebs_block_device" {
-    for_each = var.ebs_block_device
+    for_each = var.override_ebs_mapping ? var.ebs_block_device : []
     content {
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
@@ -132,7 +132,7 @@ resource "aws_instance" "this" {
   }
 
   tags        = merge({ "Name" = var.name }, var.tags)
-  volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  volume_tags = var.enable_volume_tags && var.override_ebs_mapping ? merge({ "Name" = var.name }, var.volume_tags) : null
 }
 
 resource "aws_spot_instance_request" "this" {
@@ -203,7 +203,7 @@ resource "aws_spot_instance_request" "this" {
   }
 
   dynamic "ebs_block_device" {
-    for_each = var.ebs_block_device
+    for_each = var.override_ebs_mapping ? var.ebs_block_device : []
     content {
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
@@ -274,5 +274,30 @@ resource "aws_spot_instance_request" "this" {
   }
 
   tags        = merge({ "Name" = var.name }, var.tags)
-  volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  volume_tags = var.enable_volume_tags && var.override_ebs_mapping ? merge({ "Name" = var.name }, var.volume_tags) : null
+}
+
+locals {
+  external_ebs = { for ebs in var.ebs_block_device : ebs.device_name => ebs }
+}
+
+resource "aws_ebs_volume" "this" {
+  for_each = var.create && !var.override_ebs_mapping ? local.external_ebs : {}
+
+  encrypted         = lookup(each.value, "encrypted", null)
+  iops              = lookup(each.value, "iops", null)
+  kms_key_id        = lookup(each.value, "kms_key_id", null)
+  snapshot_id       = lookup(each.value, "snapshot_id", null)
+  size              = lookup(each.value, "volume_size", null)
+  type              = lookup(each.value, "volume_type", null)
+  throughput        = lookup(each.value, "throughput", null)
+  availability_zone = lookup(each.value, "availability_zone", try(aws_instance.this[0].availability_zone, aws_spot_instance_request.this[0].availability_zone))
+  tags              = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+}
+
+resource "aws_volume_attachment" "this" {
+  for_each    = aws_ebs_volume.this
+  device_name = each.key
+  volume_id   = each.value.id
+  instance_id = try(aws_instance.this[0].id, aws_spot_instance_request.this[0].id, null)
 }
