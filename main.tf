@@ -5,6 +5,8 @@ locals {
 resource "aws_instance" "this" {
   count = var.create && !var.create_spot_instance ? 1 : 0
 
+  lifecycle { ignore_changes = [ami, user_data_base64] }
+
   ami                  = var.ami
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
