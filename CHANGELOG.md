@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.4.0...v3.5.0) (2022-03-12)
+
+
+### Features
+
+* Made it clear that we stand with Ukraine ([6867788](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6867788411a202b61187f9935e9eaa72a18f0bbe))
+
 ## [3.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.3.0...v3.4.0) (2022-01-14)
 
 
