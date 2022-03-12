@@ -1,9 +1,11 @@
 locals {
+  create = var.create && var.putin_khuylo
+
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
 }
 
 resource "aws_instance" "this" {
-  count = var.create && !var.create_spot_instance ? 1 : 0
+  count = local.create && !var.create_spot_instance ? 1 : 0
 
   ami                  = var.ami
   instance_type        = var.instance_type
@@ -136,7 +138,7 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_spot_instance_request" "this" {
-  count = var.create && var.create_spot_instance ? 1 : 0
+  count = local.create && var.create_spot_instance ? 1 : 0
 
   ami                  = var.ami
   instance_type        = var.instance_type
