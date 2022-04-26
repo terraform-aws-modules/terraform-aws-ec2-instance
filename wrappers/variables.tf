@@ -1,4 +1,4 @@
-variable "default" {
+variable "defaults" {
   description = "Map of default values. Used for each item."
   type        = any
   default     = {}
