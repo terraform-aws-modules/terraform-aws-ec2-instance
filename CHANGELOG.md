@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.6.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.5.0...v3.6.0) (2022-05-06)
+
+
+### Features
+
+* Added wrappers automatically generated via pre-commit hook ([#271](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/271)) ([6e8c541](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6e8c541b2d9b3fe54c9acc7f4d271648c5844c9b))
+
 ## [3.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.4.0...v3.5.0) (2022-03-12)
 
 
