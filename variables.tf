@@ -208,6 +208,12 @@ variable "user_data_base64" {
   default     = null
 }
 
+variable "user_data_replace_on_change" {
+  description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set."
+  type        = bool
+  default     = false
+}
+
 variable "volume_tags" {
   description = "A mapping of tags to assign to the devices created by the instance at launch time"
   type        = map(string)
