@@ -101,6 +101,7 @@ module "ec2_complete" {
   # enclave_options_enabled = true
 
   user_data_base64 = base64encode(local.user_data)
+  user_data_replace_on_change = true
 
   cpu_core_count       = 2 # default 4
   cpu_threads_per_core = 1 # default 2
