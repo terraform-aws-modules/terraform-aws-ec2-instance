@@ -71,6 +71,14 @@ jobs:
         id: minMax
         uses: clowdhaus/terraform-min-max@v1.0.3
 
+      - name: Install hcledit (for terraform_wrapper_module_for_each hook)
+        shell: bash
+        run: |
+          curl -L "$(curl -s https://api.github.com/repos/minamijoyo/hcledit/releases/latest | grep -o -E -m 1 "https://.+?_linux_amd64.tar.gz")" > hcledit.tgz
+          sudo tar -xzf hcledit.tgz -C /usr/bin/ hcledit
+          rm -f hcledit.tgz 2> /dev/null
+          hcledit version
+
       - name: Pre-commit Terraform ${{ steps.minMax.outputs.maxVersion }}
         uses: clowdhaus/terraform-composite-actions/pre-commit@v1.3.0
         with:
