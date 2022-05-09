@@ -38,6 +38,7 @@ module "wrapper" {
   tenancy                              = try(each.value.tenancy, var.defaults.tenancy, null)
   user_data                            = try(each.value.user_data, var.defaults.user_data, null)
   user_data_base64                     = try(each.value.user_data_base64, var.defaults.user_data_base64, null)
+  user_data_replace_on_change          = try(each.value.user_data_replace_on_change, var.defaults.user_data_replace_on_change, false)
   volume_tags                          = try(each.value.volume_tags, var.defaults.volume_tags, {})
   enable_volume_tags                   = try(each.value.enable_volume_tags, var.defaults.enable_volume_tags, true)
   vpc_security_group_ids               = try(each.value.vpc_security_group_ids, var.defaults.vpc_security_group_ids, null)
