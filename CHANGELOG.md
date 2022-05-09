@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.6.0...v4.0.0) (2022-05-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Add support for user_data_replace_on_change, and updated AWS provider to v4.7+ (#272)
+
+### Features
+
+* Add support for user_data_replace_on_change, and updated AWS provider to v4.7+ ([#272](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/272)) ([4d7f3d8](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/4d7f3d873b0d2be7361d439e62b872a895073342))
+
 ## [3.6.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.5.0...v3.6.0) (2022-05-06)
 
 
