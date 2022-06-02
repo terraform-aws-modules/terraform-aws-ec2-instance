@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.6.0...v4.0.0) (2022-05-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Add support for user_data_replace_on_change, and updated AWS provider to v4.7+ (#272)
+
+### Features
+
+* Add support for user_data_replace_on_change, and updated AWS provider to v4.7+ ([#272](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/272)) ([4d7f3d8](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/4d7f3d873b0d2be7361d439e62b872a895073342))
+
+## [3.6.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.5.0...v3.6.0) (2022-05-06)
+
+
+### Features
+
+* Added wrappers automatically generated via pre-commit hook ([#271](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/271)) ([6e8c541](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6e8c541b2d9b3fe54c9acc7f4d271648c5844c9b))
+
+## [3.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.4.0...v3.5.0) (2022-03-12)
+
+
+### Features
+
+* Made it clear that we stand with Ukraine ([6867788](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6867788411a202b61187f9935e9eaa72a18f0bbe))
+
 ## [3.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.3.0...v3.4.0) (2022-01-14)
 
 

@@ -1,17 +1,21 @@
 locals {
+  create = var.create && var.putin_khuylo
+
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
 }
 
 resource "aws_instance" "this" {
-  count = var.create && !var.create_spot_instance ? 1 : 0
+  count = local.create && !var.create_spot_instance ? 1 : 0
 
   ami                  = var.ami
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
-  user_data            = var.user_data
-  user_data_base64     = var.user_data_base64
   hibernation          = var.hibernation
+
+  user_data                   = var.user_data
+  user_data_base64            = var.user_data_base64
+  user_data_replace_on_change = var.user_data_replace_on_change
 
   availability_zone      = var.availability_zone
   subnet_id              = var.subnet_id
@@ -136,15 +140,17 @@ resource "aws_instance" "this" {
 }
 
 resource "aws_spot_instance_request" "this" {
-  count = var.create && var.create_spot_instance ? 1 : 0
+  count = local.create && var.create_spot_instance ? 1 : 0
 
   ami                  = var.ami
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
-  user_data            = var.user_data
-  user_data_base64     = var.user_data_base64
   hibernation          = var.hibernation
+
+  user_data                   = var.user_data
+  user_data_base64            = var.user_data_base64
+  user_data_replace_on_change = var.user_data_replace_on_change
 
   availability_zone      = var.availability_zone
   subnet_id              = var.subnet_id
