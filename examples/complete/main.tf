@@ -4,7 +4,7 @@ provider "aws" {
 
 locals {
   name   = "example-ec2-complete"
-  region = "us-east-1"
+  region = "eu-west-1"
 
   user_data = <<-EOT
   #!/bin/bash
