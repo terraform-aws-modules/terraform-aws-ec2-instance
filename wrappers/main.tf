@@ -54,5 +54,6 @@ module "wrapper" {
   spot_instance_interruption_behavior  = try(each.value.spot_instance_interruption_behavior, var.defaults.spot_instance_interruption_behavior, null)
   spot_valid_until                     = try(each.value.spot_valid_until, var.defaults.spot_valid_until, null)
   spot_valid_from                      = try(each.value.spot_valid_from, var.defaults.spot_valid_from, null)
+  disable_api_stop                     = try(each.value.disable_api_stop, var.defaults.disable_api_stop, null)
   putin_khuylo                         = try(each.value.putin_khuylo, var.defaults.putin_khuylo, true)
 }
