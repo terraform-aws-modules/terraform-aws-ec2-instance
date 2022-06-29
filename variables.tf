@@ -305,6 +305,12 @@ variable "spot_valid_from" {
   default     = null
 }
 
+variable "disable_api_stop" {
+  description = "If true, enables EC2 Instance Stop Protection."
+  type        = bool
+  default     = null
+
+}
 variable "putin_khuylo" {
   description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
   type        = bool
