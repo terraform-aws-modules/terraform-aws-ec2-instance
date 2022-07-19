@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.0.0...v4.1.0) (2022-07-19)
+
+
+### Features
+
+* Add support for `disable_api_stop` attribute ([#275](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/275)) ([cb367ec](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/cb367ec54e4386512e37b8ef0b8d01c78f589fb1))
+
 ## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.6.0...v4.0.0) (2022-05-09)
 
 
