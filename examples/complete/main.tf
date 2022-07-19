@@ -95,6 +95,7 @@ module "ec2_complete" {
   vpc_security_group_ids      = [module.security_group.security_group_id]
   placement_group             = aws_placement_group.web.id
   associate_public_ip_address = true
+  disable_api_stop            = false
 
   # only one of these can be enabled at a time
   hibernation = true
