@@ -42,7 +42,7 @@ resource "aws_instance" "this" {
       dynamic "capacity_reservation_target" {
         for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
         content {
-          capacity_reservation_id = lookup(capacity_reservation_target.value, "capacity_reservation_id", null)
+          capacity_reservation_id = lookup(capacity_reservation_target, "capacity_reservation_id", null)
         }
       }
     }
