@@ -345,10 +345,10 @@ module "ec2_capacity_reservation" {
   associate_public_ip_address = true
 
   capacity_reservation_specification = {
-      capacity_reservation_target = {
-        capacity_reservation_id = "cr-00000000000000000"
-      }
+    capacity_reservation_target = {
+      capacity_reservation_id = "cr-00000000000000000"
     }
+  }
 
   tags = local.tags
 }
