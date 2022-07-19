@@ -328,3 +328,27 @@ module "ec2_spot_instance" {
 
   tags = local.tags
 }
+
+################################################################################
+# EC2 Module - Capacity Reservation
+################################################################################
+
+module "ec2_capacity_reservation" {
+  source = "../../"
+
+  name = "${local.name}-capacity-reservation"
+
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "u-6tb1.56xlarge"
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  associate_public_ip_address = true
+
+  capacity_reservation_specification = {
+      capacity_reservation_target = {
+        capacity_reservation_id = "cr-00000000000000000"
+      }
+    }
+
+  tags = local.tags
+}
