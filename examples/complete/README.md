@@ -32,6 +32,7 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_ec2_capacity_reservation"></a> [ec2\_capacity\_reservation](#module\_ec2\_capacity\_reservation) | ../../ | n/a |
 | <a name="module_ec2_complete"></a> [ec2\_complete](#module\_ec2\_complete) | ../../ | n/a |
 | <a name="module_ec2_disabled"></a> [ec2\_disabled](#module\_ec2\_disabled) | ../../ | n/a |
 | <a name="module_ec2_metadata_options"></a> [ec2\_metadata\_options](#module\_ec2\_metadata\_options) | ../../ | n/a |
@@ -47,6 +48,7 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Type |
 |------|------|
+| [aws_ec2_capacity_reservation.targeted](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_capacity_reservation) | resource |
 | [aws_kms_key.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_network_interface.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface) | resource |
 | [aws_placement_group.web](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/placement_group) | resource |

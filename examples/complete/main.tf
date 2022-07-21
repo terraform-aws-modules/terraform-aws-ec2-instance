@@ -73,9 +73,17 @@ resource "aws_network_interface" "this" {
   subnet_id = element(module.vpc.private_subnets, 0)
 }
 
-################################################################################
-# EC2 Module
-################################################################################
+resource "aws_ec2_capacity_reservation" "targeted" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "targeted"
+}
+
+# ################################################################################
+# # EC2 Module
+# ################################################################################
 
 module "ec2_disabled" {
   source = "../../"
@@ -325,6 +333,30 @@ module "ec2_spot_instance" {
       # kms_key_id  = aws_kms_key.this.arn # you must grant the AWSServiceRoleForEC2Spot service-linked role access to any custom KMS keys
     }
   ]
+
+  tags = local.tags
+}
+
+################################################################################
+# EC2 Module - Capacity Reservation
+################################################################################
+
+module "ec2_capacity_reservation" {
+  source = "../../"
+
+  name = "${local.name}-capacity-reservation"
+
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "t3.micro"
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  associate_public_ip_address = true
+
+  capacity_reservation_specification = {
+    capacity_reservation_target = {
+      capacity_reservation_id = aws_ec2_capacity_reservation.targeted.id
+    }
+  }
 
   tags = local.tags
 }
