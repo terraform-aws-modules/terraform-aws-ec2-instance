@@ -347,7 +347,7 @@ module "ec2_capacity_reservation" {
   name = "${local.name}-capacity-reservation"
 
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "m6i.2xlarge"
+  instance_type               = "t3.micro"
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
