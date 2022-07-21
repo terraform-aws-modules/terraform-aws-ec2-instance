@@ -74,7 +74,7 @@ resource "aws_network_interface" "this" {
 }
 
 resource "aws_ec2_capacity_reservation" "targeted" {
-  instance_type           = "m6i.2xlarge"
+  instance_type           = "t3.micro"
   instance_platform       = "Linux/UNIX"
   availability_zone       = "${local.region}a"
   instance_count          = 1
