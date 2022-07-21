@@ -26,7 +26,7 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.22.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.7 |
 
 ## Modules
 
@@ -101,3 +101,4 @@ No inputs.
 | <a name="output_spot_bid_status"></a> [spot\_bid\_status](#output\_spot\_bid\_status) | The current bid status of the Spot Instance Request |
 | <a name="output_spot_instance_id"></a> [spot\_instance\_id](#output\_spot\_instance\_id) | The Instance ID (if any) that is currently fulfilling the Spot Instance request |
 | <a name="output_spot_request_state"></a> [spot\_request\_state](#output\_spot\_request\_state) | The current request state of the Spot Instance Request |
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
