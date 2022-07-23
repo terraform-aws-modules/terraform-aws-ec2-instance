@@ -73,17 +73,17 @@ resource "aws_network_interface" "this" {
   subnet_id = element(module.vpc.private_subnets, 0)
 }
 
-resource "aws_ec2_capacity_reservation" "targeted" {
+resource "aws_ec2_capacity_reservation" "open" {
   instance_type           = "t3.micro"
   instance_platform       = "Linux/UNIX"
   availability_zone       = "${local.region}a"
   instance_count          = 1
-  instance_match_criteria = "targeted"
+  instance_match_criteria = "open"
 }
 
-# ################################################################################
-# # EC2 Module
-# ################################################################################
+# # ################################################################################
+# # # EC2 Module
+# # ################################################################################
 
 module "ec2_disabled" {
   source = "../../"
@@ -350,11 +350,11 @@ module "ec2_capacity_reservation" {
   instance_type               = "t3.micro"
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
-  associate_public_ip_address = true
+  associate_public_ip_address = false
 
   capacity_reservation_specification = {
     capacity_reservation_target = {
-      capacity_reservation_id = aws_ec2_capacity_reservation.targeted.id
+      capacity_reservation_id = aws_ec2_capacity_reservation.open.id
     }
   }
 
