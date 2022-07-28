@@ -81,6 +81,14 @@ resource "aws_ec2_capacity_reservation" "open" {
   instance_match_criteria = "open"
 }
 
+resource "aws_ec2_capacity_reservation" "targeted" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "targeted"
+}
+
 # # ################################################################################
 # # # EC2 Module
 # # ################################################################################
@@ -341,10 +349,10 @@ module "ec2_spot_instance" {
 # EC2 Module - Capacity Reservation
 ################################################################################
 
-module "ec2_capacity_reservation" {
+module "ec2_open_capacity_reservation" {
   source = "../../"
 
-  name = "${local.name}-capacity-reservation"
+  name = "${local.name}-open-capacity-reservation"
 
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.micro"
@@ -355,6 +363,26 @@ module "ec2_capacity_reservation" {
   capacity_reservation_specification = {
     capacity_reservation_target = {
       capacity_reservation_id = aws_ec2_capacity_reservation.open.id
+    }
+  }
+
+  tags = local.tags
+}
+
+module "ec2_targeted_capacity_reservation" {
+  source = "../../"
+
+  name = "${local.name}-targeted-capacity-reservation"
+
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "t3.micro"
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  associate_public_ip_address = false
+
+  capacity_reservation_specification = {
+    capacity_reservation_target = {
+      capacity_reservation_id = aws_ec2_capacity_reservation.targeted.id
     }
   }
 
