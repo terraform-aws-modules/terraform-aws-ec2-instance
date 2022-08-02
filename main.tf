@@ -99,6 +99,7 @@ resource "aws_instance" "this" {
 
   lifecycle {
     ignore_changes = [
+      ami,
       key_name,
       user_data,
       ebs_optimized
