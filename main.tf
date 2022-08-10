@@ -42,7 +42,7 @@ resource "aws_instance" "this" {
       dynamic "capacity_reservation_target" {
         for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
         content {
-          capacity_reservation_id = lookup(capacity_reservation_target, "capacity_reservation_id", null)
+          capacity_reservation_id = lookup(capacity_reservation_specification.value.capacity_reservation_target, "capacity_reservation_id", null)
         }
       }
     }
@@ -182,14 +182,15 @@ resource "aws_spot_instance_request" "this" {
   # End spot request specific attributes
 
   dynamic "capacity_reservation_specification" {
-    for_each = var.capacity_reservation_specification != null ? [var.capacity_reservation_specification] : []
+    for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
     content {
-      capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", null)
+      capacity_reservation_preference = try(capacity_reservation_specification.value.capacity_reservation_preference, null)
 
       dynamic "capacity_reservation_target" {
-        for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
+        for_each = try([capacity_reservation_specification.value.capacity_reservation_target], [])
         content {
-          capacity_reservation_id = lookup(capacity_reservation_target.value, "capacity_reservation_id", null)
+          capacity_reservation_id                 = try(capacity_reservation_target.value.capacity_reservation_id, null)
+          capacity_reservation_resource_group_arn = try(capacity_reservation_target.value.capacity_reservation_resource_group_arn, null)
         }
       }
     }
