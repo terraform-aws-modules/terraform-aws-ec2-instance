@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.1.3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.2...v4.1.3) (2022-08-12)
+
+
+### Bug Fixes
+
+* The capacity_reservation_specification default value is updated from null to {} ([#285](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/285)) ([9af6601](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/9af6601abbcfe06fc907ea1eb3abffe30d26daf2))
+
 ### [4.1.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.1...v4.1.2) (2022-08-10)
 
 
