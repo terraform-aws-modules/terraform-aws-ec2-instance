@@ -31,7 +31,7 @@ variable "availability_zone" {
 variable "capacity_reservation_specification" {
   description = "Describes an instance's Capacity Reservation targeting option"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "cpu_credits" {
