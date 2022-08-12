@@ -8,7 +8,7 @@ module "wrapper" {
   ami                                  = try(each.value.ami, var.defaults.ami, "")
   associate_public_ip_address          = try(each.value.associate_public_ip_address, var.defaults.associate_public_ip_address, null)
   availability_zone                    = try(each.value.availability_zone, var.defaults.availability_zone, null)
-  capacity_reservation_specification   = try(each.value.capacity_reservation_specification, var.defaults.capacity_reservation_specification, null)
+  capacity_reservation_specification   = try(each.value.capacity_reservation_specification, var.defaults.capacity_reservation_specification, {})
   cpu_credits                          = try(each.value.cpu_credits, var.defaults.cpu_credits, null)
   disable_api_termination              = try(each.value.disable_api_termination, var.defaults.disable_api_termination, null)
   ebs_block_device                     = try(each.value.ebs_block_device, var.defaults.ebs_block_device, [])
