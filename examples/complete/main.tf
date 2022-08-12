@@ -18,80 +18,8 @@ locals {
 }
 
 ################################################################################
-# Supporting Resources
+# EC2 Module
 ################################################################################
-
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
-
-  name = local.name
-  cidr = "10.99.0.0/18"
-
-  azs              = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  public_subnets   = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets  = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
-  database_subnets = ["10.99.7.0/24", "10.99.8.0/24", "10.99.9.0/24"]
-
-  tags = local.tags
-}
-
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-hvm-*-x86_64-gp2"]
-  }
-}
-
-module "security_group" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.0"
-
-  name        = local.name
-  description = "Security group for example usage with EC2 instance"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["http-80-tcp", "all-icmp"]
-  egress_rules        = ["all-all"]
-
-  tags = local.tags
-}
-
-resource "aws_placement_group" "web" {
-  name     = local.name
-  strategy = "cluster"
-}
-
-resource "aws_kms_key" "this" {
-}
-
-resource "aws_network_interface" "this" {
-  subnet_id = element(module.vpc.private_subnets, 0)
-}
-
-resource "aws_ec2_capacity_reservation" "open" {
-  instance_type           = "t3.micro"
-  instance_platform       = "Linux/UNIX"
-  availability_zone       = "${local.region}a"
-  instance_count          = 1
-  instance_match_criteria = "open"
-}
-
-resource "aws_ec2_capacity_reservation" "targeted" {
-  instance_type           = "t3.micro"
-  instance_platform       = "Linux/UNIX"
-  availability_zone       = "${local.region}a"
-  instance_count          = 1
-  instance_match_criteria = "targeted"
-}
-
-# # ################################################################################
-# # # EC2 Module
-# # ################################################################################
 
 module "ec2_disabled" {
   source = "../../"
@@ -122,10 +50,6 @@ module "ec2_complete" {
 
   cpu_core_count       = 2 # default 4
   cpu_threads_per_core = 1 # default 2
-
-  capacity_reservation_specification = {
-    capacity_reservation_preference = "open"
-  }
 
   enable_volume_tags = false
   root_block_device = [
@@ -295,15 +219,13 @@ module "ec2_spot_instance" {
   create_spot_instance = true
 
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c4.4xlarge"
   availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
-  placement_group             = aws_placement_group.web.id
   associate_public_ip_address = true
 
   # Spot request specific attributes
-  spot_price                          = "0.60"
+  spot_price                          = "0.1"
   spot_wait_for_fulfillment           = true
   spot_type                           = "persistent"
   spot_instance_interruption_behavior = "terminate"
@@ -314,9 +236,6 @@ module "ec2_spot_instance" {
   cpu_core_count       = 2 # default 4
   cpu_threads_per_core = 1 # default 2
 
-  capacity_reservation_specification = {
-    capacity_reservation_preference = "open"
-  }
 
   enable_volume_tags = false
   root_block_device = [
@@ -387,4 +306,76 @@ module "ec2_targeted_capacity_reservation" {
   }
 
   tags = local.tags
+}
+
+################################################################################
+# Supporting Resources
+################################################################################
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 3.0"
+
+  name = local.name
+  cidr = "10.99.0.0/18"
+
+  azs              = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  public_subnets   = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
+  private_subnets  = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
+  database_subnets = ["10.99.7.0/24", "10.99.8.0/24", "10.99.9.0/24"]
+
+  tags = local.tags
+}
+
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+module "security_group" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 4.0"
+
+  name        = local.name
+  description = "Security group for example usage with EC2 instance"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_rules       = ["http-80-tcp", "all-icmp"]
+  egress_rules        = ["all-all"]
+
+  tags = local.tags
+}
+
+resource "aws_placement_group" "web" {
+  name     = local.name
+  strategy = "cluster"
+}
+
+resource "aws_kms_key" "this" {
+}
+
+resource "aws_network_interface" "this" {
+  subnet_id = element(module.vpc.private_subnets, 0)
+}
+
+resource "aws_ec2_capacity_reservation" "open" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "open"
+}
+
+resource "aws_ec2_capacity_reservation" "targeted" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "targeted"
 }
