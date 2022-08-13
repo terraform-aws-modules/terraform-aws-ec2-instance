@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.1.4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.3...v4.1.4) (2022-08-13)
+
+
+### Bug Fixes
+
+* Correct capacity reservation target ([#288](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/288)) ([135145e](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/135145e252c69814c019da49c638973f93523f6a))
+
 ### [4.1.3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.2...v4.1.3) (2022-08-12)
 
 
