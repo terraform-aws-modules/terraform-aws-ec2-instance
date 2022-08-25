@@ -214,6 +214,12 @@ variable "user_data_replace_on_change" {
   default     = false
 }
 
+variable "ebs_volume_attachments" {
+  description = "A list of permanent EBS volumes to attach to the instance at launch time"
+  type        = list(map(string))
+  default     = []
+}
+
 variable "volume_tags" {
   description = "A mapping of tags to assign to the devices created by the instance at launch time"
   type        = map(string)

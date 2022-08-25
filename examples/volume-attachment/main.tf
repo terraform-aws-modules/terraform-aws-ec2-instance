@@ -72,13 +72,14 @@ module "ec2" {
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
-  tags = local.tags
-}
+  ebs_volume_attachments = [
+    {
+      device_name = "/dev/sdh"
+      volume_id   = aws_ebs_volume.this.id
+    }
+  ]
 
-resource "aws_volume_attachment" "this" {
-  device_name = "/dev/sdh"
-  volume_id   = aws_ebs_volume.this.id
-  instance_id = module.ec2.id
+  tags = local.tags
 }
 
 resource "aws_ebs_volume" "this" {

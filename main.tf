@@ -141,6 +141,19 @@ resource "aws_instance" "this" {
   volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
 }
 
+resource "aws_volume_attachment" "this" {
+  count = (!var.create_spot_instance ? length(var.ebs_volume_attachments) : 0)
+
+  device_name = var.ebs_volume_attachments[count.index].device_name
+  volume_id   = var.ebs_volume_attachments[count.index].volume_id
+  instance_id = aws_instance.this[0].id
+
+  # Not sure if I really need this
+  depends_on = [
+    aws_instance.this
+  ]
+}
+
 resource "aws_spot_instance_request" "this" {
   count = local.create && var.create_spot_instance ? 1 : 0
 
