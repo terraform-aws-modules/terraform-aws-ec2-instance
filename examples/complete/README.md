@@ -41,6 +41,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | <a name="module_ec2_spot_instance"></a> [ec2\_spot\_instance](#module\_ec2\_spot\_instance) | ../../ | n/a |
 | <a name="module_ec2_t2_unlimited"></a> [ec2\_t2\_unlimited](#module\_ec2\_t2\_unlimited) | ../../ | n/a |
 | <a name="module_ec2_t3_unlimited"></a> [ec2\_t3\_unlimited](#module\_ec2\_t3\_unlimited) | ../../ | n/a |
+| <a name="module_ec2_t4g_standard"></a> [ec2\_t4g\_standard](#module\_ec2\_t4g\_standard) | ../../ | n/a |
 | <a name="module_ec2_targeted_capacity_reservation"></a> [ec2\_targeted\_capacity\_reservation](#module\_ec2\_targeted\_capacity\_reservation) | ../../ | n/a |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
@@ -55,6 +56,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | [aws_network_interface.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface) | resource |
 | [aws_placement_group.web](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/placement_group) | resource |
 | [aws_ami.amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.amazon_linux2_arm64](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 
 ## Inputs
 
