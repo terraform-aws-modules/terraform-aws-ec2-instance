@@ -147,6 +147,21 @@ module "ec2_t3_unlimited" {
   tags = local.tags
 }
 
+module "ec2_t4g_standard" {
+  source = "../../"
+
+  name = "${local.name}-t4g-standard"
+
+  ami                         = data.aws_ami.amazon_linux2_arm64.id
+  instance_type               = "t4g.micro"
+  cpu_credits                 = "standard"
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  associate_public_ip_address = true
+
+  tags = local.tags
+}
+
 ################################################################################
 # EC2 Module - multiple instances with `for_each`
 ################################################################################
@@ -334,6 +349,16 @@ data "aws_ami" "amazon_linux" {
   filter {
     name   = "name"
     values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+data "aws_ami" "amazon_linux2_arm64" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-*-hvm-*-arm64-gp2"]
   }
 }
 
