@@ -1,7 +1,14 @@
 locals {
   create = var.create && var.putin_khuylo
 
-  is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
+  is_t_instance_type = contains(data.aws_ec2_instance_types.burstable_types.instance_types, var.instance_type)
+}
+
+data "aws_ec2_instance_types" "burstable_types" {
+  filter {
+    name   = "burstable-performance-supported"
+    values = ["true"]
+  }
 }
 
 resource "aws_instance" "this" {
