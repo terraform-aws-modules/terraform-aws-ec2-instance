@@ -4,6 +4,8 @@ repos:
     hooks:
       - id: terraform_fmt
       - id: terraform_wrapper_module_for_each
+        args:
+          - '--args=--module-repo-shortname=ec2-instance'
       - id: terraform_validate
       - id: terraform_docs
         args:
