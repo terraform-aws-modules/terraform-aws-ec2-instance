@@ -6,6 +6,12 @@ locals {
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
 }
 
+data "aws_ssm_parameter" "this" {
+  count = local.create ? 1 : 0
+
+  name = var.ami_ssm_parameter
+}
+
 ################################################################################
 # Instance
 ################################################################################
@@ -13,7 +19,7 @@ locals {
 resource "aws_instance" "this" {
   count = local.create && !var.create_spot_instance ? 1 : 0
 
-  ami                  = var.ami
+  ami                  = try(coalesce(var.ami, data.aws_ssm_parameter.this[0].value), null)
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
@@ -154,7 +160,7 @@ resource "aws_instance" "this" {
 resource "aws_spot_instance_request" "this" {
   count = local.create && var.create_spot_instance ? 1 : 0
 
-  ami                  = var.ami
+  ami                  = try(coalesce(var.ami, data.aws_ssm_parameter.this[0].value), null)
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core

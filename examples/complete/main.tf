@@ -33,7 +33,7 @@ module "ec2_complete" {
   name = local.name
 
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c5.4xlarge"
+  instance_type               = "c5.xlarge" # used to set core count below
   availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
@@ -89,9 +89,6 @@ module "ec2_network_interface" {
 
   name = "${local.name}-network-interface"
 
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "c5.large"
-
   network_interface = [
     {
       device_index          = 0
@@ -108,8 +105,6 @@ module "ec2_metadata_options" {
 
   name = "${local.name}-metadata-options"
 
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "c5.4xlarge"
   subnet_id              = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids = [module.security_group.security_group_id]
 
@@ -128,7 +123,6 @@ module "ec2_t2_unlimited" {
 
   name = "${local.name}-t2-unlimited"
 
-  ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.micro"
   cpu_credits                 = "unlimited"
   subnet_id                   = element(module.vpc.private_subnets, 0)
@@ -143,7 +137,6 @@ module "ec2_t3_unlimited" {
 
   name = "${local.name}-t3-unlimited"
 
-  ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.micro"
   cpu_credits                 = "unlimited"
   subnet_id                   = element(module.vpc.private_subnets, 0)
@@ -202,7 +195,6 @@ module "ec2_multiple" {
 
   name = "${local.name}-multi-${each.key}"
 
-  ami                    = data.aws_ami.amazon_linux.id
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
@@ -224,7 +216,6 @@ module "ec2_spot_instance" {
   name                 = "${local.name}-spot-instance"
   create_spot_instance = true
 
-  ami                         = data.aws_ami.amazon_linux.id
   availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
@@ -314,6 +305,22 @@ module "ec2_targeted_capacity_reservation" {
   tags = local.tags
 }
 
+resource "aws_ec2_capacity_reservation" "open" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "open"
+}
+
+resource "aws_ec2_capacity_reservation" "targeted" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "targeted"
+}
+
 ################################################################################
 # Supporting Resources
 ################################################################################
@@ -368,20 +375,4 @@ resource "aws_kms_key" "this" {
 
 resource "aws_network_interface" "this" {
   subnet_id = element(module.vpc.private_subnets, 0)
-}
-
-resource "aws_ec2_capacity_reservation" "open" {
-  instance_type           = "t3.micro"
-  instance_platform       = "Linux/UNIX"
-  availability_zone       = "${local.region}a"
-  instance_count          = 1
-  instance_match_criteria = "open"
-}
-
-resource "aws_ec2_capacity_reservation" "targeted" {
-  instance_type           = "t3.micro"
-  instance_platform       = "Linux/UNIX"
-  availability_zone       = "${local.region}a"
-  instance_count          = 1
-  instance_match_criteria = "targeted"
 }

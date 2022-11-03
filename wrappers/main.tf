@@ -5,7 +5,8 @@ module "wrapper" {
 
   create                               = try(each.value.create, var.defaults.create, true)
   name                                 = try(each.value.name, var.defaults.name, "")
-  ami                                  = try(each.value.ami, var.defaults.ami, "")
+  ami_ssm_parameter                    = try(each.value.ami_ssm_parameter, var.defaults.ami_ssm_parameter, "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2")
+  ami                                  = try(each.value.ami, var.defaults.ami, null)
   associate_public_ip_address          = try(each.value.associate_public_ip_address, var.defaults.associate_public_ip_address, null)
   availability_zone                    = try(each.value.availability_zone, var.defaults.availability_zone, null)
   capacity_reservation_specification   = try(each.value.capacity_reservation_specification, var.defaults.capacity_reservation_specification, {})
