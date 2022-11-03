@@ -44,6 +44,36 @@ output "ec2_complete_tags_all" {
   value       = module.ec2_complete.tags_all
 }
 
+output "ec2_complete_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.ec2_complete.iam_role_name
+}
+
+output "ec2_complete_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.ec2_complete.iam_role_arn
+}
+
+output "ec2_complete_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.ec2_complete.iam_role_unique_id
+}
+
+output "ec2_complete_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.ec2_complete.iam_instance_profile_arn
+}
+
+output "ec2_complete_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.ec2_complete.iam_instance_profile_id
+}
+
+output "ec2_complete_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.ec2_complete.iam_instance_profile_unique
+}
+
 # EC2 T2 Unlimited
 output "ec2_t2_unlimited_id" {
   description = "The ID of the instance"

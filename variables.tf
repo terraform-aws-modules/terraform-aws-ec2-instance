@@ -316,3 +316,49 @@ variable "putin_khuylo" {
   type        = bool
   default     = true
 }
+
+################################################################################
+# IAM Role / Instance Profile
+################################################################################
+
+variable "create_iam_instance_profile" {
+  description = "Determines whether an IAM instance profile is created or to use an existing IAM instance profile"
+  type        = bool
+  default     = false
+}
+
+variable "iam_role_name" {
+  description = "Name to use on IAM role created"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_use_name_prefix" {
+  description = "Determines whether the IAM role name (`iam_role_name` or `name`) is used as a prefix"
+  type        = bool
+  default     = true
+}
+
+variable "iam_role_path" {
+  description = "IAM role path"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_description" {
+  description = "Description of the role"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_permissions_boundary" {
+  description = "ARN of the policy that is used to set the permissions boundary for the IAM role"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_policies" {
+  description = "Policies attached to the IAM role"
+  type        = map(string)
+  default     = {}
+}

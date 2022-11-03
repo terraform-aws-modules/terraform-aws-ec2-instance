@@ -66,6 +66,12 @@ No inputs.
 |------|-------------|
 | <a name="output_ec2_complete_arn"></a> [ec2\_complete\_arn](#output\_ec2\_complete\_arn) | The ARN of the instance |
 | <a name="output_ec2_complete_capacity_reservation_specification"></a> [ec2\_complete\_capacity\_reservation\_specification](#output\_ec2\_complete\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ec2_complete_iam_instance_profile_arn"></a> [ec2\_complete\_iam\_instance\_profile\_arn](#output\_ec2\_complete\_iam\_instance\_profile\_arn) | ARN assigned by AWS to the instance profile |
+| <a name="output_ec2_complete_iam_instance_profile_id"></a> [ec2\_complete\_iam\_instance\_profile\_id](#output\_ec2\_complete\_iam\_instance\_profile\_id) | Instance profile's ID |
+| <a name="output_ec2_complete_iam_instance_profile_unique"></a> [ec2\_complete\_iam\_instance\_profile\_unique](#output\_ec2\_complete\_iam\_instance\_profile\_unique) | Stable and unique string identifying the IAM instance profile |
+| <a name="output_ec2_complete_iam_role_arn"></a> [ec2\_complete\_iam\_role\_arn](#output\_ec2\_complete\_iam\_role\_arn) | The Amazon Resource Name (ARN) specifying the IAM role |
+| <a name="output_ec2_complete_iam_role_name"></a> [ec2\_complete\_iam\_role\_name](#output\_ec2\_complete\_iam\_role\_name) | The name of the IAM role |
+| <a name="output_ec2_complete_iam_role_unique_id"></a> [ec2\_complete\_iam\_role\_unique\_id](#output\_ec2\_complete\_iam\_role\_unique\_id) | Stable and unique string identifying the IAM role |
 | <a name="output_ec2_complete_id"></a> [ec2\_complete\_id](#output\_ec2\_complete\_id) | The ID of the instance |
 | <a name="output_ec2_complete_instance_state"></a> [ec2\_complete\_instance\_state](#output\_ec2\_complete\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
 | <a name="output_ec2_complete_primary_network_interface_id"></a> [ec2\_complete\_primary\_network\_interface\_id](#output\_ec2\_complete\_primary\_network\_interface\_id) | The ID of the instance's primary network interface |
