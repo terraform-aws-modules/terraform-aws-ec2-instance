@@ -336,7 +336,7 @@ resource "aws_iam_role" "this" {
   permissions_boundary  = var.iam_role_permissions_boundary
   force_detach_policies = true
 
-  tags = var.tags
+  tags = merge(var.tags, var.iam_role_tags)
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
@@ -355,7 +355,7 @@ resource "aws_iam_instance_profile" "this" {
   name_prefix = var.iam_role_use_name_prefix ? "${local.iam_role_name}-" : null
   path        = var.iam_role_path
 
-  tags = var.tags
+  tags = merge(var.tags, var.iam_role_tags)
 
   lifecycle {
     create_before_destroy = true

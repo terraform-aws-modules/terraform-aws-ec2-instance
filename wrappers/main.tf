@@ -64,4 +64,5 @@ module "wrapper" {
   iam_role_description                 = try(each.value.iam_role_description, var.defaults.iam_role_description, null)
   iam_role_permissions_boundary        = try(each.value.iam_role_permissions_boundary, var.defaults.iam_role_permissions_boundary, null)
   iam_role_policies                    = try(each.value.iam_role_policies, var.defaults.iam_role_policies, {})
+  iam_role_tags                        = try(each.value.iam_role_tags, var.defaults.iam_role_tags, {})
 }

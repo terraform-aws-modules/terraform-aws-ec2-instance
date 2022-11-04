@@ -368,3 +368,9 @@ variable "iam_role_policies" {
   type        = map(string)
   default     = {}
 }
+
+variable "iam_role_tags" {
+  description = "A map of additional tags to add to the IAM role/profile created"
+  type        = map(string)
+  default     = {}
+}
