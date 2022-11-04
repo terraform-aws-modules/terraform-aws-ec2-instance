@@ -5,7 +5,8 @@ module "wrapper" {
 
   create                               = try(each.value.create, var.defaults.create, true)
   name                                 = try(each.value.name, var.defaults.name, "")
-  ami                                  = try(each.value.ami, var.defaults.ami, "")
+  ami_ssm_parameter                    = try(each.value.ami_ssm_parameter, var.defaults.ami_ssm_parameter, "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2")
+  ami                                  = try(each.value.ami, var.defaults.ami, null)
   associate_public_ip_address          = try(each.value.associate_public_ip_address, var.defaults.associate_public_ip_address, null)
   availability_zone                    = try(each.value.availability_zone, var.defaults.availability_zone, null)
   capacity_reservation_specification   = try(each.value.capacity_reservation_specification, var.defaults.capacity_reservation_specification, {})
@@ -56,4 +57,12 @@ module "wrapper" {
   spot_valid_from                      = try(each.value.spot_valid_from, var.defaults.spot_valid_from, null)
   disable_api_stop                     = try(each.value.disable_api_stop, var.defaults.disable_api_stop, null)
   putin_khuylo                         = try(each.value.putin_khuylo, var.defaults.putin_khuylo, true)
+  create_iam_instance_profile          = try(each.value.create_iam_instance_profile, var.defaults.create_iam_instance_profile, false)
+  iam_role_name                        = try(each.value.iam_role_name, var.defaults.iam_role_name, null)
+  iam_role_use_name_prefix             = try(each.value.iam_role_use_name_prefix, var.defaults.iam_role_use_name_prefix, true)
+  iam_role_path                        = try(each.value.iam_role_path, var.defaults.iam_role_path, null)
+  iam_role_description                 = try(each.value.iam_role_description, var.defaults.iam_role_description, null)
+  iam_role_permissions_boundary        = try(each.value.iam_role_permissions_boundary, var.defaults.iam_role_permissions_boundary, null)
+  iam_role_policies                    = try(each.value.iam_role_policies, var.defaults.iam_role_policies, {})
+  iam_role_tags                        = try(each.value.iam_role_tags, var.defaults.iam_role_tags, {})
 }

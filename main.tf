@@ -1,13 +1,25 @@
+data "aws_partition" "current" {}
+
 locals {
   create = var.create && var.putin_khuylo
 
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
 }
 
+data "aws_ssm_parameter" "this" {
+  count = local.create ? 1 : 0
+
+  name = var.ami_ssm_parameter
+}
+
+################################################################################
+# Instance
+################################################################################
+
 resource "aws_instance" "this" {
   count = local.create && !var.create_spot_instance ? 1 : 0
 
-  ami                  = var.ami
+  ami                  = try(coalesce(var.ami, data.aws_ssm_parameter.this[0].value), null)
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
@@ -24,7 +36,7 @@ resource "aws_instance" "this" {
   key_name             = var.key_name
   monitoring           = var.monitoring
   get_password_data    = var.get_password_data
-  iam_instance_profile = var.iam_instance_profile
+  iam_instance_profile = var.create_iam_instance_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
 
   associate_public_ip_address = var.associate_public_ip_address
   private_ip                  = var.private_ip
@@ -141,10 +153,14 @@ resource "aws_instance" "this" {
   volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
 }
 
+################################################################################
+# Spot Instance
+################################################################################
+
 resource "aws_spot_instance_request" "this" {
   count = local.create && var.create_spot_instance ? 1 : 0
 
-  ami                  = var.ami
+  ami                  = try(coalesce(var.ami, data.aws_ssm_parameter.this[0].value), null)
   instance_type        = var.instance_type
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
@@ -161,7 +177,7 @@ resource "aws_spot_instance_request" "this" {
   key_name             = var.key_name
   monitoring           = var.monitoring
   get_password_data    = var.get_password_data
-  iam_instance_profile = var.iam_instance_profile
+  iam_instance_profile = var.create_iam_instance_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
 
   associate_public_ip_address = var.associate_public_ip_address
   private_ip                  = var.private_ip
@@ -284,4 +300,64 @@ resource "aws_spot_instance_request" "this" {
 
   tags        = merge({ "Name" = var.name }, var.tags)
   volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+}
+
+################################################################################
+# IAM Role / Instance Profile
+################################################################################
+
+locals {
+  iam_role_name = try(coalesce(var.iam_role_name, var.name), "")
+}
+
+data "aws_iam_policy_document" "assume_role_policy" {
+  count = var.create && var.create_iam_instance_profile ? 1 : 0
+
+  statement {
+    sid     = "EC2AssumeRole"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.${data.aws_partition.current.dns_suffix}"]
+    }
+  }
+}
+
+resource "aws_iam_role" "this" {
+  count = var.create && var.create_iam_instance_profile ? 1 : 0
+
+  name        = var.iam_role_use_name_prefix ? null : local.iam_role_name
+  name_prefix = var.iam_role_use_name_prefix ? "${local.iam_role_name}-" : null
+  path        = var.iam_role_path
+  description = var.iam_role_description
+
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy[0].json
+  permissions_boundary  = var.iam_role_permissions_boundary
+  force_detach_policies = true
+
+  tags = merge(var.tags, var.iam_role_tags)
+}
+
+resource "aws_iam_role_policy_attachment" "this" {
+  for_each = { for k, v in var.iam_role_policies : k => v if var.create && var.create_iam_instance_profile }
+
+  policy_arn = each.value
+  role       = aws_iam_role.this[0].name
+}
+
+resource "aws_iam_instance_profile" "this" {
+  count = var.create && var.create_iam_instance_profile ? 1 : 0
+
+  role = aws_iam_role.this[0].name
+
+  name        = var.iam_role_use_name_prefix ? null : local.iam_role_name
+  name_prefix = var.iam_role_use_name_prefix ? "${local.iam_role_name}-" : null
+  path        = var.iam_role_path
+
+  tags = merge(var.tags, var.iam_role_tags)
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
