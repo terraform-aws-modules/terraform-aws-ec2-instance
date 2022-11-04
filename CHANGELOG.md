@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.4...v4.2.0) (2022-11-04)
+
+
+### Features
+
+* Add support for creating IAM role/instance profile with policies ([#302](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/302)) ([787132e](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/787132e5dbe7b58e4b9a62e1a69a682bcbb9bd58))
+
 ### [4.1.4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.3...v4.1.4) (2022-08-13)
 
 
