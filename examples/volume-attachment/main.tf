@@ -66,7 +66,7 @@ module "ec2" {
   name = local.name
 
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c5.large"
+  instance_type               = "t3.micro"
   availability_zone           = local.availability_zone
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
