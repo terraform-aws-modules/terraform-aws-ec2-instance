@@ -127,6 +127,13 @@ resource "aws_instance" "this" {
     }
   }
 
+  dynamic "maintenance_options" {
+    for_each = var.auto_recovery != null ? [var.auto_recovery] : []
+    content {
+      auto_recovery = var.auto_recovery
+    }
+  }
+
   enclave_options {
     enabled = var.enclave_options_enabled
   }

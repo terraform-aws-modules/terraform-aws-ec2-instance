@@ -129,6 +129,8 @@ module "ec2_t2_unlimited" {
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
+  auto_recovery = "disabled"
+
   tags = local.tags
 }
 
@@ -232,7 +234,6 @@ module "ec2_spot_instance" {
 
   cpu_core_count       = 2 # default 4
   cpu_threads_per_core = 1 # default 2
-
 
   enable_volume_tags = false
   root_block_device = [
