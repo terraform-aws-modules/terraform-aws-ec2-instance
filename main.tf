@@ -128,9 +128,9 @@ resource "aws_instance" "this" {
   }
 
   dynamic "maintenance_options" {
-    for_each = var.auto_recovery != null ? [var.auto_recovery] : []
+    for_each = length(var.maintenance_options) > 0 ? [var.maintenance_options] : []
     content {
-      auto_recovery = var.auto_recovery
+      auto_recovery = try(maintenance_options.value.auto_recovery, null)
     }
   }
 

@@ -28,10 +28,10 @@ variable "associate_public_ip_address" {
   default     = null
 }
 
-variable "auto_recovery" {
-  description = "Automatic recovery behavior of the Instance. Can be `default` or `disabled`."
-  type        = string
-  default     = null
+variable "maintenance_options" {
+  description = "The maintenance options for the instance"
+  type        = any
+  default     = {}
 }
 
 variable "availability_zone" {

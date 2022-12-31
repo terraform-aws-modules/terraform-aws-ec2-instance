@@ -8,7 +8,7 @@ module "wrapper" {
   ami_ssm_parameter                    = try(each.value.ami_ssm_parameter, var.defaults.ami_ssm_parameter, "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2")
   ami                                  = try(each.value.ami, var.defaults.ami, null)
   associate_public_ip_address          = try(each.value.associate_public_ip_address, var.defaults.associate_public_ip_address, null)
-  auto_recovery                        = try(each.value.auto_recovery, var.defaults.auto_recovery, null)
+  maintenance_options                  = try(each.value.maintenance_options, var.defaults.maintenance_options, {})
   availability_zone                    = try(each.value.availability_zone, var.defaults.availability_zone, null)
   capacity_reservation_specification   = try(each.value.capacity_reservation_specification, var.defaults.capacity_reservation_specification, {})
   cpu_credits                          = try(each.value.cpu_credits, var.defaults.cpu_credits, null)

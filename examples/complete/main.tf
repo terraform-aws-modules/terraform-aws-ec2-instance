@@ -129,7 +129,9 @@ module "ec2_t2_unlimited" {
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
-  auto_recovery = "disabled"
+  maintenance_options = {
+    auto_recovery = "default"
+  }
 
   tags = local.tags
 }
