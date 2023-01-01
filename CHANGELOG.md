@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.2.1...v4.3.0) (2023-01-01)
+
+
+### Features
+
+* Add support for `maintenance_options` ([#312](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/312)) ([2aaa990](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/2aaa99011a5ae0224da13691e9d288a5ef7cbd0d))
+
 ### [4.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.2.0...v4.2.1) (2022-11-07)
 
 
