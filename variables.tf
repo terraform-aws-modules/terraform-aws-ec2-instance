@@ -28,6 +28,12 @@ variable "associate_public_ip_address" {
   default     = null
 }
 
+variable "maintenance_options" {
+  description = "The maintenance options for the instance"
+  type        = any
+  default     = {}
+}
+
 variable "availability_zone" {
   description = "AZ to start the instance in"
   type        = string

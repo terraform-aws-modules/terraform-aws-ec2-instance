@@ -127,6 +127,13 @@ resource "aws_instance" "this" {
     }
   }
 
+  dynamic "maintenance_options" {
+    for_each = length(var.maintenance_options) > 0 ? [var.maintenance_options] : []
+    content {
+      auto_recovery = try(maintenance_options.value.auto_recovery, null)
+    }
+  }
+
   enclave_options {
     enabled = var.enclave_options_enabled
   }
