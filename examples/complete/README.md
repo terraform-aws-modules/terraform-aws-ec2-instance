@@ -66,6 +66,8 @@ No inputs.
 |------|-------------|
 | <a name="output_ec2_complete_arn"></a> [ec2\_complete\_arn](#output\_ec2\_complete\_arn) | The ARN of the instance |
 | <a name="output_ec2_complete_capacity_reservation_specification"></a> [ec2\_complete\_capacity\_reservation\_specification](#output\_ec2\_complete\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ec2_complete_ebs_block_devices"></a> [ec2\_complete\_ebs\_block\_devices](#output\_ec2\_complete\_ebs\_block\_devices) | EBS block devices information |
+| <a name="output_ec2_complete_ephemeral_block_devices"></a> [ec2\_complete\_ephemeral\_block\_devices](#output\_ec2\_complete\_ephemeral\_block\_devices) | Ephemeral block devices information |
 | <a name="output_ec2_complete_iam_instance_profile_arn"></a> [ec2\_complete\_iam\_instance\_profile\_arn](#output\_ec2\_complete\_iam\_instance\_profile\_arn) | ARN assigned by AWS to the instance profile |
 | <a name="output_ec2_complete_iam_instance_profile_id"></a> [ec2\_complete\_iam\_instance\_profile\_id](#output\_ec2\_complete\_iam\_instance\_profile\_id) | Instance profile's ID |
 | <a name="output_ec2_complete_iam_instance_profile_unique"></a> [ec2\_complete\_iam\_instance\_profile\_unique](#output\_ec2\_complete\_iam\_instance\_profile\_unique) | Stable and unique string identifying the IAM instance profile |
@@ -78,6 +80,7 @@ No inputs.
 | <a name="output_ec2_complete_private_dns"></a> [ec2\_complete\_private\_dns](#output\_ec2\_complete\_private\_dns) | The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
 | <a name="output_ec2_complete_public_dns"></a> [ec2\_complete\_public\_dns](#output\_ec2\_complete\_public\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
 | <a name="output_ec2_complete_public_ip"></a> [ec2\_complete\_public\_ip](#output\_ec2\_complete\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_ec2_complete_root_block_device"></a> [ec2\_complete\_root\_block\_device](#output\_ec2\_complete\_root\_block\_device) | Root block device information |
 | <a name="output_ec2_complete_tags_all"></a> [ec2\_complete\_tags\_all](#output\_ec2\_complete\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 | <a name="output_ec2_multiple"></a> [ec2\_multiple](#output\_ec2\_multiple) | The full output of the `ec2_module` module |
 | <a name="output_ec2_spot_instance_arn"></a> [ec2\_spot\_instance\_arn](#output\_ec2\_spot\_instance\_arn) | The ARN of the instance |
