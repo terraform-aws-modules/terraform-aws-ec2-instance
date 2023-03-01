@@ -74,6 +74,21 @@ output "ec2_complete_iam_instance_profile_unique" {
   value       = module.ec2_complete.iam_instance_profile_unique
 }
 
+output "ec2_complete_root_block_device" {
+  description = "Root block device information"
+  value       = module.ec2_complete.root_block_device
+}
+
+output "ec2_complete_ebs_block_devices" {
+  description = "EBS block devices information"
+  value       = module.ec2_complete.ebs_block_devices
+}
+
+output "ec2_complete_ephemeral_block_devices" {
+  description = "Ephemeral block devices information"
+  value       = module.ec2_complete.ephemeral_block_devices
+}
+
 # EC2 T2 Unlimited
 output "ec2_t2_unlimited_id" {
   description = "The ID of the instance"
