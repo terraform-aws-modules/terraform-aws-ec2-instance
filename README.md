@@ -265,6 +265,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_ami"></a> [ami](#output\_ami) | AMI ID that was used to create the instance. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the instance |
 | <a name="output_capacity_reservation_specification"></a> [capacity\_reservation\_specification](#output\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
 | <a name="output_iam_instance_profile_arn"></a> [iam\_instance\_profile\_arn](#output\_iam\_instance\_profile\_arn) | ARN assigned by AWS to the instance profile |
