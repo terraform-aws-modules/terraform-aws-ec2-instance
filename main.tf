@@ -87,6 +87,7 @@ resource "aws_instance" "this" {
       volume_size           = lookup(ebs_block_device.value, "volume_size", null)
       volume_type           = lookup(ebs_block_device.value, "volume_type", null)
       throughput            = lookup(ebs_block_device.value, "throughput", null)
+      tags                  = lookup(ebs_block_device.value, "tags", null)
     }
   }
 
