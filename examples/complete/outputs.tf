@@ -79,14 +79,14 @@ output "ec2_complete_root_block_device" {
   value       = module.ec2_complete.root_block_device
 }
 
-output "ec2_complete_ebs_block_devices" {
-  description = "EBS block devices information"
-  value       = module.ec2_complete.ebs_block_devices
+output "ec2_complete_ebs_block_device" {
+  description = "EBS block device information"
+  value       = module.ec2_complete.ebs_block_device
 }
 
-output "ec2_complete_ephemeral_block_devices" {
-  description = "Ephemeral block devices information"
-  value       = module.ec2_complete.ephemeral_block_devices
+output "ec2_complete_ephemeral_block_device" {
+  description = "Ephemeral block device information"
+  value       = module.ec2_complete.ephemeral_block_device
 }
 
 # EC2 T2 Unlimited

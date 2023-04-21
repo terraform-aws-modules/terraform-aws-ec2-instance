@@ -66,8 +66,8 @@ No inputs.
 |------|-------------|
 | <a name="output_ec2_complete_arn"></a> [ec2\_complete\_arn](#output\_ec2\_complete\_arn) | The ARN of the instance |
 | <a name="output_ec2_complete_capacity_reservation_specification"></a> [ec2\_complete\_capacity\_reservation\_specification](#output\_ec2\_complete\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
-| <a name="output_ec2_complete_ebs_block_devices"></a> [ec2\_complete\_ebs\_block\_devices](#output\_ec2\_complete\_ebs\_block\_devices) | EBS block devices information |
-| <a name="output_ec2_complete_ephemeral_block_devices"></a> [ec2\_complete\_ephemeral\_block\_devices](#output\_ec2\_complete\_ephemeral\_block\_devices) | Ephemeral block devices information |
+| <a name="output_ec2_complete_ebs_block_device"></a> [ec2\_complete\_ebs\_block\_device](#output\_ec2\_complete\_ebs\_block\_device) | EBS block device information |
+| <a name="output_ec2_complete_ephemeral_block_device"></a> [ec2\_complete\_ephemeral\_block\_device](#output\_ec2\_complete\_ephemeral\_block\_device) | Ephemeral block device information |
 | <a name="output_ec2_complete_iam_instance_profile_arn"></a> [ec2\_complete\_iam\_instance\_profile\_arn](#output\_ec2\_complete\_iam\_instance\_profile\_arn) | ARN assigned by AWS to the instance profile |
 | <a name="output_ec2_complete_iam_instance_profile_id"></a> [ec2\_complete\_iam\_instance\_profile\_id](#output\_ec2\_complete\_iam\_instance\_profile\_id) | Instance profile's ID |
 | <a name="output_ec2_complete_iam_instance_profile_unique"></a> [ec2\_complete\_iam\_instance\_profile\_unique](#output\_ec2\_complete\_iam\_instance\_profile\_unique) | Stable and unique string identifying the IAM instance profile |

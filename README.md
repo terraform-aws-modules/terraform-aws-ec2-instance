@@ -268,8 +268,8 @@ No modules.
 | <a name="output_ami"></a> [ami](#output\_ami) | AMI ID that was used to create the instance. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the instance |
 | <a name="output_capacity_reservation_specification"></a> [capacity\_reservation\_specification](#output\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
-| <a name="output_ebs_block_devices"></a> [ebs\_block\_devices](#output\_ebs\_block\_devices) | EBS block devices information |
-| <a name="output_ephemeral_block_devices"></a> [ephemeral\_block\_devices](#output\_ephemeral\_block\_devices) | Ephemeral block devices information |
+| <a name="output_ebs_block_device"></a> [ebs\_block\_device](#output\_ebs\_block\_device) | EBS block device information |
+| <a name="output_ephemeral_block_device"></a> [ephemeral\_block\_device](#output\_ephemeral\_block\_device) | Ephemeral block device information |
 | <a name="output_iam_instance_profile_arn"></a> [iam\_instance\_profile\_arn](#output\_iam\_instance\_profile\_arn) | ARN assigned by AWS to the instance profile |
 | <a name="output_iam_instance_profile_id"></a> [iam\_instance\_profile\_id](#output\_iam\_instance\_profile\_id) | Instance profile's ID |
 | <a name="output_iam_instance_profile_unique"></a> [iam\_instance\_profile\_unique](#output\_iam\_instance\_profile\_unique) | Stable and unique string identifying the IAM instance profile |
