@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.4.0...v4.5.0) (2023-04-21)
+
+
+### Features
+
+* Add unique tags to EBS block devices ([#327](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/327)) ([55ed759](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/55ed759b9fbc475629da2d5068a593a2ce08d8dc))
+
 ## [4.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.3.1...v4.4.0) (2023-04-21)
 
 
