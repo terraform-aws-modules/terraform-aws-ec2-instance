@@ -60,7 +60,7 @@ variable "disable_api_termination" {
 
 variable "ebs_block_device" {
   description = "Additional EBS block devices to attach to the instance"
-  type        = list(map(string))
+  type        = list(any)
   default     = []
 }
 

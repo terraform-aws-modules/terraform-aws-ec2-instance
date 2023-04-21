@@ -78,6 +78,9 @@ module "ec2_complete" {
       throughput  = 200
       encrypted   = true
       kms_key_id  = aws_kms_key.this.arn
+      tags = {
+        MountPoint = "/mnt/data"
+      }
     }
   ]
 
