@@ -78,6 +78,11 @@ output "spot_instance_id" {
   value       = try(aws_spot_instance_request.this[0].spot_instance_id, "")
 }
 
+output "ami" {
+  description = "AMI ID that was used to create the instance."
+  value       = try(aws_instance.this[0].ami, aws_spot_instance_request.this[0].ami, "")
+}
+
 ################################################################################
 # IAM Role / Instance Profile
 ################################################################################
@@ -110,4 +115,22 @@ output "iam_instance_profile_id" {
 output "iam_instance_profile_unique" {
   description = "Stable and unique string identifying the IAM instance profile"
   value       = try(aws_iam_instance_profile.this[0].unique_id, null)
+}
+
+################################################################################
+# Block Devices
+################################################################################
+output "root_block_device" {
+  description = "Root block device information"
+  value       = try(aws_instance.this[0].root_block_device, null)
+}
+
+output "ebs_block_device" {
+  description = "EBS block device information"
+  value       = try(aws_instance.this[0].ebs_block_device, null)
+}
+
+output "ephemeral_block_device" {
+  description = "Ephemeral block device information"
+  value       = try(aws_instance.this[0].ephemeral_block_device, null)
 }

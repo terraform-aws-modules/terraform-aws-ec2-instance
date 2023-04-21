@@ -265,8 +265,11 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_ami"></a> [ami](#output\_ami) | AMI ID that was used to create the instance. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the instance |
 | <a name="output_capacity_reservation_specification"></a> [capacity\_reservation\_specification](#output\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
+| <a name="output_ebs_block_device"></a> [ebs\_block\_device](#output\_ebs\_block\_device) | EBS block device information |
+| <a name="output_ephemeral_block_device"></a> [ephemeral\_block\_device](#output\_ephemeral\_block\_device) | Ephemeral block device information |
 | <a name="output_iam_instance_profile_arn"></a> [iam\_instance\_profile\_arn](#output\_iam\_instance\_profile\_arn) | ARN assigned by AWS to the instance profile |
 | <a name="output_iam_instance_profile_id"></a> [iam\_instance\_profile\_id](#output\_iam\_instance\_profile\_id) | Instance profile's ID |
 | <a name="output_iam_instance_profile_unique"></a> [iam\_instance\_profile\_unique](#output\_iam\_instance\_profile\_unique) | Stable and unique string identifying the IAM instance profile |
@@ -283,6 +286,7 @@ No modules.
 | <a name="output_private_ip"></a> [private\_ip](#output\_private\_ip) | The private IP address assigned to the instance. |
 | <a name="output_public_dns"></a> [public\_dns](#output\_public\_dns) | The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |
 | <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
+| <a name="output_root_block_device"></a> [root\_block\_device](#output\_root\_block\_device) | Root block device information |
 | <a name="output_spot_bid_status"></a> [spot\_bid\_status](#output\_spot\_bid\_status) | The current bid status of the Spot Instance Request |
 | <a name="output_spot_instance_id"></a> [spot\_instance\_id](#output\_spot\_instance\_id) | The Instance ID (if any) that is currently fulfilling the Spot Instance request |
 | <a name="output_spot_request_state"></a> [spot\_request\_state](#output\_spot\_request\_state) | The current request state of the Spot Instance Request |
