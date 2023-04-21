@@ -78,6 +78,11 @@ output "spot_instance_id" {
   value       = try(aws_spot_instance_request.this[0].spot_instance_id, "")
 }
 
+output "ami" {
+  description = "AMI ID that was used to create the instance."
+  value       = try(aws_instance.this[0].ami, aws_spot_instance_request.this[0].ami, "")
+}
+
 ################################################################################
 # IAM Role / Instance Profile
 ################################################################################

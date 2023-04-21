@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.3.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.3.0...v4.3.1) (2023-04-21)
+
+
+### Bug Fixes
+
+* Marked AMI id as nonsensitive ([#321](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/321)) ([1ae1d5c](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/1ae1d5ce73d6bef0e42821406f82ff16fe718177))
+
 ## [4.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.2.1...v4.3.0) (2023-01-01)
 
 
