@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.3.1...v4.4.0) (2023-04-21)
+
+
+### Features
+
+* Addition of block device information in outputs ([#319](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/319)) ([884e244](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/884e24466e19144e6b5a1085ab81b377174c6e0c))
+
 ### [4.3.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.3.0...v4.3.1) (2023-04-21)
 
 
