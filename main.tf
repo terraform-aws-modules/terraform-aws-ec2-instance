@@ -99,7 +99,7 @@ resource "aws_instance" "this" {
     for_each = var.ephemeral_block_device
 
     content {
-      device_name  = try(ephemeral_block_device.value.device_name, each.key)
+      device_name  = ephemeral_block_device.value.device_name
       no_device    = try(ephemeral_block_device.value.no_device, null)
       virtual_name = try(ephemeral_block_device.value.virtual_name, null)
     }
@@ -257,7 +257,7 @@ resource "aws_instance" "ignore_ami" {
     for_each = var.ephemeral_block_device
 
     content {
-      device_name  = try(ephemeral_block_device.value.device_name, each.key)
+      device_name  = ephemeral_block_device.value.device_name
       no_device    = try(ephemeral_block_device.value.no_device, null)
       virtual_name = try(ephemeral_block_device.value.virtual_name, null)
     }
@@ -431,7 +431,7 @@ resource "aws_spot_instance_request" "this" {
     for_each = var.ephemeral_block_device
 
     content {
-      device_name  = try(ephemeral_block_device.value.device_name, each.key)
+      device_name  = ephemeral_block_device.value.device_name
       no_device    = try(ephemeral_block_device.value.no_device, null)
       virtual_name = try(ephemeral_block_device.value.virtual_name, null)
     }
