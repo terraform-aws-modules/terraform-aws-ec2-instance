@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.5.0...v5.0.0) (2023-04-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Raise minimum required Terraform version to 1.0+ (#331)
+
+### Features
+
+* Raise minimum required Terraform version to 1.0+ ([#331](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/331)) ([9d4e0ca](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/9d4e0ca389535522808ddf988e3a6510bb143161))
+
 ## [4.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.4.0...v4.5.0) (2023-04-21)
 
 
