@@ -48,11 +48,13 @@ resource "aws_instance" "this" {
 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
+
     content {
       capacity_reservation_preference = try(capacity_reservation_specification.value.capacity_reservation_preference, null)
 
       dynamic "capacity_reservation_target" {
         for_each = try([capacity_reservation_specification.value.capacity_reservation_target], [])
+
         content {
           capacity_reservation_id                 = try(capacity_reservation_target.value.capacity_reservation_id, null)
           capacity_reservation_resource_group_arn = try(capacity_reservation_target.value.capacity_reservation_resource_group_arn, null)
@@ -63,6 +65,7 @@ resource "aws_instance" "this" {
 
   dynamic "root_block_device" {
     for_each = var.root_block_device
+
     content {
       delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
       encrypted             = lookup(root_block_device.value, "encrypted", null)
@@ -77,6 +80,7 @@ resource "aws_instance" "this" {
 
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
+
     content {
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
@@ -92,6 +96,7 @@ resource "aws_instance" "this" {
 
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
+
     content {
       device_name  = ephemeral_block_device.value.device_name
       no_device    = lookup(ephemeral_block_device.value, "no_device", null)
@@ -101,6 +106,7 @@ resource "aws_instance" "this" {
 
   dynamic "metadata_options" {
     for_each = var.metadata_options != null ? [var.metadata_options] : []
+
     content {
       http_endpoint               = lookup(metadata_options.value, "http_endpoint", "enabled")
       http_tokens                 = lookup(metadata_options.value, "http_tokens", "optional")
@@ -111,6 +117,7 @@ resource "aws_instance" "this" {
 
   dynamic "network_interface" {
     for_each = var.network_interface
+
     content {
       device_index          = network_interface.value.device_index
       network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
@@ -120,6 +127,7 @@ resource "aws_instance" "this" {
 
   dynamic "launch_template" {
     for_each = var.launch_template != null ? [var.launch_template] : []
+
     content {
       id      = lookup(var.launch_template, "id", null)
       name    = lookup(var.launch_template, "name", null)
@@ -129,6 +137,7 @@ resource "aws_instance" "this" {
 
   dynamic "maintenance_options" {
     for_each = length(var.maintenance_options) > 0 ? [var.maintenance_options] : []
+
     content {
       auto_recovery = try(maintenance_options.value.auto_recovery, null)
     }
@@ -207,6 +216,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
+
     content {
       capacity_reservation_preference = try(capacity_reservation_specification.value.capacity_reservation_preference, null)
 
@@ -222,6 +232,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "root_block_device" {
     for_each = var.root_block_device
+
     content {
       delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
       encrypted             = lookup(root_block_device.value, "encrypted", null)
@@ -236,6 +247,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
+
     content {
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
@@ -251,6 +263,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
+
     content {
       device_name  = ephemeral_block_device.value.device_name
       no_device    = lookup(ephemeral_block_device.value, "no_device", null)
@@ -260,6 +273,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "metadata_options" {
     for_each = var.metadata_options != null ? [var.metadata_options] : []
+
     content {
       http_endpoint               = lookup(metadata_options.value, "http_endpoint", "enabled")
       http_tokens                 = lookup(metadata_options.value, "http_tokens", "optional")
@@ -269,6 +283,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "network_interface" {
     for_each = var.network_interface
+
     content {
       device_index          = network_interface.value.device_index
       network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
@@ -278,6 +293,7 @@ resource "aws_spot_instance_request" "this" {
 
   dynamic "launch_template" {
     for_each = var.launch_template != null ? [var.launch_template] : []
+
     content {
       id      = lookup(var.launch_template, "id", null)
       name    = lookup(var.launch_template, "name", null)

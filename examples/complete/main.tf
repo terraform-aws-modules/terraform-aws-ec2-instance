@@ -2,30 +2,30 @@ provider "aws" {
   region = local.region
 }
 
+data "aws_availability_zones" "available" {}
+
 locals {
-  name   = "example-ec2-complete"
+  name   = "ex-${basename(path.cwd)}"
   region = "eu-west-1"
 
+  vpc_cidr = "10.0.0.0/16"
+  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+
   user_data = <<-EOT
-  #!/bin/bash
-  echo "Hello Terraform!"
+    #!/bin/bash
+    echo "Hello Terraform!"
   EOT
 
   tags = {
-    Owner       = "user"
-    Environment = "dev"
+    Name       = local.name
+    Example    = local.name
+    Repository = "https://github.com/terraform-aws-modules/terraform-aws-ec2-instance"
   }
 }
 
 ################################################################################
 # EC2 Module
 ################################################################################
-
-module "ec2_disabled" {
-  source = "../../"
-
-  create = false
-}
 
 module "ec2_complete" {
   source = "../../"
@@ -148,6 +148,13 @@ module "ec2_t3_unlimited" {
   associate_public_ip_address = true
 
   tags = local.tags
+}
+
+
+module "ec2_disabled" {
+  source = "../../"
+
+  create = false
 }
 
 ################################################################################
@@ -330,15 +337,14 @@ resource "aws_ec2_capacity_reservation" "targeted" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   name = local.name
-  cidr = "10.99.0.0/18"
+  cidr = local.vpc_cidr
 
-  azs              = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  public_subnets   = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets  = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
-  database_subnets = ["10.99.7.0/24", "10.99.8.0/24", "10.99.9.0/24"]
+  azs             = local.azs
+  private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
+  public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
 
   tags = local.tags
 }
