@@ -22,6 +22,12 @@ variable "ami" {
   default     = null
 }
 
+variable "ignore_ami_changes" {
+  description = "Whether changes to the AMI ID changes should be ignored by Terraform. Note - changing this value will result in the replacement of the instance"
+  type        = bool
+  default     = false
+}
+
 variable "associate_public_ip_address" {
   description = "Whether to associate a public IP address with an instance in a VPC"
   type        = bool
@@ -83,7 +89,7 @@ variable "ephemeral_block_device" {
 }
 
 variable "get_password_data" {
-  description = "If true, wait for password data to become available and retrieve it."
+  description = "If true, wait for password data to become available and retrieve it"
   type        = bool
   default     = null
 }
@@ -139,19 +145,23 @@ variable "key_name" {
 variable "launch_template" {
   description = "Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "metadata_options" {
   description = "Customize the metadata options of the instance"
   type        = map(string)
-  default     = {}
+  default = {
+    "http_endpoint"               = "enabled"
+    "http_put_response_hop_limit" = 1
+    "http_tokens"                 = "optional"
+  }
 }
 
 variable "monitoring" {
   description = "If true, the launched EC2 instance will have detailed monitoring enabled"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "network_interface" {
@@ -185,9 +195,9 @@ variable "secondary_private_ips" {
 }
 
 variable "source_dest_check" {
-  description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
+  description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "subnet_id" {
@@ -203,27 +213,27 @@ variable "tags" {
 }
 
 variable "tenancy" {
-  description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host."
+  description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host"
   type        = string
   default     = null
 }
 
 variable "user_data" {
-  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
+  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead"
   type        = string
   default     = null
 }
 
 variable "user_data_base64" {
-  description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption."
+  description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption"
   type        = string
   default     = null
 }
 
 variable "user_data_replace_on_change" {
-  description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set."
+  description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "volume_tags" {
@@ -251,13 +261,13 @@ variable "timeouts" {
 }
 
 variable "cpu_core_count" {
-  description = "Sets the number of CPU cores for an instance." # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
+  description = "Sets the number of CPU cores for an instance" # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
   type        = number
   default     = null
 }
 
 variable "cpu_threads_per_core" {
-  description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)."
+  description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)"
   type        = number
   default     = null
 }
@@ -318,7 +328,7 @@ variable "spot_valid_from" {
 }
 
 variable "disable_api_stop" {
-  description = "If true, enables EC2 Instance Stop Protection."
+  description = "If true, enables EC2 Instance Stop Protection"
   type        = bool
   default     = null
 

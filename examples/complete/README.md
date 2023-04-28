@@ -19,14 +19,14 @@ Note that this example may create resources which can cost money. Run `terraform
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.7 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.20 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.7 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.20 |
 
 ## Modules
 
@@ -43,7 +43,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | <a name="module_ec2_t3_unlimited"></a> [ec2\_t3\_unlimited](#module\_ec2\_t3\_unlimited) | ../../ | n/a |
 | <a name="module_ec2_targeted_capacity_reservation"></a> [ec2\_targeted\_capacity\_reservation](#module\_ec2\_targeted\_capacity\_reservation) | ../../ | n/a |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 4.0 |
 
 ## Resources
 
@@ -55,6 +55,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | [aws_network_interface.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface) | resource |
 | [aws_placement_group.web](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/placement_group) | resource |
 | [aws_ami.amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 
 ## Inputs
 
