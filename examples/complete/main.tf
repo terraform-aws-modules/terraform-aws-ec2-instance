@@ -55,7 +55,7 @@ module "ec2_complete" {
   user_data_replace_on_change = true
 
   cpu_options = {
-    core_count = 2
+    core_count       = 2
     threads_per_core = 1
   }
   enable_volume_tags = false
@@ -246,7 +246,7 @@ module "ec2_spot_instance" {
   user_data_base64 = base64encode(local.user_data)
 
   cpu_options = {
-    core_count = 2
+    core_count       = 2
     threads_per_core = 1
   }
 
@@ -364,9 +364,9 @@ module "ec2_cpu_options" {
   user_data_replace_on_change = true
 
   cpu_options = {
-    core_count = 2
+    core_count       = 2
     threads_per_core = 1
-    amd_sev_snp = "enabled"
+    amd_sev_snp      = "enabled"
   }
   enable_volume_tags = false
   root_block_device = [
