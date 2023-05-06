@@ -21,8 +21,6 @@ resource "aws_instance" "this" {
 
   ami                  = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
   instance_type        = var.instance_type
-  cpu_core_count       = var.cpu_core_count
-  cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
 
   user_data                   = var.user_data
@@ -189,8 +187,6 @@ resource "aws_instance" "ignore_ami" {
 
   ami                  = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
   instance_type        = var.instance_type
-  cpu_core_count       = var.cpu_core_count
-  cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
 
   user_data                   = var.user_data
@@ -213,6 +209,16 @@ resource "aws_instance" "ignore_ami" {
   ipv6_addresses              = var.ipv6_addresses
 
   ebs_optimized = var.ebs_optimized
+
+  dynamic "cpu_options" {
+    for_each = length(var.cpu_options) > 0 ? [var.cpu_options] : []
+
+    content {
+      core_count       = try(cpu_options.value.core_count, null)
+      threads_per_core = try(cpu_options.value.threads_per_core, null)
+      amd_sev_snp      = try(cpu_options.value.amd_sev_snp, null)
+    }
+  }
 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
@@ -353,8 +359,6 @@ resource "aws_spot_instance_request" "this" {
 
   ami                  = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
   instance_type        = var.instance_type
-  cpu_core_count       = var.cpu_core_count
-  cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
 
   user_data                   = var.user_data
@@ -388,6 +392,16 @@ resource "aws_spot_instance_request" "this" {
   valid_until                    = var.spot_valid_until
   valid_from                     = var.spot_valid_from
   # End spot request specific attributes
+
+  dynamic "cpu_options" {
+    for_each = length(var.cpu_options) > 0 ? [var.cpu_options] : []
+
+    content {
+      core_count       = try(cpu_options.value.core_count, null)
+      threads_per_core = try(cpu_options.value.threads_per_core, null)
+      amd_sev_snp      = try(cpu_options.value.amd_sev_snp, null)
+    }
+  }
 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
