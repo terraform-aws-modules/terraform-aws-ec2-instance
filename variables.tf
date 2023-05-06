@@ -260,6 +260,12 @@ variable "timeouts" {
   default     = {}
 }
 
+variable "cpu_options" {
+  description = "Defines CPU options to apply to the instance at launch time."
+  type        = any
+  default     = {}
+}
+
 variable "cpu_core_count" {
   description = "Sets the number of CPU cores for an instance" # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
   type        = number
