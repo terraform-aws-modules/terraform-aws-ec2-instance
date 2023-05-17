@@ -19,9 +19,11 @@ data "aws_ssm_parameter" "this" {
 resource "aws_instance" "this" {
   count = local.create && !var.ignore_ami_changes && !var.create_spot_instance ? 1 : 0
 
-  ami           = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
-  instance_type = var.instance_type
-  hibernation   = var.hibernation
+  ami                  = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
+  instance_type        = var.instance_type
+  cpu_core_count       = var.cpu_core_count
+  cpu_threads_per_core = var.cpu_threads_per_core
+  hibernation          = var.hibernation
 
   user_data                   = var.user_data
   user_data_base64            = var.user_data_base64

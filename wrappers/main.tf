@@ -51,6 +51,8 @@ module "wrapper" {
   vpc_security_group_ids              = try(each.value.vpc_security_group_ids, var.defaults.vpc_security_group_ids, null)
   timeouts                            = try(each.value.timeouts, var.defaults.timeouts, {})
   cpu_options                         = try(each.value.cpu_options, var.defaults.cpu_options, {})
+  cpu_core_count                      = try(each.value.cpu_core_count, var.defaults.cpu_core_count, null)
+  cpu_threads_per_core                = try(each.value.cpu_threads_per_core, var.defaults.cpu_threads_per_core, null)
   create_spot_instance                = try(each.value.create_spot_instance, var.defaults.create_spot_instance, false)
   spot_price                          = try(each.value.spot_price, var.defaults.spot_price, null)
   spot_wait_for_fulfillment           = try(each.value.spot_wait_for_fulfillment, var.defaults.spot_wait_for_fulfillment, null)
