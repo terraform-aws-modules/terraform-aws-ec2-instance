@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.0.0...v5.1.0) (2023-05-30)
+
+
+### Features
+
+* Implementation of the cpu_options block and addition of support for AMD SEV-SNP ([#334](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/334)) ([6a123ad](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6a123adb10393759fcdd18795fbf1484c5f44dde))
+
 ## [5.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.5.0...v5.0.0) (2023-04-28)
 
 
