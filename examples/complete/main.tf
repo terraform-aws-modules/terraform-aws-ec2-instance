@@ -54,9 +54,10 @@ module "ec2_complete" {
   user_data_base64            = base64encode(local.user_data)
   user_data_replace_on_change = true
 
-  cpu_core_count       = 2 # default 4
-  cpu_threads_per_core = 1 # default 2
-
+  cpu_options = {
+    core_count       = 2
+    threads_per_core = 1
+  }
   enable_volume_tags = false
   root_block_device = [
     {
@@ -244,8 +245,10 @@ module "ec2_spot_instance" {
 
   user_data_base64 = base64encode(local.user_data)
 
-  cpu_core_count       = 2 # default 4
-  cpu_threads_per_core = 1 # default 2
+  cpu_options = {
+    core_count       = 2
+    threads_per_core = 1
+  }
 
   enable_volume_tags = false
   root_block_device = [
@@ -335,6 +338,72 @@ resource "aws_ec2_capacity_reservation" "targeted" {
 }
 
 ################################################################################
+# EC2 Module - CPU Options
+################################################################################
+module "ec2_cpu_options" {
+  source = "../../"
+
+  name = "${local.name}-cpu-options"
+
+  ami                         = data.aws_ami.amazon_linux_23.id
+  instance_type               = "c6a.xlarge" # used to set core count below and test amd_sev_snp attribute
+  availability_zone           = element(module.vpc.azs, 0)
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  placement_group             = aws_placement_group.web.id
+  associate_public_ip_address = true
+  disable_api_stop            = false
+
+  create_iam_instance_profile = true
+  iam_role_description        = "IAM role for EC2 instance"
+  iam_role_policies = {
+    AdministratorAccess = "arn:aws:iam::aws:policy/AdministratorAccess"
+  }
+
+  user_data_base64            = base64encode(local.user_data)
+  user_data_replace_on_change = true
+
+  cpu_options = {
+    core_count       = 2
+    threads_per_core = 1
+    amd_sev_snp      = "enabled"
+  }
+  enable_volume_tags = false
+  root_block_device = [
+    {
+      encrypted   = true
+      volume_type = "gp3"
+      throughput  = 200
+      volume_size = 50
+      tags = {
+        Name = "my-root-block"
+      }
+    },
+  ]
+
+  ebs_block_device = [
+    {
+      device_name = "/dev/sdf"
+      volume_type = "gp3"
+      volume_size = 5
+      throughput  = 200
+      encrypted   = true
+      kms_key_id  = aws_kms_key.this.arn
+      tags = {
+        MountPoint = "/mnt/data"
+      }
+    }
+  ]
+
+  tags = merge(
+    local.tags,
+    {
+      Name = "${local.name}-cpu-options"
+    }
+  )
+}
+
+################################################################################
 # Supporting Resources
 ################################################################################
 
@@ -359,6 +428,16 @@ data "aws_ami" "amazon_linux" {
   filter {
     name   = "name"
     values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+data "aws_ami" "amazon_linux_23" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023*-x86_64"]
   }
 }
 

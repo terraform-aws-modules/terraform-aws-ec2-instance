@@ -46,6 +46,16 @@ resource "aws_instance" "this" {
 
   ebs_optimized = var.ebs_optimized
 
+  dynamic "cpu_options" {
+    for_each = length(var.cpu_options) > 0 ? [var.cpu_options] : []
+
+    content {
+      core_count       = try(cpu_options.value.core_count, null)
+      threads_per_core = try(cpu_options.value.threads_per_core, null)
+      amd_sev_snp      = try(cpu_options.value.amd_sev_snp, null)
+    }
+  }
+
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
 
@@ -203,6 +213,16 @@ resource "aws_instance" "ignore_ami" {
   ipv6_addresses              = var.ipv6_addresses
 
   ebs_optimized = var.ebs_optimized
+
+  dynamic "cpu_options" {
+    for_each = length(var.cpu_options) > 0 ? [var.cpu_options] : []
+
+    content {
+      core_count       = try(cpu_options.value.core_count, null)
+      threads_per_core = try(cpu_options.value.threads_per_core, null)
+      amd_sev_snp      = try(cpu_options.value.amd_sev_snp, null)
+    }
+  }
 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
@@ -378,6 +398,16 @@ resource "aws_spot_instance_request" "this" {
   valid_until                    = var.spot_valid_until
   valid_from                     = var.spot_valid_from
   # End spot request specific attributes
+
+  dynamic "cpu_options" {
+    for_each = length(var.cpu_options) > 0 ? [var.cpu_options] : []
+
+    content {
+      core_count       = try(cpu_options.value.core_count, null)
+      threads_per_core = try(cpu_options.value.threads_per_core, null)
+      amd_sev_snp      = try(cpu_options.value.amd_sev_snp, null)
+    }
+  }
 
   dynamic "capacity_reservation_specification" {
     for_each = length(var.capacity_reservation_specification) > 0 ? [var.capacity_reservation_specification] : []
