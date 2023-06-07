@@ -37,6 +37,8 @@ module "ec2" {
   iam_role_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
+
+  tags = local.tags
 }
 
 ################################################################################
