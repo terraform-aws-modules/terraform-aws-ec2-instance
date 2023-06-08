@@ -1,4 +1,5 @@
 data "aws_partition" "current" {}
+Aqui el error
 
 locals {
   create = var.create && var.putin_khuylo
