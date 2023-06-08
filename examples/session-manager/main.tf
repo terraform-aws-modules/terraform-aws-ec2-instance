@@ -53,7 +53,7 @@ module "vpc" {
   cidr = local.vpc_cidr
 
   azs           = local.azs
-  intra_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 20)]
+  intra_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
 
   tags = local.tags
 }
