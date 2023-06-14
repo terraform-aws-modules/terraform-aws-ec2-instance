@@ -1,7 +1,7 @@
 variable "create" {
   description = "Whether to create an instance"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "name" {
