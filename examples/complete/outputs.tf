@@ -181,6 +181,12 @@ output "ec2_t3_unlimited_tags_all" {
   value       = module.ec2_t3_unlimited.tags_all
 }
 
+# EC2 with ignore AMI changes
+output "ec2_ignore_ami_changes_ami" {
+  description = "The AMI of the instance (ignore_ami_changes = true)"
+  value       = module.ec2_ignore_ami_changes.ami
+}
+
 # EC2 Multiple
 output "ec2_multiple" {
   description = "The full output of the `ec2_module` module"
