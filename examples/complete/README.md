@@ -35,6 +35,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | <a name="module_ec2_complete"></a> [ec2\_complete](#module\_ec2\_complete) | ../../ | n/a |
 | <a name="module_ec2_cpu_options"></a> [ec2\_cpu\_options](#module\_ec2\_cpu\_options) | ../../ | n/a |
 | <a name="module_ec2_disabled"></a> [ec2\_disabled](#module\_ec2\_disabled) | ../../ | n/a |
+| <a name="module_ec2_ignore_ami_changes"></a> [ec2\_ignore\_ami\_changes](#module\_ec2\_ignore\_ami\_changes) | ../../ | n/a |
 | <a name="module_ec2_metadata_options"></a> [ec2\_metadata\_options](#module\_ec2\_metadata\_options) | ../../ | n/a |
 | <a name="module_ec2_multiple"></a> [ec2\_multiple](#module\_ec2\_multiple) | ../../ | n/a |
 | <a name="module_ec2_network_interface"></a> [ec2\_network\_interface](#module\_ec2\_network\_interface) | ../../ | n/a |
@@ -44,7 +45,7 @@ Note that this example may create resources which can cost money. Run `terraform
 | <a name="module_ec2_t3_unlimited"></a> [ec2\_t3\_unlimited](#module\_ec2\_t3\_unlimited) | ../../ | n/a |
 | <a name="module_ec2_targeted_capacity_reservation"></a> [ec2\_targeted\_capacity\_reservation](#module\_ec2\_targeted\_capacity\_reservation) | ../../ | n/a |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-aws-modules/security-group/aws | ~> 4.0 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 4.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 5.0 |
 
 ## Resources
 
@@ -85,6 +86,7 @@ No inputs.
 | <a name="output_ec2_complete_public_ip"></a> [ec2\_complete\_public\_ip](#output\_ec2\_complete\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
 | <a name="output_ec2_complete_root_block_device"></a> [ec2\_complete\_root\_block\_device](#output\_ec2\_complete\_root\_block\_device) | Root block device information |
 | <a name="output_ec2_complete_tags_all"></a> [ec2\_complete\_tags\_all](#output\_ec2\_complete\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
+| <a name="output_ec2_ignore_ami_changes_ami"></a> [ec2\_ignore\_ami\_changes\_ami](#output\_ec2\_ignore\_ami\_changes\_ami) | The AMI of the instance (ignore\_ami\_changes = true) |
 | <a name="output_ec2_multiple"></a> [ec2\_multiple](#output\_ec2\_multiple) | The full output of the `ec2_module` module |
 | <a name="output_ec2_spot_instance_arn"></a> [ec2\_spot\_instance\_arn](#output\_ec2\_spot\_instance\_arn) | The ARN of the instance |
 | <a name="output_ec2_spot_instance_capacity_reservation_specification"></a> [ec2\_spot\_instance\_capacity\_reservation\_specification](#output\_ec2\_spot\_instance\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |

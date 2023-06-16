@@ -154,11 +154,30 @@ module "ec2_t3_unlimited" {
   tags = local.tags
 }
 
-
 module "ec2_disabled" {
   source = "../../"
 
   create = false
+}
+
+################################################################################
+# EC2 Module - with ignore AMI changes
+################################################################################
+
+module "ec2_ignore_ami_changes" {
+  source = "../../"
+
+  name = local.name
+
+  ignore_ami_changes = true
+
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.micro"
+  availability_zone      = element(module.vpc.azs, 0)
+  subnet_id              = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.security_group.security_group_id]
+
+  tags = local.tags
 }
 
 ################################################################################
@@ -409,7 +428,7 @@ module "ec2_cpu_options" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   name = local.name
   cidr = local.vpc_cidr
