@@ -94,18 +94,27 @@ module "vpc_endpoints" {
       private_dns_enabled = true
       subnet_ids          = module.vpc.intra_subnets
       security_group_ids  = [module.security_group_vpc_endpoint.security_group_id]
+      tags = {
+        Name = "${local.name}-ssm-vpc-endpoint"
+      }
     },
     ssmmessages = {
       service             = "ssmmessages"
       private_dns_enabled = true
       subnet_ids          = module.vpc.intra_subnets
       security_group_ids  = [module.security_group_vpc_endpoint.security_group_id]
+      tags = {
+        Name = "${local.name}-ssmmessages-vpc-endpoint"
+      }
     },
     ec2messages = {
       service             = "ec2messages"
       private_dns_enabled = true
       subnet_ids          = module.vpc.intra_subnets
       security_group_ids  = [module.security_group_vpc_endpoint.security_group_id]
+      tags = {
+        Name = "${local.name}-ec2messages-vpc-endpoint"
+      }
     },
   }
 
