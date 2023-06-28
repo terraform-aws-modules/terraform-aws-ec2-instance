@@ -24,6 +24,7 @@ module "wrapper" {
   iam_instance_profile                 = try(each.value.iam_instance_profile, var.defaults.iam_instance_profile, null)
   instance_initiated_shutdown_behavior = try(each.value.instance_initiated_shutdown_behavior, var.defaults.instance_initiated_shutdown_behavior, null)
   instance_type                        = try(each.value.instance_type, var.defaults.instance_type, "t3.micro")
+  instance_tags                        = try(each.value.instance_tags, var.defaults.instance_tags, {})
   ipv6_address_count                   = try(each.value.ipv6_address_count, var.defaults.ipv6_address_count, null)
   ipv6_addresses                       = try(each.value.ipv6_addresses, var.defaults.ipv6_addresses, null)
   key_name                             = try(each.value.key_name, var.defaults.key_name, null)

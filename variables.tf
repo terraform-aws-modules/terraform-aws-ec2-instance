@@ -124,6 +124,12 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
+variable "instance_tags" {
+  description = "Additional tags for the instance"
+  type        = map(string)
+  default     = {}
+}
+
 variable "ipv6_address_count" {
   description = "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet"
   type        = number
