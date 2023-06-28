@@ -414,12 +414,9 @@ module "ec2_cpu_options" {
     }
   ]
 
-  tags = merge(
-    local.tags,
-    {
-      Name = "${local.name}-cpu-options"
-    }
-  )
+  instance_tags = { Persistence = "09:00-18:00" }
+
+  tags = local.tags
 }
 
 ################################################################################
