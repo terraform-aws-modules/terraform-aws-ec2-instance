@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.1.0...v5.2.0) (2023-06-28)
+
+
+### Features
+
+* Add input variable 'instance_tags' ([#343](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/343)) ([025d3b4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/025d3b4beca9835a5e997e41677a4c6441a733f4))
+
 ## [5.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.0.0...v5.1.0) (2023-05-30)
 
 
