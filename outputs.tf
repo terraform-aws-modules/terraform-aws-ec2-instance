@@ -192,15 +192,30 @@ output "iam_instance_profile_unique" {
 ################################################################################
 output "root_block_device" {
   description = "Root block device information"
-  value       = try(aws_instance.this[0].root_block_device, null)
+  value = try(
+    aws_instance.this[0].root_block_device,
+    aws_instance.ignore_ami[0].root_block_device,
+    aws_spot_instance_request.this[0].root_block_device,
+    null
+  )
 }
 
 output "ebs_block_device" {
   description = "EBS block device information"
-  value       = try(aws_instance.this[0].ebs_block_device, null)
+  value = try(
+    aws_instance.this[0].ebs_block_device,
+    aws_instance.ignore_ami[0].ebs_block_device,
+    aws_spot_instance_request.this[0].ebs_block_device,
+    null
+  )
 }
 
 output "ephemeral_block_device" {
   description = "Ephemeral block device information"
-  value       = try(aws_instance.this[0].ephemeral_block_device, null)
+  value = try(
+    aws_instance.this[0].ephemeral_block_device,
+    aws_instance.ignore_ami[0].ephemeral_block_device,
+    aws_spot_instance_request.this[0].ephemeral_block_device,
+    null
+  )
 }
