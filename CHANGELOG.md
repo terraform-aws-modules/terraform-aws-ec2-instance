@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.2.0...v5.2.1) (2023-07-06)
+
+
+### Bug Fixes
+
+* Fixed outputs for Block Devices ([#344](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/344)) ([80381d2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/80381d2c94e6aec7aa308f4a6cf24732a87c8237))
+
 ## [5.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.1.0...v5.2.0) (2023-06-28)
 
 
