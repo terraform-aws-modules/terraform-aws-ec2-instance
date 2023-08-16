@@ -7,7 +7,7 @@ locals {
 }
 
 data "aws_ssm_parameter" "this" {
-  count = local.create ? 1 : 0
+  count = local.create && var.ami == null ? 1 : 0
 
   name = var.ami_ssm_parameter
 }
