@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.3.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.3.0...v5.3.1) (2023-08-17)
+
+
+### Bug Fixes
+
+* Fixed ami variable when using without ssm ([#354](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/354)) ([a1691a0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/a1691a050d92e800b584a5624f3d8f2114e000c6))
+
 ## [5.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.2.1...v5.3.0) (2023-08-16)
 
 
