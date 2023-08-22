@@ -142,12 +142,6 @@ variable "ipv6_addresses" {
   default     = null
 }
 
-variable "key_name" {
-  description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
-  type        = string
-  default     = null
-}
-
 variable "launch_template" {
   description = "Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template"
   type        = map(string)
@@ -401,4 +395,21 @@ variable "iam_role_tags" {
   description = "A map of additional tags to add to the IAM role/profile created"
   type        = map(string)
   default     = {}
+}
+
+
+################################################################################
+# KMS
+################################################################################
+
+variable "key_name" {
+  description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
+  type        = string
+  default     = null
+}
+
+variable "create_kms" {
+  description = "Create new kms"
+  type        = bool
+  default     = false
 }

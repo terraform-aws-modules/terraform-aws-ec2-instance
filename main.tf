@@ -35,7 +35,7 @@ resource "aws_instance" "this" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
 
-  key_name             = var.key_name
+  key_name             = module.key_pair.key_pair_name
   monitoring           = var.monitoring
   get_password_data    = var.get_password_data
   iam_instance_profile = var.create_iam_instance_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
@@ -203,7 +203,7 @@ resource "aws_instance" "ignore_ami" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
 
-  key_name             = var.key_name
+  key_name             = module.key_pair.key_pair_name
   monitoring           = var.monitoring
   get_password_data    = var.get_password_data
   iam_instance_profile = var.create_iam_instance_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
@@ -377,7 +377,7 @@ resource "aws_spot_instance_request" "this" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
 
-  key_name             = var.key_name
+  key_name             = module.key_pair.key_pair_name
   monitoring           = var.monitoring
   get_password_data    = var.get_password_data
   iam_instance_profile = var.create_iam_instance_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
@@ -582,4 +582,14 @@ resource "aws_iam_instance_profile" "this" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+################################################################################
+# KMS
+################################################################################
+
+module "key_pair" {
+  source = "terraform-aws-modules/key-pair/aws"
+  key_name           = var.key_name
+  create = var.create_kms
 }
