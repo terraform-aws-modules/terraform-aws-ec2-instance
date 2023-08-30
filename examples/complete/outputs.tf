@@ -89,6 +89,11 @@ output "ec2_complete_ephemeral_block_device" {
   value       = module.ec2_complete.ephemeral_block_device
 }
 
+output "ec2_complete_availability_zone" {
+  description = "The availability zone of the created instance"
+  value       = module.ec2_complete.availability_zone
+}
+
 # EC2 T2 Unlimited
 output "ec2_t2_unlimited_id" {
   description = "The ID of the instance"
@@ -135,6 +140,11 @@ output "ec2_t2_unlimited_tags_all" {
   value       = module.ec2_t2_unlimited.tags_all
 }
 
+output "ec2_t2_unlimited_availability_zone" {
+  description = "The availability zone of the created instance"
+  value       = module.ec2_t2_unlimited.availability_zone
+}
+
 # EC2 T3 Unlimited
 output "ec2_t3_unlimited_id" {
   description = "The ID of the instance"
@@ -179,6 +189,11 @@ output "ec2_t3_unlimited_public_ip" {
 output "ec2_t3_unlimited_tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
   value       = module.ec2_t3_unlimited.tags_all
+}
+
+output "ec2_t3_unlimited_availability_zone" {
+  description = "The availability zone of the created instance"
+  value       = module.ec2_t3_unlimited.availability_zone
 }
 
 # EC2 with ignore AMI changes
@@ -252,4 +267,9 @@ output "spot_request_state" {
 output "spot_instance_id" {
   description = "The Instance ID (if any) that is currently fulfilling the Spot Instance request"
   value       = module.ec2_spot_instance.spot_instance_id
+}
+
+output "spot_instance_availability_zone" {
+  description = "The availability zone of the created spot instance"
+  value       = module.ec2_spot_instance.availability_zone
 }

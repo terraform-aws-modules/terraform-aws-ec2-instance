@@ -266,6 +266,7 @@ No modules.
 |------|-------------|
 | <a name="output_ami"></a> [ami](#output\_ami) | AMI ID that was used to create the instance |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the instance |
+| <a name="output_availability_zone"></a> [availability\_zone](#output\_availability\_zone) | The availability zone of the created instance |
 | <a name="output_capacity_reservation_specification"></a> [capacity\_reservation\_specification](#output\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
 | <a name="output_ebs_block_device"></a> [ebs\_block\_device](#output\_ebs\_block\_device) | EBS block device information |
 | <a name="output_ephemeral_block_device"></a> [ephemeral\_block\_device](#output\_ephemeral\_block\_device) | Ephemeral block device information |
