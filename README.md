@@ -84,6 +84,7 @@ Users of Terragrunt can achieve similar results by using modules provided in the
 ## Examples
 
 - [Complete EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/complete)
+- [EC2 instance w/ private network access via Session Manager](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/session-manager)
 - [EC2 instance with EBS volume attachment](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment)
 
 ## Make an encrypted AMI for use
