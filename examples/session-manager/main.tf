@@ -12,9 +12,9 @@ locals {
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
 
   tags = {
+    Name       = local.name
     Example    = local.name
-    GithubRepo = "terraform-aws-ec2-instance"
-    GithubOrg  = "terraform-aws-modules"
+    Repository = "https://github.com/terraform-aws-modules/terraform-aws-ec2-instance"
   }
 }
 
@@ -27,8 +27,6 @@ module "ec2" {
 
   name = local.name
 
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t2.micro"
   subnet_id              = element(module.vpc.intra_subnets, 0)
   vpc_security_group_ids = [module.security_group_instance.security_group_id]
 
@@ -58,16 +56,6 @@ module "vpc" {
   tags = local.tags
 }
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-hvm-*-x86_64-gp2"]
-  }
-}
-
 module "security_group_instance" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.0"
@@ -88,51 +76,25 @@ module "vpc_endpoints" {
 
   vpc_id = module.vpc.vpc_id
 
-  endpoints = {
-    ssm = {
-      service             = "ssm"
-      private_dns_enabled = true
+  endpoints = { for service in toset(["ssm", "ssmmessages", "ec2messages"]) :
+    replace(service, ".", "_") =>
+    {
+      service             = service
       subnet_ids          = module.vpc.intra_subnets
-      security_group_ids  = [module.security_group_vpc_endpoint.security_group_id]
-      tags = {
-        Name = "${local.name}-ssm-vpc-endpoint"
-      }
-    },
-    ssmmessages = {
-      service             = "ssmmessages"
       private_dns_enabled = true
-      subnet_ids          = module.vpc.intra_subnets
-      security_group_ids  = [module.security_group_vpc_endpoint.security_group_id]
-      tags = {
-        Name = "${local.name}-ssmmessages-vpc-endpoint"
-      }
-    },
-    ec2messages = {
-      service             = "ec2messages"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.intra_subnets
-      security_group_ids  = [module.security_group_vpc_endpoint.security_group_id]
-      tags = {
-        Name = "${local.name}-ec2messages-vpc-endpoint"
-      }
-    },
+      tags                = { Name = "${local.name}-${service}" }
+    }
   }
 
-  tags = local.tags
-}
-
-module "security_group_vpc_endpoint" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 5.0"
-
-  name        = "${local.name}-vpce"
-  description = "Security Group for VPC Endpoint Ingress"
-
-  vpc_id = module.vpc.vpc_id
-
-  ingress_cidr_blocks = module.vpc.intra_subnets_cidr_blocks
-
-  ingress_rules = ["https-443-tcp"]
+  create_security_group      = true
+  security_group_name_prefix = "${local.name}-vpc-endpoints-"
+  security_group_description = "VPC endpoint security group"
+  security_group_rules = {
+    ingress_https = {
+      description = "HTTPS from subnets"
+      cidr_blocks = module.vpc.intra_subnets_cidr_blocks
+    }
+  }
 
   tags = local.tags
 }
