@@ -43,3 +43,8 @@ output "ec2_tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
   value       = module.ec2.tags_all
 }
+
+output "ec2_availability_zone" {
+  description = "The availability zone of the created spot instance"
+  value       = module.ec2.availability_zone
+}
