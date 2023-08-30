@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.3.1...v5.4.0) (2023-08-30)
+
+
+### Features
+
+* Add `availability_zone` output ([#347](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/347)) ([1b2cdeb](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/1b2cdeba14ee0aba4f687996fde8ab6eb2ad27c6))
+
 ### [5.3.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.3.0...v5.3.1) (2023-08-17)
 
 
