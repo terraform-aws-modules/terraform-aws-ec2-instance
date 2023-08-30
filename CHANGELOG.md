@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.4.0...v5.5.0) (2023-08-30)
+
+
+### Features
+
+* Add example for connecting via Session Manager without Internet access ([#336](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/336)) ([68edef8](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/68edef8e2a83f6492db63b684cf5ad7065b89d6f))
+
 ## [5.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.3.1...v5.4.0) (2023-08-30)
 
 
