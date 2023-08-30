@@ -56,6 +56,7 @@ No inputs.
 | Name | Description |
 |------|-------------|
 | <a name="output_ec2_arn"></a> [ec2\_arn](#output\_ec2\_arn) | The ARN of the instance |
+| <a name="output_ec2_availability_zone"></a> [ec2\_availability\_zone](#output\_ec2\_availability\_zone) | The availability zone of the created spot instance |
 | <a name="output_ec2_capacity_reservation_specification"></a> [ec2\_capacity\_reservation\_specification](#output\_ec2\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
 | <a name="output_ec2_id"></a> [ec2\_id](#output\_ec2\_id) | The ID of the instance |
 | <a name="output_ec2_instance_state"></a> [ec2\_instance\_state](#output\_ec2\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |

@@ -153,6 +153,16 @@ output "ami" {
   )
 }
 
+output "availability_zone" {
+  description = "The availability zone of the created instance"
+  value = try(
+    aws_instance.this[0].availability_zone,
+    aws_instance.ignore_ami[0].availability_zone,
+    aws_spot_instance_request.this[0].availability_zone,
+    null,
+  )
+}
+
 ################################################################################
 # IAM Role / Instance Profile
 ################################################################################

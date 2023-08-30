@@ -69,6 +69,7 @@ No inputs.
 | Name | Description |
 |------|-------------|
 | <a name="output_ec2_complete_arn"></a> [ec2\_complete\_arn](#output\_ec2\_complete\_arn) | The ARN of the instance |
+| <a name="output_ec2_complete_availability_zone"></a> [ec2\_complete\_availability\_zone](#output\_ec2\_complete\_availability\_zone) | The availability zone of the created instance |
 | <a name="output_ec2_complete_capacity_reservation_specification"></a> [ec2\_complete\_capacity\_reservation\_specification](#output\_ec2\_complete\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
 | <a name="output_ec2_complete_ebs_block_device"></a> [ec2\_complete\_ebs\_block\_device](#output\_ec2\_complete\_ebs\_block\_device) | EBS block device information |
 | <a name="output_ec2_complete_ephemeral_block_device"></a> [ec2\_complete\_ephemeral\_block\_device](#output\_ec2\_complete\_ephemeral\_block\_device) | Ephemeral block device information |
@@ -98,6 +99,7 @@ No inputs.
 | <a name="output_ec2_spot_instance_public_ip"></a> [ec2\_spot\_instance\_public\_ip](#output\_ec2\_spot\_instance\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
 | <a name="output_ec2_spot_instance_tags_all"></a> [ec2\_spot\_instance\_tags\_all](#output\_ec2\_spot\_instance\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 | <a name="output_ec2_t2_unlimited_arn"></a> [ec2\_t2\_unlimited\_arn](#output\_ec2\_t2\_unlimited\_arn) | The ARN of the instance |
+| <a name="output_ec2_t2_unlimited_availability_zone"></a> [ec2\_t2\_unlimited\_availability\_zone](#output\_ec2\_t2\_unlimited\_availability\_zone) | The availability zone of the created instance |
 | <a name="output_ec2_t2_unlimited_capacity_reservation_specification"></a> [ec2\_t2\_unlimited\_capacity\_reservation\_specification](#output\_ec2\_t2\_unlimited\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
 | <a name="output_ec2_t2_unlimited_id"></a> [ec2\_t2\_unlimited\_id](#output\_ec2\_t2\_unlimited\_id) | The ID of the instance |
 | <a name="output_ec2_t2_unlimited_instance_state"></a> [ec2\_t2\_unlimited\_instance\_state](#output\_ec2\_t2\_unlimited\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
@@ -107,6 +109,7 @@ No inputs.
 | <a name="output_ec2_t2_unlimited_public_ip"></a> [ec2\_t2\_unlimited\_public\_ip](#output\_ec2\_t2\_unlimited\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
 | <a name="output_ec2_t2_unlimited_tags_all"></a> [ec2\_t2\_unlimited\_tags\_all](#output\_ec2\_t2\_unlimited\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 | <a name="output_ec2_t3_unlimited_arn"></a> [ec2\_t3\_unlimited\_arn](#output\_ec2\_t3\_unlimited\_arn) | The ARN of the instance |
+| <a name="output_ec2_t3_unlimited_availability_zone"></a> [ec2\_t3\_unlimited\_availability\_zone](#output\_ec2\_t3\_unlimited\_availability\_zone) | The availability zone of the created instance |
 | <a name="output_ec2_t3_unlimited_capacity_reservation_specification"></a> [ec2\_t3\_unlimited\_capacity\_reservation\_specification](#output\_ec2\_t3\_unlimited\_capacity\_reservation\_specification) | Capacity reservation specification of the instance |
 | <a name="output_ec2_t3_unlimited_id"></a> [ec2\_t3\_unlimited\_id](#output\_ec2\_t3\_unlimited\_id) | The ID of the instance |
 | <a name="output_ec2_t3_unlimited_instance_state"></a> [ec2\_t3\_unlimited\_instance\_state](#output\_ec2\_t3\_unlimited\_instance\_state) | The state of the instance. One of: `pending`, `running`, `shutting-down`, `terminated`, `stopping`, `stopped` |
@@ -116,6 +119,7 @@ No inputs.
 | <a name="output_ec2_t3_unlimited_public_ip"></a> [ec2\_t3\_unlimited\_public\_ip](#output\_ec2\_t3\_unlimited\_public\_ip) | The public IP address assigned to the instance, if applicable. NOTE: If you are using an aws\_eip with your instance, you should refer to the EIP's address directly and not use `public_ip` as this field will change after the EIP is attached |
 | <a name="output_ec2_t3_unlimited_tags_all"></a> [ec2\_t3\_unlimited\_tags\_all](#output\_ec2\_t3\_unlimited\_tags\_all) | A map of tags assigned to the resource, including those inherited from the provider default\_tags configuration block |
 | <a name="output_spot_bid_status"></a> [spot\_bid\_status](#output\_spot\_bid\_status) | The current bid status of the Spot Instance Request |
+| <a name="output_spot_instance_availability_zone"></a> [spot\_instance\_availability\_zone](#output\_spot\_instance\_availability\_zone) | The availability zone of the created spot instance |
 | <a name="output_spot_instance_id"></a> [spot\_instance\_id](#output\_spot\_instance\_id) | The Instance ID (if any) that is currently fulfilling the Spot Instance request |
 | <a name="output_spot_request_state"></a> [spot\_request\_state](#output\_spot\_request\_state) | The current request state of the Spot Instance Request |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
