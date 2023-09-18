@@ -4,6 +4,12 @@ variable "create" {
   default     = true
 }
 
+variable "region" {
+  description = "provide the region name"
+  type = string
+  default = ""
+}
+
 variable "name" {
   description = "Name to be used on EC2 instance created"
   type        = string
