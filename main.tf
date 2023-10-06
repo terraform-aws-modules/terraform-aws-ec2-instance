@@ -23,6 +23,7 @@ resource "aws_instance" "this" {
 
   ami                  = local.ami
   instance_type        = var.instance_type
+  instance_state       = var.instance_state
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
@@ -191,6 +192,7 @@ resource "aws_instance" "ignore_ami" {
 
   ami                  = local.ami
   instance_type        = var.instance_type
+  instance_state       = var.instance_state
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation

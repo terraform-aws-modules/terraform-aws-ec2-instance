@@ -124,6 +124,12 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
+variable "instance_state" {
+  description = "The state of the instance"
+  type        = string
+  default     = "running" # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#instance_state
+}
+
 variable "instance_tags" {
   description = "Additional tags for the instance"
   type        = map(string)
