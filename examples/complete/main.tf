@@ -34,6 +34,7 @@ module "ec2_complete" {
 
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "c5.xlarge" # used to set core count below
+  instance_state              = "running"   # ensure instance is running
   availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
