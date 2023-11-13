@@ -44,6 +44,56 @@ output "ec2_complete_tags_all" {
   value       = module.ec2_complete.tags_all
 }
 
+output "ec2_complete_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.ec2_complete.iam_role_name
+}
+
+output "ec2_complete_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.ec2_complete.iam_role_arn
+}
+
+output "ec2_complete_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.ec2_complete.iam_role_unique_id
+}
+
+output "ec2_complete_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.ec2_complete.iam_instance_profile_arn
+}
+
+output "ec2_complete_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.ec2_complete.iam_instance_profile_id
+}
+
+output "ec2_complete_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.ec2_complete.iam_instance_profile_unique
+}
+
+output "ec2_complete_root_block_device" {
+  description = "Root block device information"
+  value       = module.ec2_complete.root_block_device
+}
+
+output "ec2_complete_ebs_block_device" {
+  description = "EBS block device information"
+  value       = module.ec2_complete.ebs_block_device
+}
+
+output "ec2_complete_ephemeral_block_device" {
+  description = "Ephemeral block device information"
+  value       = module.ec2_complete.ephemeral_block_device
+}
+
+output "ec2_complete_availability_zone" {
+  description = "The availability zone of the created instance"
+  value       = module.ec2_complete.availability_zone
+}
+
 # EC2 T2 Unlimited
 output "ec2_t2_unlimited_id" {
   description = "The ID of the instance"
@@ -90,6 +140,11 @@ output "ec2_t2_unlimited_tags_all" {
   value       = module.ec2_t2_unlimited.tags_all
 }
 
+output "ec2_t2_unlimited_availability_zone" {
+  description = "The availability zone of the created instance"
+  value       = module.ec2_t2_unlimited.availability_zone
+}
+
 # EC2 T3 Unlimited
 output "ec2_t3_unlimited_id" {
   description = "The ID of the instance"
@@ -134,6 +189,17 @@ output "ec2_t3_unlimited_public_ip" {
 output "ec2_t3_unlimited_tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
   value       = module.ec2_t3_unlimited.tags_all
+}
+
+output "ec2_t3_unlimited_availability_zone" {
+  description = "The availability zone of the created instance"
+  value       = module.ec2_t3_unlimited.availability_zone
+}
+
+# EC2 with ignore AMI changes
+output "ec2_ignore_ami_changes_ami" {
+  description = "The AMI of the instance (ignore_ami_changes = true)"
+  value       = module.ec2_ignore_ami_changes.ami
 }
 
 # EC2 Multiple
@@ -201,4 +267,9 @@ output "spot_request_state" {
 output "spot_instance_id" {
   description = "The Instance ID (if any) that is currently fulfilling the Spot Instance request"
   value       = module.ec2_spot_instance.spot_instance_id
+}
+
+output "spot_instance_availability_zone" {
+  description = "The availability zone of the created spot instance"
+  value       = module.ec2_spot_instance.availability_zone
 }

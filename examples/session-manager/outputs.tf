@@ -1,4 +1,3 @@
-# EC2
 output "ec2_id" {
   description = "The ID of the instance"
   value       = module.ec2.id
@@ -44,7 +43,52 @@ output "ec2_tags_all" {
   value       = module.ec2.tags_all
 }
 
-output "ec2_availability_zone" {
-  description = "The availability zone of the created spot instance"
-  value       = module.ec2.availability_zone
+output "ec2_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.ec2.iam_role_name
+}
+
+output "ec2_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.ec2.iam_role_arn
+}
+
+output "ec2_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.ec2.iam_role_unique_id
+}
+
+output "ec2_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.ec2.iam_instance_profile_arn
+}
+
+output "ec2_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.ec2.iam_instance_profile_id
+}
+
+output "ec2_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.ec2.iam_instance_profile_unique
+}
+
+output "ec2_root_block_device" {
+  description = "Root block device information"
+  value       = module.ec2.root_block_device
+}
+
+output "ec2_ebs_block_device" {
+  description = "EBS block device information"
+  value       = module.ec2.ebs_block_device
+}
+
+output "ec2_ephemeral_block_device" {
+  description = "Ephemeral block device information"
+  value       = module.ec2.ephemeral_block_device
+}
+
+output "ssm_connect_command" {
+  description = "The AWS CLI command to connect to the instance using Session Manager"
+  value       = "aws ssm start-session --target ${module.ec2.id} --region ${local.region}"
 }

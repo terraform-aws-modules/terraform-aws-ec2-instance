@@ -2,6 +2,143 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.4.0...v5.5.0) (2023-08-30)
+
+
+### Features
+
+* Add example for connecting via Session Manager without Internet access ([#336](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/336)) ([68edef8](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/68edef8e2a83f6492db63b684cf5ad7065b89d6f))
+
+## [5.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.3.1...v5.4.0) (2023-08-30)
+
+
+### Features
+
+* Add `availability_zone` output ([#347](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/347)) ([1b2cdeb](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/1b2cdeba14ee0aba4f687996fde8ab6eb2ad27c6))
+
+### [5.3.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.3.0...v5.3.1) (2023-08-17)
+
+
+### Bug Fixes
+
+* Fixed ami variable when using without ssm ([#354](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/354)) ([a1691a0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/a1691a050d92e800b584a5624f3d8f2114e000c6))
+
+## [5.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.2.1...v5.3.0) (2023-08-16)
+
+
+### Features
+
+* Remove call data ssm parameter when ami id is specified ([#351](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/351)) ([7ffc3dd](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/7ffc3dd843efecd543fecb0a1b556004d7db2bb7))
+
+### [5.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.2.0...v5.2.1) (2023-07-06)
+
+
+### Bug Fixes
+
+* Fixed outputs for Block Devices ([#344](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/344)) ([80381d2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/80381d2c94e6aec7aa308f4a6cf24732a87c8237))
+
+## [5.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.1.0...v5.2.0) (2023-06-28)
+
+
+### Features
+
+* Add input variable 'instance_tags' ([#343](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/343)) ([025d3b4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/025d3b4beca9835a5e997e41677a4c6441a733f4))
+
+## [5.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.0.0...v5.1.0) (2023-05-30)
+
+
+### Features
+
+* Implementation of the cpu_options block and addition of support for AMD SEV-SNP ([#334](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/334)) ([6a123ad](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6a123adb10393759fcdd18795fbf1484c5f44dde))
+
+## [5.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.5.0...v5.0.0) (2023-04-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Raise minimum required Terraform version to 1.0+ (#331)
+
+### Features
+
+* Raise minimum required Terraform version to 1.0+ ([#331](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/331)) ([9d4e0ca](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/9d4e0ca389535522808ddf988e3a6510bb143161))
+
+## [4.5.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.4.0...v4.5.0) (2023-04-21)
+
+
+### Features
+
+* Add unique tags to EBS block devices ([#327](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/327)) ([55ed759](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/55ed759b9fbc475629da2d5068a593a2ce08d8dc))
+
+## [4.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.3.1...v4.4.0) (2023-04-21)
+
+
+### Features
+
+* Addition of block device information in outputs ([#319](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/319)) ([884e244](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/884e24466e19144e6b5a1085ab81b377174c6e0c))
+
+### [4.3.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.3.0...v4.3.1) (2023-04-21)
+
+
+### Bug Fixes
+
+* Marked AMI id as nonsensitive ([#321](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/321)) ([1ae1d5c](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/1ae1d5ce73d6bef0e42821406f82ff16fe718177))
+
+## [4.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.2.1...v4.3.0) (2023-01-01)
+
+
+### Features
+
+* Add support for `maintenance_options` ([#312](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/312)) ([2aaa990](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/2aaa99011a5ae0224da13691e9d288a5ef7cbd0d))
+
+### [4.2.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.2.0...v4.2.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* Update CI configuration files to use latest version ([#303](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/303)) ([2151031](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/21510318bffcfa84a13c5ec8cbb93dff9871a4f9))
+
+## [4.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.4...v4.2.0) (2022-11-04)
+
+
+### Features
+
+* Add support for creating IAM role/instance profile with policies ([#302](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/302)) ([787132e](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/787132e5dbe7b58e4b9a62e1a69a682bcbb9bd58))
+
+### [4.1.4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.3...v4.1.4) (2022-08-13)
+
+
+### Bug Fixes
+
+* Correct capacity reservation target ([#288](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/288)) ([135145e](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/135145e252c69814c019da49c638973f93523f6a))
+
+### [4.1.3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.2...v4.1.3) (2022-08-12)
+
+
+### Bug Fixes
+
+* The capacity_reservation_specification default value is updated from null to {} ([#285](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/285)) ([9af6601](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/9af6601abbcfe06fc907ea1eb3abffe30d26daf2))
+
+### [4.1.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.1...v4.1.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* Assignment of the Capacity Reservation id to an instance ([#282](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/282)) ([7f0a0ae](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/7f0a0ae66cbe50d0ea1c09191de4e82cfa8c4ca2))
+
+### [4.1.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.1.0...v4.1.1) (2022-07-21)
+
+
+### Bug Fixes
+
+* Creation of an Instance with a Capacity Reservation ID ([#278](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/278)) ([f12ac95](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/f12ac95aa309fdbf532ba1d5a9841690ca7fdb8e))
+
+## [4.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v4.0.0...v4.1.0) (2022-07-19)
+
+
+### Features
+
+* Add support for `disable_api_stop` attribute ([#275](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/275)) ([cb367ec](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/cb367ec54e4386512e37b8ef0b8d01c78f589fb1))
+
 ## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v3.6.0...v4.0.0) (2022-05-09)
 
 

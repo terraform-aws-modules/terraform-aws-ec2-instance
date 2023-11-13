@@ -2,86 +2,30 @@ provider "aws" {
   region = local.region
 }
 
+data "aws_availability_zones" "available" {}
+
 locals {
-  name   = "example-ec2-complete"
+  name   = "ex-${basename(path.cwd)}"
   region = "eu-west-1"
 
+  vpc_cidr = "10.0.0.0/16"
+  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+
   user_data = <<-EOT
-  #!/bin/bash
-  echo "Hello Terraform!"
+    #!/bin/bash
+    echo "Hello Terraform!"
   EOT
 
   tags = {
-    Owner       = "user"
-    Environment = "dev"
+    Name       = local.name
+    Example    = local.name
+    Repository = "https://github.com/terraform-aws-modules/terraform-aws-ec2-instance"
   }
-}
-
-################################################################################
-# Supporting Resources
-################################################################################
-
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
-
-  name = local.name
-  cidr = "10.99.0.0/18"
-
-  azs              = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  public_subnets   = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets  = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
-  database_subnets = ["10.99.7.0/24", "10.99.8.0/24", "10.99.9.0/24"]
-
-  tags = local.tags
-}
-
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-hvm-*-x86_64-gp2"]
-  }
-}
-
-module "security_group" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.0"
-
-  name        = local.name
-  description = "Security group for example usage with EC2 instance"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["http-80-tcp", "all-icmp"]
-  egress_rules        = ["all-all"]
-
-  tags = local.tags
-}
-
-resource "aws_placement_group" "web" {
-  name     = local.name
-  strategy = "cluster"
-}
-
-resource "aws_kms_key" "this" {
-}
-
-resource "aws_network_interface" "this" {
-  subnet_id = element(module.vpc.private_subnets, 0)
 }
 
 ################################################################################
 # EC2 Module
 ################################################################################
-
-module "ec2_disabled" {
-  source = "../../"
-
-  create = false
-}
 
 module "ec2_complete" {
   source = "../../"
@@ -89,12 +33,19 @@ module "ec2_complete" {
   name = local.name
 
   ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c5.4xlarge"
+  instance_type               = "c5.xlarge" # used to set core count below
   availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   placement_group             = aws_placement_group.web.id
   associate_public_ip_address = true
+  disable_api_stop            = false
+
+  create_iam_instance_profile = true
+  iam_role_description        = "IAM role for EC2 instance"
+  iam_role_policies = {
+    AdministratorAccess = "arn:aws:iam::aws:policy/AdministratorAccess"
+  }
 
   # only one of these can be enabled at a time
   hibernation = true
@@ -103,13 +54,10 @@ module "ec2_complete" {
   user_data_base64            = base64encode(local.user_data)
   user_data_replace_on_change = true
 
-  cpu_core_count       = 2 # default 4
-  cpu_threads_per_core = 1 # default 2
-
-  capacity_reservation_specification = {
-    capacity_reservation_preference = "open"
+  cpu_options = {
+    core_count       = 2
+    threads_per_core = 1
   }
-
   enable_volume_tags = false
   root_block_device = [
     {
@@ -131,6 +79,9 @@ module "ec2_complete" {
       throughput  = 200
       encrypted   = true
       kms_key_id  = aws_kms_key.this.arn
+      tags = {
+        MountPoint = "/mnt/data"
+      }
     }
   ]
 
@@ -141,9 +92,6 @@ module "ec2_network_interface" {
   source = "../../"
 
   name = "${local.name}-network-interface"
-
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "c5.large"
 
   network_interface = [
     {
@@ -161,8 +109,6 @@ module "ec2_metadata_options" {
 
   name = "${local.name}-metadata-options"
 
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "c5.4xlarge"
   subnet_id              = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids = [module.security_group.security_group_id]
 
@@ -181,12 +127,15 @@ module "ec2_t2_unlimited" {
 
   name = "${local.name}-t2-unlimited"
 
-  ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t2.micro"
   cpu_credits                 = "unlimited"
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
+
+  maintenance_options = {
+    auto_recovery = "default"
+  }
 
   tags = local.tags
 }
@@ -196,12 +145,37 @@ module "ec2_t3_unlimited" {
 
   name = "${local.name}-t3-unlimited"
 
-  ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.micro"
   cpu_credits                 = "unlimited"
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
+
+  tags = local.tags
+}
+
+module "ec2_disabled" {
+  source = "../../"
+
+  create = false
+}
+
+################################################################################
+# EC2 Module - with ignore AMI changes
+################################################################################
+
+module "ec2_ignore_ami_changes" {
+  source = "../../"
+
+  name = local.name
+
+  ignore_ami_changes = true
+
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.micro"
+  availability_zone      = element(module.vpc.azs, 0)
+  subnet_id              = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.security_group.security_group_id]
 
   tags = local.tags
 }
@@ -255,7 +229,6 @@ module "ec2_multiple" {
 
   name = "${local.name}-multi-${each.key}"
 
-  ami                    = data.aws_ami.amazon_linux.id
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
@@ -277,16 +250,13 @@ module "ec2_spot_instance" {
   name                 = "${local.name}-spot-instance"
   create_spot_instance = true
 
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "c4.4xlarge"
   availability_zone           = element(module.vpc.azs, 0)
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
-  placement_group             = aws_placement_group.web.id
   associate_public_ip_address = true
 
   # Spot request specific attributes
-  spot_price                          = "0.60"
+  spot_price                          = "0.1"
   spot_wait_for_fulfillment           = true
   spot_type                           = "persistent"
   spot_instance_interruption_behavior = "terminate"
@@ -294,11 +264,9 @@ module "ec2_spot_instance" {
 
   user_data_base64 = base64encode(local.user_data)
 
-  cpu_core_count       = 2 # default 4
-  cpu_threads_per_core = 1 # default 2
-
-  capacity_reservation_specification = {
-    capacity_reservation_preference = "open"
+  cpu_options = {
+    core_count       = 2
+    threads_per_core = 1
   }
 
   enable_volume_tags = false
@@ -326,4 +294,193 @@ module "ec2_spot_instance" {
   ]
 
   tags = local.tags
+}
+
+################################################################################
+# EC2 Module - Capacity Reservation
+################################################################################
+
+module "ec2_open_capacity_reservation" {
+  source = "../../"
+
+  name = "${local.name}-open-capacity-reservation"
+
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "t3.micro"
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  associate_public_ip_address = false
+
+  capacity_reservation_specification = {
+    capacity_reservation_target = {
+      capacity_reservation_id = aws_ec2_capacity_reservation.open.id
+    }
+  }
+
+  tags = local.tags
+}
+
+module "ec2_targeted_capacity_reservation" {
+  source = "../../"
+
+  name = "${local.name}-targeted-capacity-reservation"
+
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "t3.micro"
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  associate_public_ip_address = false
+
+  capacity_reservation_specification = {
+    capacity_reservation_target = {
+      capacity_reservation_id = aws_ec2_capacity_reservation.targeted.id
+    }
+  }
+
+  tags = local.tags
+}
+
+resource "aws_ec2_capacity_reservation" "open" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "open"
+}
+
+resource "aws_ec2_capacity_reservation" "targeted" {
+  instance_type           = "t3.micro"
+  instance_platform       = "Linux/UNIX"
+  availability_zone       = "${local.region}a"
+  instance_count          = 1
+  instance_match_criteria = "targeted"
+}
+
+################################################################################
+# EC2 Module - CPU Options
+################################################################################
+
+module "ec2_cpu_options" {
+  source = "../../"
+
+  name = "${local.name}-cpu-options"
+
+  ami                         = data.aws_ami.amazon_linux_23.id
+  instance_type               = "c6a.xlarge" # used to set core count below and test amd_sev_snp attribute
+  availability_zone           = element(module.vpc.azs, 0)
+  subnet_id                   = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids      = [module.security_group.security_group_id]
+  placement_group             = aws_placement_group.web.id
+  associate_public_ip_address = true
+  disable_api_stop            = false
+
+  create_iam_instance_profile = true
+  iam_role_description        = "IAM role for EC2 instance"
+  iam_role_policies = {
+    AdministratorAccess = "arn:aws:iam::aws:policy/AdministratorAccess"
+  }
+
+  user_data_base64            = base64encode(local.user_data)
+  user_data_replace_on_change = true
+
+  cpu_options = {
+    core_count       = 2
+    threads_per_core = 1
+    amd_sev_snp      = "enabled"
+  }
+  enable_volume_tags = false
+  root_block_device = [
+    {
+      encrypted   = true
+      volume_type = "gp3"
+      throughput  = 200
+      volume_size = 50
+      tags = {
+        Name = "my-root-block"
+      }
+    },
+  ]
+
+  ebs_block_device = [
+    {
+      device_name = "/dev/sdf"
+      volume_type = "gp3"
+      volume_size = 5
+      throughput  = 200
+      encrypted   = true
+      kms_key_id  = aws_kms_key.this.arn
+      tags = {
+        MountPoint = "/mnt/data"
+      }
+    }
+  ]
+
+  instance_tags = { Persistence = "09:00-18:00" }
+
+  tags = local.tags
+}
+
+################################################################################
+# Supporting Resources
+################################################################################
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
+
+  name = local.name
+  cidr = local.vpc_cidr
+
+  azs             = local.azs
+  private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
+  public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
+
+  tags = local.tags
+}
+
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+data "aws_ami" "amazon_linux_23" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023*-x86_64"]
+  }
+}
+
+module "security_group" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 4.0"
+
+  name        = local.name
+  description = "Security group for example usage with EC2 instance"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_rules       = ["http-80-tcp", "all-icmp"]
+  egress_rules        = ["all-all"]
+
+  tags = local.tags
+}
+
+resource "aws_placement_group" "web" {
+  name     = local.name
+  strategy = "cluster"
+}
+
+resource "aws_kms_key" "this" {
+}
+
+resource "aws_network_interface" "this" {
+  subnet_id = element(module.vpc.private_subnets, 0)
 }

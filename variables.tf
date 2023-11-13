@@ -10,16 +10,34 @@ variable "name" {
   default     = ""
 }
 
+variable "ami_ssm_parameter" {
+  description = "SSM parameter name for the AMI ID. For Amazon Linux AMI SSM parameters see [reference](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html)"
+  type        = string
+  default     = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+}
+
 variable "ami" {
   description = "ID of AMI to use for the instance"
   type        = string
-  default     = ""
+  default     = null
+}
+
+variable "ignore_ami_changes" {
+  description = "Whether changes to the AMI ID changes should be ignored by Terraform. Note - changing this value will result in the replacement of the instance"
+  type        = bool
+  default     = false
 }
 
 variable "associate_public_ip_address" {
   description = "Whether to associate a public IP address with an instance in a VPC"
   type        = bool
   default     = null
+}
+
+variable "maintenance_options" {
+  description = "The maintenance options for the instance"
+  type        = any
+  default     = {}
 }
 
 variable "availability_zone" {
@@ -31,7 +49,7 @@ variable "availability_zone" {
 variable "capacity_reservation_specification" {
   description = "Describes an instance's Capacity Reservation targeting option"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "cpu_credits" {
@@ -48,7 +66,7 @@ variable "disable_api_termination" {
 
 variable "ebs_block_device" {
   description = "Additional EBS block devices to attach to the instance"
-  type        = list(map(string))
+  type        = list(any)
   default     = []
 }
 
@@ -71,7 +89,7 @@ variable "ephemeral_block_device" {
 }
 
 variable "get_password_data" {
-  description = "If true, wait for password data to become available and retrieve it."
+  description = "If true, wait for password data to become available and retrieve it"
   type        = bool
   default     = null
 }
@@ -106,6 +124,12 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
+variable "instance_tags" {
+  description = "Additional tags for the instance"
+  type        = map(string)
+  default     = {}
+}
+
 variable "ipv6_address_count" {
   description = "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet"
   type        = number
@@ -127,19 +151,23 @@ variable "key_name" {
 variable "launch_template" {
   description = "Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "metadata_options" {
   description = "Customize the metadata options of the instance"
   type        = map(string)
-  default     = {}
+  default = {
+    "http_endpoint"               = "enabled"
+    "http_put_response_hop_limit" = 1
+    "http_tokens"                 = "optional"
+  }
 }
 
 variable "monitoring" {
   description = "If true, the launched EC2 instance will have detailed monitoring enabled"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "network_interface" {
@@ -173,9 +201,9 @@ variable "secondary_private_ips" {
 }
 
 variable "source_dest_check" {
-  description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
+  description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "subnet_id" {
@@ -191,27 +219,27 @@ variable "tags" {
 }
 
 variable "tenancy" {
-  description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host."
+  description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host"
   type        = string
   default     = null
 }
 
 variable "user_data" {
-  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
+  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead"
   type        = string
   default     = null
 }
 
 variable "user_data_base64" {
-  description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption."
+  description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption"
   type        = string
   default     = null
 }
 
 variable "user_data_replace_on_change" {
-  description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set."
+  description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "volume_tags" {
@@ -238,14 +266,20 @@ variable "timeouts" {
   default     = {}
 }
 
+variable "cpu_options" {
+  description = "Defines CPU options to apply to the instance at launch time."
+  type        = any
+  default     = {}
+}
+
 variable "cpu_core_count" {
-  description = "Sets the number of CPU cores for an instance." # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
+  description = "Sets the number of CPU cores for an instance" # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
   type        = number
   default     = null
 }
 
 variable "cpu_threads_per_core" {
-  description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)."
+  description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)"
   type        = number
   default     = null
 }
@@ -305,8 +339,66 @@ variable "spot_valid_from" {
   default     = null
 }
 
+variable "disable_api_stop" {
+  description = "If true, enables EC2 Instance Stop Protection"
+  type        = bool
+  default     = null
+
+}
 variable "putin_khuylo" {
   description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
   type        = bool
   default     = true
+}
+
+################################################################################
+# IAM Role / Instance Profile
+################################################################################
+
+variable "create_iam_instance_profile" {
+  description = "Determines whether an IAM instance profile is created or to use an existing IAM instance profile"
+  type        = bool
+  default     = false
+}
+
+variable "iam_role_name" {
+  description = "Name to use on IAM role created"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_use_name_prefix" {
+  description = "Determines whether the IAM role name (`iam_role_name` or `name`) is used as a prefix"
+  type        = bool
+  default     = true
+}
+
+variable "iam_role_path" {
+  description = "IAM role path"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_description" {
+  description = "Description of the role"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_permissions_boundary" {
+  description = "ARN of the policy that is used to set the permissions boundary for the IAM role"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_policies" {
+  description = "Policies attached to the IAM role"
+  type        = map(string)
+  default     = {}
+}
+
+variable "iam_role_tags" {
+  description = "A map of additional tags to add to the IAM role/profile created"
+  type        = map(string)
+  default     = {}
 }
