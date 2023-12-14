@@ -176,6 +176,12 @@ variable "network_interface" {
   default     = []
 }
 
+variable "private_dns_name_options" {
+  description = "Customize the private DNS name options of the instance"
+  type        = map(string)
+  default     = {}
+}
+
 variable "placement_group" {
   description = "The Placement Group to start the instance in"
   type        = string

@@ -36,6 +36,7 @@ module "wrapper" {
   })
   monitoring                          = try(each.value.monitoring, var.defaults.monitoring, null)
   network_interface                   = try(each.value.network_interface, var.defaults.network_interface, [])
+  private_dns_name_options            = try(each.value.private_dns_name_options, var.defaults.private_dns_name_options, {})
   placement_group                     = try(each.value.placement_group, var.defaults.placement_group, null)
   private_ip                          = try(each.value.private_ip, var.defaults.private_ip, null)
   root_block_device                   = try(each.value.root_block_device, var.defaults.root_block_device, [])
