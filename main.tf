@@ -70,6 +70,16 @@ resource "aws_instance" "this" {
     }
   }
 
+  dynamic "metadata_options" {
+    for_each = length(var.metadata_options) > 0 ? [var.metadata_options] : []
+
+    content {
+      http_endpoint               = try(metadata_options.value.http_endpoint, "enabled")
+      http_tokens                 = try(metadata_options.value.http_tokens, "optional")
+      http_put_response_hop_limit = try(metadata_options.value.http_put_response_hop_limit, 1)
+    }
+  }
+
   source_dest_check                    = length(var.network_interface) > 0 ? null : var.source_dest_check
   disable_api_termination              = var.disable_api_termination
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior

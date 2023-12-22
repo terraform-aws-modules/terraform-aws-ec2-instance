@@ -198,3 +198,13 @@ variable "format_fqdn" {
   type        = bool
   default     = true
 }
+
+variable "metadata_options" {
+  description = "Customize the metadata options of the instance"
+  type        = map(string)
+  default = {
+    "http_endpoint"               = "enabled"
+    "http_put_response_hop_limit" = 1
+    "http_tokens"                 = "optional"
+  }
+}
