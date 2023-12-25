@@ -142,9 +142,9 @@ resource "aws_instance" "this" {
     for_each = length(var.private_dns_name_options) > 0 ? [var.private_dns_name_options] : []
 
     content {
-      hostname_type                        = try(private_dns_name_options.value.hostname_type, "ip-name")
-      enable_resource_name_dns_a_record    = try(private_dns_name_options.value.enable_resource_name_dns_a_record, false)
-      enable_resource_name_dns_aaaa_record = try(private_dns_name_options.value.enable_resource_name_dns_aaaa_record, false)
+      hostname_type                        = try(private_dns_name_options.value.hostname_type, null)
+      enable_resource_name_dns_a_record    = try(private_dns_name_options.value.enable_resource_name_dns_a_record, null)
+      enable_resource_name_dns_aaaa_record = try(private_dns_name_options.value.enable_resource_name_dns_aaaa_record, null)
     }
   }
 
@@ -320,9 +320,9 @@ resource "aws_instance" "ignore_ami" {
     for_each = length(var.private_dns_name_options) > 0 ? [var.private_dns_name_options] : []
 
     content {
-      hostname_type                        = try(private_dns_name_options.value.hostname_type, "ip-name")
-      enable_resource_name_dns_a_record    = try(private_dns_name_options.value.enable_resource_name_dns_a_record, false)
-      enable_resource_name_dns_aaaa_record = try(private_dns_name_options.value.enable_resource_name_dns_aaaa_record, false)
+      hostname_type                        = try(private_dns_name_options.value.hostname_type, null)
+      enable_resource_name_dns_a_record    = try(private_dns_name_options.value.enable_resource_name_dns_a_record, null)
+      enable_resource_name_dns_aaaa_record = try(private_dns_name_options.value.enable_resource_name_dns_aaaa_record, null)
     }
   }
 
