@@ -138,6 +138,16 @@ resource "aws_instance" "this" {
     }
   }
 
+  dynamic "private_dns_name_options" {
+    for_each = length(var.private_dns_name_options) > 0 ? [var.private_dns_name_options] : []
+
+    content {
+      hostname_type                        = try(private_dns_name_options.value.hostname_type, null)
+      enable_resource_name_dns_a_record    = try(private_dns_name_options.value.enable_resource_name_dns_a_record, null)
+      enable_resource_name_dns_aaaa_record = try(private_dns_name_options.value.enable_resource_name_dns_aaaa_record, null)
+    }
+  }
+
   dynamic "launch_template" {
     for_each = length(var.launch_template) > 0 ? [var.launch_template] : []
 
@@ -303,6 +313,16 @@ resource "aws_instance" "ignore_ami" {
       device_index          = network_interface.value.device_index
       network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
       delete_on_termination = try(network_interface.value.delete_on_termination, false)
+    }
+  }
+
+  dynamic "private_dns_name_options" {
+    for_each = length(var.private_dns_name_options) > 0 ? [var.private_dns_name_options] : []
+
+    content {
+      hostname_type                        = try(private_dns_name_options.value.hostname_type, null)
+      enable_resource_name_dns_a_record    = try(private_dns_name_options.value.enable_resource_name_dns_a_record, null)
+      enable_resource_name_dns_aaaa_record = try(private_dns_name_options.value.enable_resource_name_dns_aaaa_record, null)
     }
   }
 
