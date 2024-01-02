@@ -603,3 +603,26 @@ resource "aws_iam_instance_profile" "this" {
     create_before_destroy = true
   }
 }
+
+################################################################################
+# Elastic IP
+################################################################################
+
+resource "aws_eip" "public" {
+  count = local.create && var.create_eip_public && !var.create_spot_instance ? 1 : 0
+
+  instance = try(
+    aws_instance.this[0].id,
+    aws_instance.ignore_ami[0].id,
+    null,
+  )
+
+  domain = var.eip_public_domain
+
+  tags = merge(var.tags, var.eip_public_tags)
+
+  depends_on = [
+    aws_instance.this,
+    aws_instance.ignore_ami
+  ]
+}

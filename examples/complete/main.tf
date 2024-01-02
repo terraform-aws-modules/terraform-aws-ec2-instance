@@ -85,6 +85,8 @@ module "ec2_complete" {
     }
   ]
 
+  create_eip_public = true
+
   tags = local.tags
 }
 

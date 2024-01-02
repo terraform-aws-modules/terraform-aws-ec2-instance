@@ -229,3 +229,22 @@ output "ephemeral_block_device" {
     null
   )
 }
+
+################################################################################
+# Elastic IP
+################################################################################
+
+output "eip_public_id" {
+  description = "Contains the EIP allocation ID"
+  value       = try(aws_eip.public[0].id, null)
+}
+
+output "eip_public_dns" {
+  description = "Public DNS associated with the Elastic IP address"
+  value       = try(aws_eip.public[0].public_dns, null)
+}
+
+output "eip_public_ip" {
+  description = "Contains the public IP address"
+  value       = try(aws_eip.public[0].public_ip, null)
+}

@@ -39,6 +39,11 @@ output "ec2_complete_public_ip" {
   value       = module.ec2_complete.public_ip
 }
 
+output "ec2_complete_public_eip" {
+  description = "The public Elastic IP address assigned to the instance, if applicable"
+  value       = module.ec2_complete.eip_public_ip
+}
+
 output "ec2_complete_tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
   value       = module.ec2_complete.tags_all
