@@ -1,4 +1,4 @@
-name: Format Code
+name: Terraform Test
 
 on:
   pull_request
@@ -29,10 +29,10 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        working-directory: ./examples/session_manager
         run: |
-          pwd  
-          cd examples/session_manager
-          pwd
-          terraform test
+            terraform init
+            terraform test
+        
 
 
