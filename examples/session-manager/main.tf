@@ -4,9 +4,11 @@ provider "aws" {
 
 data "aws_availability_zones" "available" {}
 
+data "aws_region" "current" {}
+
 locals {
   name   = "ex-${basename(path.cwd)}"
-  region = "eu-west-1"
+  region = "us-east-1"
 
   vpc_cidr = "10.0.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
@@ -24,7 +26,7 @@ locals {
 
 module "ec2" {
   source = "../../"
-
+   
   name = local.name
 
   subnet_id              = element(module.vpc.intra_subnets, 0)
@@ -37,6 +39,8 @@ module "ec2" {
   }
 
   tags = local.tags
+
+  
 }
 
 ################################################################################
