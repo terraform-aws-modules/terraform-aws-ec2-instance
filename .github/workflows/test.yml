@@ -8,14 +8,14 @@ permissions:
 
 jobs:
   format:
-    name: Format Code
+    name: Test Code
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.AUTO_MERGE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Terraform
         run: |
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
