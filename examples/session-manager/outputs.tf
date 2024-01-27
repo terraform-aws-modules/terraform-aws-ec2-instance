@@ -3,6 +3,10 @@ output "ec2_id" {
   value       = module.ec2.id
 }
 
+output "region" {
+  value = data.aws_region.current.name
+}
+
 output "ec2_arn" {
   description = "The ARN of the instance"
   value       = module.ec2.arn
@@ -88,7 +92,12 @@ output "ec2_ephemeral_block_device" {
   value       = module.ec2.ephemeral_block_device
 }
 
-output "ssm_connect_command" {
-  description = "The AWS CLI command to connect to the instance using Session Manager"
-  value       = "aws ssm start-session --target ${module.ec2.id} --region ${local.region}"
-}
+# output "ssm_status" {
+#   description = "The status of the command. Valid values are: `Pending`, `InProgress`, `Success`, `Cancelled`, `Failed`"
+#   value       = data.external.aws_ssm_send_command.result.status
+# }
+
+# output "ssm_result" {
+#   description = "The result of the command execution"
+#   value       = data.external.aws_ssm_send_command.result.result
+# }
