@@ -29,7 +29,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-        working-directory: examples/session_manager
+        working-directory: examples/session-manager
         run: |
             terraform init
             terraform test
