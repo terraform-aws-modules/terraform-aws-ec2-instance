@@ -160,7 +160,7 @@ variable "metadata_options" {
   default = {
     "http_endpoint"               = "enabled"
     "http_put_response_hop_limit" = 1
-    "http_tokens"                 = "optional"
+    "http_tokens"                 = "required"
   }
 }
 
