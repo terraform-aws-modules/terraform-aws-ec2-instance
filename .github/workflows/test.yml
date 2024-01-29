@@ -1,0 +1,38 @@
+name: Terraform Test
+
+on:
+  pull_request
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    name: Test Code
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Terraform
+        run: |
+          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update && sudo apt install terraform
+      - name: Check Terraform Version
+        run: |
+          terraform version
+      - name: Run Terraform Test
+        env:
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        working-directory: examples/session-manager
+        run: |
+            terraform init
+            terraform test
+        
+
+
