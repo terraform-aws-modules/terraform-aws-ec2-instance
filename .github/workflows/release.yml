@@ -2,14 +2,8 @@ name: Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - '**/*.tf'
-      - '**/*.md'
-      - '.github/workflows/*.yml'
-      - 'LICENSE'
+
+
 jobs:
   release:
     name: Release
@@ -19,14 +13,14 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: 'lts/*'
       - name: Install dependencies
-        run: npm clean-install
+        run: |
+            npm install --package-lock-only
+            npm clean-install
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
-      - name: Build
-        run: npm run build
       - name: Semantic Release
-        run: npx semantic-release
+        run: npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release semantic-release
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
