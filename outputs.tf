@@ -18,6 +18,15 @@ output "arn" {
   )
 }
 
+output "instance_type" {
+  description = "The instance_type of the instance"
+  value = try(
+    aws_instance.this[0].instance_type,
+    aws_instance.ignore_ami[0].arn,
+    aws_spot_instance_request.this[0].instance_type,
+    null,
+  )
+} 
 output "capacity_reservation_specification" {
   description = "Capacity reservation specification of the instance"
   value = try(
@@ -152,6 +161,7 @@ output "ami" {
     null,
   )
 }
+
 
 output "availability_zone" {
   description = "The availability zone of the created instance"

@@ -1,8 +1,15 @@
+#add command=plan example
+run "check_ec2_instance_type" {
+  command = plan
+  assert {
+    error_message = "Instance type should be t2.micro"
+    condition     = module.ec2.instance_type == "t3.micro"
+  }
+}
+
 run "create_ec2_instance" {
   # Check that ec2 instance is created
-
   assert {
-
     error_message = "Instance should be running'"
     condition     = module.ec2.instance_state == "running"
   }
@@ -11,7 +18,7 @@ run "create_ec2_instance" {
 run "check_ssm_command" {
 
   module {
-    source = "./tests/setup"
+    source = "./tests/load"
   }
 
   variables {
