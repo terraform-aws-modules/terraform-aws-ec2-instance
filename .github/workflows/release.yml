@@ -2,14 +2,8 @@ name: Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - '**/*.tf'
-      - '**/*.md'
-      - '.github/workflows/*.yml'
-      - 'LICENSE'
+
+
 jobs:
   release:
     name: Release
@@ -21,7 +15,9 @@ jobs:
         with:
           node-version: '16'
       - name: Install dependencies
-        run: npm clean-install
+        run: |
+            npm install --package-lock-only
+            npm clean-install
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
       - name: Build
