@@ -1,0 +1,10 @@
+{
+    "name": "semenatic-release",
+    "main": "index.js",
+    "devDependencies": {
+      "@semantic-release/git": "10.0.1",
+      "@semantic-release/github": "8.0.6",
+      "semantic-release": "19.0.5",
+      "semantic-release-github-actions-tags": "1.0.3"
+    }
+  }
