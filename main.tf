@@ -21,8 +21,8 @@ data "aws_ssm_parameter" "this" {
 resource "aws_instance" "this" {
   count = local.create && !var.ignore_ami_changes && !var.create_spot_instance ? 1 : 0
 
-  ami                  = local.ami
-  instance_type        = var.instance_type
+  ami                  = length(var.launch_template) == 0 ? local.ami : null
+  instance_type        = length(var.launch_template) == 0 ? var.instance_type : null
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
@@ -199,8 +199,8 @@ resource "aws_instance" "this" {
 resource "aws_instance" "ignore_ami" {
   count = local.create && var.ignore_ami_changes && !var.create_spot_instance ? 1 : 0
 
-  ami                  = local.ami
-  instance_type        = var.instance_type
+  ami                  = length(var.launch_template) == 0 ? local.ami : null
+  instance_type        = length(var.launch_template) == 0 ? var.instance_type : null
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
@@ -383,8 +383,8 @@ resource "aws_instance" "ignore_ami" {
 resource "aws_spot_instance_request" "this" {
   count = local.create && var.create_spot_instance ? 1 : 0
 
-  ami                  = local.ami
-  instance_type        = var.instance_type
+  ami                  = length(var.launch_template) == 0 ? local.ami : null
+  instance_type        = length(var.launch_template) == 0 ? var.instance_type : null
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
