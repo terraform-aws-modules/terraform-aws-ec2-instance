@@ -133,6 +133,7 @@ resource "aws_instance" "this" {
 
     content {
       device_index          = network_interface.value.device_index
+      network_card_index    = lookup(network_interface.value, "network_card_index", null)
       network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
       delete_on_termination = try(network_interface.value.delete_on_termination, false)
     }
@@ -311,6 +312,7 @@ resource "aws_instance" "ignore_ami" {
 
     content {
       device_index          = network_interface.value.device_index
+      network_card_index    = lookup(network_interface.value, "network_card_index", null)
       network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
       delete_on_termination = try(network_interface.value.delete_on_termination, false)
     }
@@ -505,6 +507,7 @@ resource "aws_spot_instance_request" "this" {
 
     content {
       device_index          = network_interface.value.device_index
+      network_card_index    = lookup(network_interface.value, "network_card_index", null)
       network_interface_id  = lookup(network_interface.value, "network_interface_id", null)
       delete_on_termination = try(network_interface.value.delete_on_termination, false)
     }
