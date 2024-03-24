@@ -1,3 +1,4 @@
+
 data "aws_partition" "current" {}
 
 locals {
