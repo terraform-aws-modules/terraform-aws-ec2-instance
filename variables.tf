@@ -367,6 +367,18 @@ variable "create_iam_instance_profile" {
   default     = false
 }
 
+variable "use_existing_iam_role" {
+  description = "Whether to use an existing IAM role instead of creating a new one."
+  type        = bool
+  default     = false
+}
+
+variable "existing_iam_role_name" {
+  description = "Name of the existing IAM role to use for the instance profile."
+  type        = string
+  default     = null
+}
+
 variable "iam_role_name" {
   description = "Name to use on IAM role created"
   type        = string
