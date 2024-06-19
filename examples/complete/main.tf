@@ -59,17 +59,15 @@ module "ec2_complete" {
     threads_per_core = 1
   }
   enable_volume_tags = false
-  root_block_device = [
-    {
-      encrypted   = true
-      volume_type = "gp3"
-      throughput  = 200
-      volume_size = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
-  ]
+  root_block_device = {
+    encrypted   = true
+    volume_type = "gp3"
+    throughput  = 200
+    volume_size = 50
+    tags = {
+      Name = "my-root-block"
+    }
+  }
 
   ebs_block_device = [
     {
@@ -190,29 +188,25 @@ locals {
       instance_type     = "t3.micro"
       availability_zone = element(module.vpc.azs, 0)
       subnet_id         = element(module.vpc.private_subnets, 0)
-      root_block_device = [
-        {
-          encrypted   = true
-          volume_type = "gp3"
-          throughput  = 200
-          volume_size = 50
-          tags = {
-            Name = "my-root-block"
-          }
+      root_block_device = {
+        encrypted   = true
+        volume_type = "gp3"
+        throughput  = 200
+        volume_size = 50
+        tags = {
+          Name = "my-root-block"
         }
-      ]
+      }
     }
     two = {
       instance_type     = "t3.small"
       availability_zone = element(module.vpc.azs, 1)
       subnet_id         = element(module.vpc.private_subnets, 1)
-      root_block_device = [
-        {
-          encrypted   = true
-          volume_type = "gp2"
-          volume_size = 50
-        }
-      ]
+      root_block_device = {
+        encrypted   = true
+        volume_type = "gp2"
+        volume_size = 50
+      }
     }
     three = {
       instance_type     = "t3.medium"
@@ -270,17 +264,15 @@ module "ec2_spot_instance" {
   }
 
   enable_volume_tags = false
-  root_block_device = [
-    {
-      encrypted   = true
-      volume_type = "gp3"
-      throughput  = 200
-      volume_size = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
-  ]
+  root_block_device = {
+    encrypted   = true
+    volume_type = "gp3"
+    throughput  = 200
+    volume_size = 50
+    tags = {
+      Name = "my-root-block"
+    }
+  }
 
   ebs_block_device = [
     {
@@ -389,17 +381,15 @@ module "ec2_cpu_options" {
     amd_sev_snp      = "enabled"
   }
   enable_volume_tags = false
-  root_block_device = [
-    {
-      encrypted   = true
-      volume_type = "gp3"
-      throughput  = 200
-      volume_size = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
-  ]
+  root_block_device = {
+    encrypted   = true
+    volume_type = "gp3"
+    throughput  = 200
+    volume_size = 50
+    tags = {
+      Name = "my-root-block"
+    }
+  }
 
   ebs_block_device = [
     {
