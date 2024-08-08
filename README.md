@@ -1,5 +1,12 @@
 # AWS EC2 Instance Terraform module
 
+## Grouper fork
+Forked from
+[terraform-aws-modules/terraform-aws-ec2-instance](https://github.com/Element3Health/terraform-aws-ec2-instance)
+
+Only to add lifecycle hoook of create_before_destroy to the instance resource.
+
+
 Terraform module which creates an EC2 instance on AWS.
 
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
