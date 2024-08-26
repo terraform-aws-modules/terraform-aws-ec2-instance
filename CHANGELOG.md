@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.7.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.6.1...v5.7.0) (2024-08-26)
+
+
+### Features
+
+* Added parameter to attach aws_eip ([#391](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/391)) ([57cdd5d](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/57cdd5d376939ec8a177c4622d3fe8c6f12c68c7))
+
 ## [5.6.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.6.0...v5.6.1) (2024-03-07)
 
 
