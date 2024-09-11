@@ -167,12 +167,12 @@ resource "aws_instance" "this" {
   }
 
   dynamic "instance_market_options" {
-  for_each = length(var.instance_market_options) > 0 ? [var.instance_market_options] : []
+    for_each = length(var.instance_market_options) > 0 ? [var.instance_market_options] : []
 
-  content {
-    market_type  = try(instance_market_options.value.market_type, null)
+    content {
+      market_type = try(instance_market_options.value.market_type, null)
+    }
   }
-}
 
   enclave_options {
     enabled = var.enclave_options_enabled
