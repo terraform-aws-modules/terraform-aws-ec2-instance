@@ -40,6 +40,12 @@ variable "maintenance_options" {
   default     = {}
 }
 
+variable "instance_market_options" {
+  description = "The market (purchasing) option for the instance"
+  type        = any
+  default     = {}
+}
+
 variable "availability_zone" {
   description = "AZ to start the instance in"
   type        = string
