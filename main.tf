@@ -171,7 +171,6 @@ resource "aws_instance" "this" {
 
   content {
     market_type  = try(instance_market_options.value.market_type, null)
-    spot_options = try(instance_market_options.value.spot_options, null)
   }
 }
 
