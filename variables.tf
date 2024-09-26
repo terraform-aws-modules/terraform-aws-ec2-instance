@@ -351,11 +351,7 @@ variable "disable_api_stop" {
   default     = null
 
 }
-variable "putin_khuylo" {
-  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
-  type        = bool
-  default     = true
-}
+
 
 ################################################################################
 # IAM Role / Instance Profile

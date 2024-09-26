@@ -56,7 +56,6 @@ module "wrapper" {
   placement_group                     = try(each.value.placement_group, var.defaults.placement_group, null)
   private_dns_name_options            = try(each.value.private_dns_name_options, var.defaults.private_dns_name_options, {})
   private_ip                          = try(each.value.private_ip, var.defaults.private_ip, null)
-  putin_khuylo                        = try(each.value.putin_khuylo, var.defaults.putin_khuylo, true)
   root_block_device                   = try(each.value.root_block_device, var.defaults.root_block_device, [])
   secondary_private_ips               = try(each.value.secondary_private_ips, var.defaults.secondary_private_ips, null)
   source_dest_check                   = try(each.value.source_dest_check, var.defaults.source_dest_check, null)
