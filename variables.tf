@@ -196,8 +196,8 @@ variable "private_ip" {
 
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details"
-  type        = list(any)
-  default     = []
+  type        = any
+  default     = {}
 }
 
 variable "secondary_private_ips" {

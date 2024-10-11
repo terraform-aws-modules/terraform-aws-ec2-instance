@@ -76,7 +76,7 @@ resource "aws_instance" "this" {
   }
 
   dynamic "root_block_device" {
-    for_each = var.root_block_device
+    for_each = length(var.root_block_device) > 0 ? [var.root_block_device] : []
 
     content {
       delete_on_termination = try(root_block_device.value.delete_on_termination, null)
@@ -254,7 +254,7 @@ resource "aws_instance" "ignore_ami" {
   }
 
   dynamic "root_block_device" {
-    for_each = var.root_block_device
+    for_each = length(var.root_block_device) > 0 ? [var.root_block_device] : []
 
     content {
       delete_on_termination = try(root_block_device.value.delete_on_termination, null)
@@ -448,7 +448,7 @@ resource "aws_spot_instance_request" "this" {
   }
 
   dynamic "root_block_device" {
-    for_each = var.root_block_device
+    for_each = length(var.root_block_device) > 0 ? [var.root_block_device] : []
 
     content {
       delete_on_termination = try(root_block_device.value.delete_on_termination, null)
