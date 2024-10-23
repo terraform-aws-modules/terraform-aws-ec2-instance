@@ -193,7 +193,10 @@ resource "aws_instance" "this" {
     "Environment" = var.environment,
     "Service" = var.service,
     "ServiceComponent" = var.service_component,
-    "OwnerTeam" = var.owner_team
+    "OwnerTeam" = var.owner_team,
+    env_type_ssm             = var.ssm_access_type,
+    disaster-recovery-backup = var.backup_for_disaster_recovery,
+    backup-frequency         = var.backup_frequency_days
   }, var.instance_tags, var.tags)
   volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
 }

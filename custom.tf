@@ -51,6 +51,11 @@ variable "backup_frequency_days" {
   description = "The number of days after which the backup should be taken of the ami"
 }
 
+variable "ssm_access_type" {
+  type        = string
+  default     = ""
+  description = "ssm access type"
+}
 
 variable "owner_team" {
   type = string
