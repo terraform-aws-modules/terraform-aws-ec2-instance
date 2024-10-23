@@ -39,6 +39,19 @@ variable "service_component" {
   }
 }
 
+variable "backup_for_disaster_recovery" {
+  type        = bool
+  default     = false
+  description = "If we need to keep backup of this instance's ami in other region"
+}
+
+variable "backup_frequency_days" {
+  type        = number
+  default     = 7
+  description = "The number of days after which the backup should be taken of the ami"
+}
+
+
 variable "owner_team" {
   type = string
   description = "Owner of this ec2. eg: platform, supply, demand, ds, etc"
