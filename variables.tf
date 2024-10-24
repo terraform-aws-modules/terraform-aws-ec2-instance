@@ -122,7 +122,13 @@ variable "instance_type" {
   description = "The type of instance to start"
   type        = string
   default     = "t3.micro"
+
+  validation {
+    condition = contains(["micro", "medium", "large", "nano"], var.instance_type)
+    error_message = "Instance type must be one of: micro, medium, large, nano."
+  }
 }
+
 
 variable "instance_tags" {
   description = "Additional tags for the instance"
