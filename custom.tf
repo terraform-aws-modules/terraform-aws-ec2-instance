@@ -8,6 +8,11 @@ variable "alarm_sns_topic_arn" {
   description = "The ARN of the SNS topic to notify when on critical alerts"
 }
 
+variable "ignore_in_lifecycle" {
+  default = []
+  description = "ignore instance type changes"
+}
+
 variable "environment" {
   type = string
   description = "The environment tag to apply to all resources. eg: production, testing, staging, etc"

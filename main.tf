@@ -188,6 +188,10 @@ resource "aws_instance" "this" {
     delete = try(var.timeouts.delete, null)
   }
 
+  lifecycle {
+    ignore_changes = var.ignore_in_lifecycle
+  }
+
   tags        = merge({
     "Name" = var.name,
     "Environment" = var.environment,
