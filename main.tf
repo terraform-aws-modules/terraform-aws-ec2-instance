@@ -189,7 +189,10 @@ resource "aws_instance" "this" {
   }
 
   lifecycle {
-    ignore_changes = var.ignore_in_lifecycle
+    ignore_changes = [
+      key_name,
+      instance_type,
+    ]
   }
 
   tags        = merge({
