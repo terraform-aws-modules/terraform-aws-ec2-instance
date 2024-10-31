@@ -181,6 +181,48 @@ module "ec2_ignore_ami_changes" {
 }
 
 ################################################################################
+# EC2 Module - with ignore AMI changes and ignore user_data changes
+################################################################################
+  
+module "ec2_ignore_ami_changes" {
+  source = "../../"      
+  
+  name = local.name      
+
+  ignore_ami_changes = true
+  ignore_user_data_changes = true
+  
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.micro"
+  availability_zone      = element(module.vpc.azs, 0)
+  subnet_id              = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.security_group.security_group_id]
+  
+  tags = local.tags
+}
+
+################################################################################
+# EC2 Module - with ignore user_data changes
+################################################################################
+ 
+module "ec2_ignore_ami_changes" {
+  source = "../../"
+ 
+  name = local.name
+
+  ignore_user_data_changes = true
+ 
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.micro"
+  availability_zone      = element(module.vpc.azs, 0)
+  subnet_id              = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.security_group.security_group_id]
+  
+  tags = local.tags
+}
+
+
+################################################################################
 # EC2 Module - multiple instances with `for_each`
 ################################################################################
 
