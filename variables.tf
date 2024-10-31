@@ -28,6 +28,12 @@ variable "ignore_ami_changes" {
   default     = false
 }
 
+variable "ignore_user_data_changes" {
+  description = "Whether changes to the userdata should be ignored by Terraform. Note - changing this value will result in the replacement of the instance"
+  type        = bool
+  default     = false
+}
+
 variable "associate_public_ip_address" {
   description = "Whether to associate a public IP address with an instance in a VPC"
   type        = bool
