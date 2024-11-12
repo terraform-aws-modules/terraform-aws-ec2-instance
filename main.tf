@@ -6,6 +6,12 @@ locals {
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a|4g){1}\\..*$/", "1") == "1" ? true : false
 
   ami = try(coalesce(var.ami, try(nonsensitive(data.aws_ssm_parameter.this[0].value), null)), null)
+
+  security_group_name    = try(coalesce(var.security_group_name, "${var.name}-sg"), "")
+  sg_ingress_rules       = try(lookup(var.security_group_rules, "ingress", {}), {})
+  create_sg_ingress_rule = length(keys(local.sg_ingress_rules)) > 0 ? true : false
+  sg_egress_rules        = try(lookup(var.security_group_rules, "egress", {}), {})
+  create_sg_egress_rule  = length(keys(local.sg_egress_rules)) > 0 ? true : false
 }
 
 data "aws_ssm_parameter" "this" {
@@ -33,7 +39,7 @@ resource "aws_instance" "this" {
 
   availability_zone      = var.availability_zone
   subnet_id              = var.subnet_id
-  vpc_security_group_ids = var.vpc_security_group_ids
+  vpc_security_group_ids = compact(concat([try(aws_security_group.this[0].id, "")], var.vpc_security_group_ids))
 
   key_name             = var.key_name
   monitoring           = var.monitoring
@@ -211,7 +217,7 @@ resource "aws_instance" "ignore_ami" {
 
   availability_zone      = var.availability_zone
   subnet_id              = var.subnet_id
-  vpc_security_group_ids = var.vpc_security_group_ids
+  vpc_security_group_ids = compact(concat([try(aws_security_group.this[0].id, "")], var.vpc_security_group_ids))
 
   key_name             = var.key_name
   monitoring           = var.monitoring
@@ -395,7 +401,7 @@ resource "aws_spot_instance_request" "this" {
 
   availability_zone      = var.availability_zone
   subnet_id              = var.subnet_id
-  vpc_security_group_ids = var.vpc_security_group_ids
+  vpc_security_group_ids = compact(concat([try(aws_security_group.this[0].id, "")], var.vpc_security_group_ids))
 
   key_name             = var.key_name
   monitoring           = var.monitoring
@@ -619,4 +625,53 @@ resource "aws_eip" "this" {
   domain = var.eip_domain
 
   tags = merge(var.tags, var.eip_tags)
+}
+
+################################################################################
+# Security Group
+################################################################################
+
+resource "aws_security_group" "this" {
+  count = local.create && var.create_security_group ? 1 : 0
+
+  name        = var.security_group_use_name_prefix ? null : local.security_group_name
+  name_prefix = var.security_group_use_name_prefix ? "${local.security_group_name}-" : null
+  vpc_id      = var.vpc_id
+  description = coalesce(var.security_group_description, "Control traffic to/from EC2 instance ${var.name}")
+
+  tags = merge(var.tags, var.security_group_tags, { Name = local.security_group_name })
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_vpc_security_group_egress_rule" "this" {
+  for_each = { for k, v in local.sg_egress_rules : k => v if local.create && var.create_security_group && local.create_sg_egress_rule }
+
+  security_group_id            = aws_security_group.this[0].id
+  cidr_ipv4                    = each.value.cidr_ipv4
+  cidr_ipv6                    = each.value.cidr_ipv6
+  description                  = each.value.description
+  from_port                    = each.value.from_port
+  to_port                      = each.value.to_port
+  ip_protocol                  = each.value.ip_protocol
+  prefix_list_id               = each.value.prefix_list_id
+  referenced_security_group_id = each.value.referenced_security_group_id
+  tags                         = merge(try(each.value.tags, {}), var.security_group_tags, { Name = local.security_group_name })
+}
+
+resource "aws_vpc_security_group_ingress_rule" "this" {
+  for_each = { for k, v in local.sg_ingress_rules : k => v if local.create && var.create_security_group && local.create_sg_ingress_rule }
+
+  security_group_id            = aws_security_group.this[0].id
+  cidr_ipv4                    = each.value.cidr_ipv4
+  cidr_ipv6                    = each.value.cidr_ipv6
+  description                  = each.value.description
+  from_port                    = each.value.from_port
+  to_port                      = each.value.to_port
+  ip_protocol                  = each.value.ip_protocol
+  prefix_list_id               = each.value.prefix_list_id
+  referenced_security_group_id = each.value.referenced_security_group_id
+  tags                         = merge(try(each.value.tags, {}), var.security_group_tags, { Name = local.security_group_name })
 }

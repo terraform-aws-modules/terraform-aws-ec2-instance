@@ -430,3 +430,82 @@ variable "eip_tags" {
   type        = map(string)
   default     = {}
 }
+
+################################################################################
+# Security Group
+################################################################################
+variable "create_security_group" {
+  description = "Determines whether to create security group for EC2 instance"
+  type        = bool
+  default     = true
+}
+
+variable "security_group_name" {
+  description = "The security group name. Default value is (`var.name`)"
+  type        = string
+  default     = ""
+}
+
+variable "security_group_use_name_prefix" {
+  description = "Determines whether the security group name (`var.name`) is used as a prefix"
+  type        = bool
+  default     = true
+}
+
+variable "security_group_description" {
+  description = "The description of the security group."
+  type        = string
+  default     = null
+}
+
+variable "vpc_id" {
+  description = "ID of the VPC where to create security group"
+  type        = string
+  default     = ""
+}
+
+variable "security_group_rules" {
+  description = "Map of security group rules to add to the cluster security group created"
+  type = object({
+    ingress = optional(map(object({
+      cidr_ipv4                    = optional(string)
+      cidr_ipv6                    = optional(string)
+      description                  = optional(string)
+      from_port                    = optional(number)
+      ip_protocol                  = optional(string)
+      prefix_list_id               = optional(string)
+      referenced_security_group_id = optional(string)
+      tags                         = optional(map(string))
+      to_port                      = optional(number)
+    })))
+    egress = optional(map(object({
+      cidr_ipv4                    = optional(string)
+      cidr_ipv6                    = optional(string)
+      description                  = optional(string)
+      from_port                    = optional(number)
+      ip_protocol                  = optional(string)
+      prefix_list_id               = optional(string)
+      referenced_security_group_id = optional(string)
+      tags                         = optional(map(string))
+      to_port                      = optional(number)
+    })))
+  })
+  default = {
+    ingress = {}
+    egress = {
+      all_https = {
+        cidr_ipv4   = "0.0.0.0/0"
+        description = "Allow all outbound HTTPS traffic"
+        from_port   = 443
+        ip_protocol = "tcp"
+        to_port     = 443
+      }
+    }
+  }
+}
+
+variable "security_group_tags" {
+  description = "Additional tags for the security group"
+  type        = map(string)
+  default     = {}
+}

@@ -230,3 +230,19 @@ output "ephemeral_block_device" {
     null
   )
 }
+
+################################################################################
+# Security Group
+################################################################################
+
+output "security_group_id" {
+  description = "The security group ID of the cluster"
+  value       = try(aws_security_group.this[0].id, null)
+}
+
+output "egress_security_group_rule_ids" {
+  description = "The egress security group rule IDs of the cluster"
+  value = {
+    for k, v in try(aws_vpc_security_group_egress_rule.this, {}) : k => v
+  }
+}
