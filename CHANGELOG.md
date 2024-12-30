@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.7.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.7.0...v5.7.1) (2024-10-11)
+
+
+### Bug Fixes
+
+* Update CI workflow versions to latest ([#409](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/409)) ([e48d67f](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/e48d67f339c72bb44a544729fa685e347ea6256e))
+
+## [5.7.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.6.1...v5.7.0) (2024-08-26)
+
+
+### Features
+
+* Added parameter to attach aws_eip ([#391](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/391)) ([57cdd5d](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/57cdd5d376939ec8a177c4622d3fe8c6f12c68c7))
+
 ## [5.6.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.6.0...v5.6.1) (2024-03-07)
 
 

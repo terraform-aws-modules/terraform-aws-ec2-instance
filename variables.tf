@@ -408,3 +408,25 @@ variable "iam_role_tags" {
   type        = map(string)
   default     = {}
 }
+
+################################################################################
+# Elastic IP
+################################################################################
+
+variable "create_eip" {
+  description = "Determines whether a public EIP will be created and associated with the instance."
+  type        = bool
+  default     = false
+}
+
+variable "eip_domain" {
+  description = "Indicates if this EIP is for use in VPC"
+  type        = string
+  default     = "vpc"
+}
+
+variable "eip_tags" {
+  description = "A map of additional tags to add to the eip"
+  type        = map(string)
+  default     = {}
+}
