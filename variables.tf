@@ -109,7 +109,7 @@ variable "host_id" {
 variable "iam_instance_profile" {
   description = "IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile"
   type        = string
-  default     = null
+  default     = "EC2DefaultProfile"
 }
 
 variable "instance_initiated_shutdown_behavior" {
