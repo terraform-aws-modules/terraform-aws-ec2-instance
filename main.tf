@@ -1,19 +1,3 @@
-data "aws_partition" "current" {}
-
-locals {
-  create = var.create && var.putin_khuylo
-
-  is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a|4g){1}\\..*$/", "1") == "1" ? true : false
-
-  ami = try(coalesce(var.ami, try(nonsensitive(data.aws_ssm_parameter.this[0].value), null)), null)
-}
-
-data "aws_ssm_parameter" "this" {
-  count = local.create && var.ami == null ? 1 : 0
-
-  name = var.ami_ssm_parameter
-}
-
 ################################################################################
 # Instance
 ################################################################################
@@ -188,8 +172,8 @@ resource "aws_instance" "this" {
     delete = try(var.timeouts.delete, null)
   }
 
-  tags        = merge({ "Name" = var.name }, var.instance_tags, var.tags)
-  volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  tags        = merge({ "Name" = local.name }, var.instance_tags, var.tags)
+  volume_tags = var.enable_volume_tags ? merge({ "Name" = local.name }, var.volume_tags) : null
 }
 
 ################################################################################
@@ -366,8 +350,8 @@ resource "aws_instance" "ignore_ami" {
     delete = try(var.timeouts.delete, null)
   }
 
-  tags        = merge({ "Name" = var.name }, var.instance_tags, var.tags)
-  volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  tags        = merge({ "Name" = local.name }, var.instance_tags, var.tags)
+  volume_tags = var.enable_volume_tags ? merge({ "Name" = local.name }, var.volume_tags) : null
 
   lifecycle {
     ignore_changes = [
@@ -540,8 +524,8 @@ resource "aws_spot_instance_request" "this" {
     delete = try(var.timeouts.delete, null)
   }
 
-  tags        = merge({ "Name" = var.name }, var.instance_tags, var.tags)
-  volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  tags        = merge({ "Name" = local.name }, var.instance_tags, var.tags)
+  volume_tags = var.enable_volume_tags ? merge({ "Name" = local.name }, var.volume_tags) : null
 }
 
 ################################################################################
@@ -549,7 +533,7 @@ resource "aws_spot_instance_request" "this" {
 ################################################################################
 
 locals {
-  iam_role_name = try(coalesce(var.iam_role_name, var.name), "")
+  iam_role_name = try(coalesce(var.iam_role_name, local.name), "")
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {

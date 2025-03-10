@@ -4,16 +4,45 @@ variable "create" {
   default     = true
 }
 
-variable "name" {
-  description = "Name to be used on EC2 instance created"
+variable "instance_number" {
   type        = string
-  default     = ""
+  default     = "01"
+  description = "This is an identifier, not a count"
+}
+
+variable "org" {
+  type    = string
+  default = "sccm"
+}
+
+variable "application" {
+  description = "Identifier to be added to the resources created which represents the application they belong to"
+  type        = string
+}
+
+variable "environment" {
+  type        = string
+  description = "Application environment (dev, qa, stg, uat, prod)"
+  validation {
+    condition     = contains(["dev", "qa", "stg", "uat", "prod"], var.environment)
+    error_message = "Valid values for environment: dev, qa, stg, uat, prod"
+  }
 }
 
 variable "ami_ssm_parameter" {
   description = "SSM parameter name for the AMI ID. For Amazon Linux AMI SSM parameters see [reference](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html)"
   type        = string
   default     = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+}
+
+variable "ami_os" {
+  description = "value"
+  type        = string
+  default     = "override"
+  validation {
+    condition     = contains(["Windows", "Amazon_Linux", "RHEL", "Ubuntu", "override"], var.ami_os)
+    error_message = "Valid values for ami_os: Windows, Amazon_Linux, RHEL, Ubuntu, override. If you select override, provide a value for ami variable"
+  }
 }
 
 variable "ami" {
@@ -430,3 +459,4 @@ variable "eip_tags" {
   type        = map(string)
   default     = {}
 }
+
