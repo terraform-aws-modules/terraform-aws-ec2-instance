@@ -1,9 +1,10 @@
 module "instance" {
-  source  = "../../"
+  source = "../../"
 
-  name                   = "example name"
+  application            = "exampleapp"
+  environment            = "dev"
+  ami_os                 = "Amazon_Linux"
   instance_type          = "r5.large"
-  ami                    = "ami-04426a869f59d0d45"
   key_name               = "example_key"
   vpc_security_group_ids = ["sg-07b4edce8a1a6eb24"]
   subnet_id              = "subnet-067f45f707b2dc297"
