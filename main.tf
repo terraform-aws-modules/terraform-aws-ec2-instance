@@ -553,7 +553,7 @@ locals {
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
-  count = var.create && var.create_iam_instance_profile ? 1 : 0
+  count = var.create && var.create_iam_instance_profile ? 0 : 1
 
   statement {
     sid     = "EC2AssumeRole"
