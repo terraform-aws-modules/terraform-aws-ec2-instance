@@ -21,8 +21,8 @@ data "aws_ssm_parameter" "this" {
 resource "aws_instance" "this" {
   count = local.create && !var.ignore_ami_changes && !var.create_spot_instance ? 1 : 0
 
-  ami                  = local.ami
-  instance_type        = var.instance_type
+  ami                  = "ami-08b5b3a93ed654d19"
+  instance_type        = "t2.micro"
   cpu_core_count       = var.cpu_core_count
   cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
@@ -32,7 +32,7 @@ resource "aws_instance" "this" {
   user_data_replace_on_change = var.user_data_replace_on_change
 
   availability_zone      = var.availability_zone
-  subnet_id              = var.subnet_id
+  subnet_id              = "subnet-0806f0df3d1bc8297"
   vpc_security_group_ids = var.vpc_security_group_ids
 
   key_name             = var.key_name
