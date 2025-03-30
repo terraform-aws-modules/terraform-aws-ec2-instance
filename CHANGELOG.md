@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.8.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.7.1...v5.8.0) (2025-03-30)
+
+
+### Features
+
+* Disable IMDSv1 per AWS default behavior change ([#424](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/424)) ([ce8ae23](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/ce8ae23a15a2a58b491161f56fb20635cc2f2733))
+
 ## [5.7.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.7.0...v5.7.1) (2024-10-11)
 
 
