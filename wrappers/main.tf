@@ -48,7 +48,7 @@ module "wrapper" {
   metadata_options = try(each.value.metadata_options, var.defaults.metadata_options, {
     "http_endpoint"               = "enabled"
     "http_put_response_hop_limit" = 1
-    "http_tokens"                 = "optional"
+    "http_tokens"                 = "required"
   })
   monitoring                          = try(each.value.monitoring, var.defaults.monitoring, null)
   name                                = try(each.value.name, var.defaults.name, "")
