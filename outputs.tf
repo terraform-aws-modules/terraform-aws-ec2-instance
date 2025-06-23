@@ -1,11 +1,6 @@
 output "id" {
   description = "The ID of the instance"
-  value = try(
-    aws_instance.this[0].id,
-    aws_instance.ignore_ami[0].id,
-    aws_spot_instance_request.this[0].id,
-    null,
-  )
+  value       = local.instance_id
 }
 
 output "arn" {
@@ -156,12 +151,16 @@ output "ami" {
 
 output "availability_zone" {
   description = "The availability zone of the created instance"
-  value = try(
-    aws_instance.this[0].availability_zone,
-    aws_instance.ignore_ami[0].availability_zone,
-    aws_spot_instance_request.this[0].availability_zone,
-    null,
-  )
+  value       = local.instance_availability_zone
+}
+
+################################################################################
+# EBS Volume(s)
+################################################################################
+
+output "ebs_volumes" {
+  description = "Map of EBS volumes created and their attributes"
+  value       = aws_ebs_volume.this
 }
 
 ################################################################################
@@ -201,6 +200,7 @@ output "iam_instance_profile_unique" {
 ################################################################################
 # Block Devices
 ################################################################################
+
 output "root_block_device" {
   description = "Root block device information"
   value = try(

@@ -3,7 +3,6 @@
 If you have any questions regarding this upgrade process, please consult the `examples` directory:
 
 - [Complete](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/complete)
-- [Volume Attachment](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/volume-attachment)
 
 If you find a bug, please open an issue with supporting configuration to reproduce.
 
