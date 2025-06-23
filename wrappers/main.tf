@@ -58,7 +58,6 @@ module "wrapper" {
   root_block_device                   = try(each.value.root_block_device, var.defaults.root_block_device, [])
   secondary_private_ips               = try(each.value.secondary_private_ips, var.defaults.secondary_private_ips, null)
   source_dest_check                   = try(each.value.source_dest_check, var.defaults.source_dest_check, null)
-  spot_block_duration_minutes         = try(each.value.spot_block_duration_minutes, var.defaults.spot_block_duration_minutes, null)
   spot_instance_interruption_behavior = try(each.value.spot_instance_interruption_behavior, var.defaults.spot_instance_interruption_behavior, null)
   spot_launch_group                   = try(each.value.spot_launch_group, var.defaults.spot_launch_group, null)
   spot_price                          = try(each.value.spot_price, var.defaults.spot_price, null)

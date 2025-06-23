@@ -309,12 +309,6 @@ variable "spot_launch_group" {
   default     = null
 }
 
-variable "spot_block_duration_minutes" {
-  description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)"
-  type        = number
-  default     = null
-}
-
 variable "spot_instance_interruption_behavior" {
   description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
   type        = string
