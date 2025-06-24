@@ -52,38 +52,34 @@ module "ec2_complete" {
   # enclave_options_enabled = true
 
   user_data_base64            = base64encode(local.user_data)
-  user_data_replace_on_change = true
+  user_data_replace_on_change = false
 
   cpu_options = {
     core_count       = 2
     threads_per_core = 1
   }
   enable_volume_tags = false
-  root_block_device = [
-    {
-      encrypted   = true
-      volume_type = "gp3"
-      throughput  = 200
-      volume_size = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
-  ]
+  root_block_device = {
+    encrypted  = true
+    type       = "gp3"
+    throughput = 200
+    size       = 50
+    tags = {
+      Name = "my-root-block"
+    }
+  }
 
-  ebs_block_device = [
-    {
-      device_name = "/dev/sdf"
-      volume_type = "gp3"
-      volume_size = 5
-      throughput  = 200
-      encrypted   = true
-      kms_key_id  = aws_kms_key.this.arn
+  ebs_volumes = {
+    "/dev/sdf" = {
+      size       = 5
+      throughput = 200
+      encrypted  = true
+      kms_key_id = aws_kms_key.this.arn
       tags = {
         MountPoint = "/mnt/data"
       }
     }
-  ]
+  }
 
   tags = local.tags
 }
@@ -93,13 +89,12 @@ module "ec2_network_interface" {
 
   name = "${local.name}-network-interface"
 
-  network_interface = [
-    {
-      device_index          = 0
+  network_interface = {
+    0 = {
       network_interface_id  = aws_network_interface.this.id
       delete_on_termination = false
     }
-  ]
+  }
 
   tags = local.tags
 }
@@ -109,8 +104,7 @@ module "ec2_metadata_options" {
 
   name = "${local.name}-metadata-options"
 
-  subnet_id              = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  subnet_id = element(module.vpc.private_subnets, 0)
 
   metadata_options = {
     http_endpoint               = "enabled"
@@ -130,7 +124,6 @@ module "ec2_t2_unlimited" {
   instance_type               = "t2.micro"
   cpu_credits                 = "unlimited"
   subnet_id                   = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
   maintenance_options = {
@@ -148,7 +141,6 @@ module "ec2_t3_unlimited" {
   instance_type               = "t3.micro"
   cpu_credits                 = "unlimited"
   subnet_id                   = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
 
   tags = local.tags
@@ -167,15 +159,14 @@ module "ec2_disabled" {
 module "ec2_ignore_ami_changes" {
   source = "../../"
 
-  name = local.name
+  name = "${local.name}-ignore-ami-changes"
 
   ignore_ami_changes = true
 
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t2.micro"
-  availability_zone      = element(module.vpc.azs, 0)
-  subnet_id              = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  ami               = data.aws_ami.amazon_linux.id
+  instance_type     = "t2.micro"
+  availability_zone = element(module.vpc.azs, 0)
+  subnet_id         = element(module.vpc.private_subnets, 0)
 
   tags = local.tags
 }
@@ -190,29 +181,25 @@ locals {
       instance_type     = "t3.micro"
       availability_zone = element(module.vpc.azs, 0)
       subnet_id         = element(module.vpc.private_subnets, 0)
-      root_block_device = [
-        {
-          encrypted   = true
-          volume_type = "gp3"
-          throughput  = 200
-          volume_size = 50
-          tags = {
-            Name = "my-root-block"
-          }
+      root_block_device = {
+        encrypted  = true
+        type       = "gp3"
+        throughput = 200
+        size       = 50
+        tags = {
+          Name = "my-root-block"
         }
-      ]
+      }
     }
     two = {
       instance_type     = "t3.small"
       availability_zone = element(module.vpc.azs, 1)
       subnet_id         = element(module.vpc.private_subnets, 1)
-      root_block_device = [
-        {
-          encrypted   = true
-          volume_type = "gp2"
-          volume_size = 50
-        }
-      ]
+      root_block_device = {
+        encrypted = true
+        type      = "gp2"
+        size      = 50
+      }
     }
     three = {
       instance_type     = "t3.medium"
@@ -229,13 +216,12 @@ module "ec2_multiple" {
 
   name = "${local.name}-multi-${each.key}"
 
-  instance_type          = each.value.instance_type
-  availability_zone      = each.value.availability_zone
-  subnet_id              = each.value.subnet_id
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  instance_type     = each.value.instance_type
+  availability_zone = each.value.availability_zone
+  subnet_id         = each.value.subnet_id
 
   enable_volume_tags = false
-  root_block_device  = lookup(each.value, "root_block_device", [])
+  root_block_device  = try(each.value.root_block_device, null)
 
   tags = local.tags
 }
@@ -256,10 +242,9 @@ module "ec2_spot_instance" {
   associate_public_ip_address = true
 
   # Spot request specific attributes
-  spot_price                          = "0.1"
-  spot_wait_for_fulfillment           = true
-  spot_type                           = "persistent"
-  spot_instance_interruption_behavior = "terminate"
+  spot_price                = "0.1"
+  spot_wait_for_fulfillment = true
+  spot_type                 = "persistent"
   # End spot request specific attributes
 
   user_data_base64 = base64encode(local.user_data)
@@ -270,28 +255,24 @@ module "ec2_spot_instance" {
   }
 
   enable_volume_tags = false
-  root_block_device = [
-    {
-      encrypted   = true
-      volume_type = "gp3"
-      throughput  = 200
-      volume_size = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
-  ]
+  root_block_device = {
+    encrypted  = true
+    type       = "gp3"
+    throughput = 200
+    size       = 50
+    tags = {
+      Name = "my-root-block"
+    }
+  }
 
-  ebs_block_device = [
-    {
-      device_name = "/dev/sdf"
-      volume_type = "gp3"
-      volume_size = 5
-      throughput  = 200
-      encrypted   = true
+  ebs_volumes = {
+    "/dev/sdf" = {
+      size       = 5
+      throughput = 200
+      encrypted  = true
       # kms_key_id  = aws_kms_key.this.arn # you must grant the AWSServiceRoleForEC2Spot service-linked role access to any custom KMS keys
     }
-  ]
+  }
 
   tags = local.tags
 }
@@ -305,10 +286,8 @@ module "ec2_open_capacity_reservation" {
 
   name = "${local.name}-open-capacity-reservation"
 
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "t3.micro"
+  instance_type               = "m4.large"
   subnet_id                   = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = false
 
   capacity_reservation_specification = {
@@ -325,10 +304,8 @@ module "ec2_targeted_capacity_reservation" {
 
   name = "${local.name}-targeted-capacity-reservation"
 
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = "t3.micro"
+  instance_type               = "m4.large"
   subnet_id                   = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = false
 
   capacity_reservation_specification = {
@@ -341,7 +318,7 @@ module "ec2_targeted_capacity_reservation" {
 }
 
 resource "aws_ec2_capacity_reservation" "open" {
-  instance_type           = "t3.micro"
+  instance_type           = "m4.large"
   instance_platform       = "Linux/UNIX"
   availability_zone       = "${local.region}a"
   instance_count          = 1
@@ -349,75 +326,11 @@ resource "aws_ec2_capacity_reservation" "open" {
 }
 
 resource "aws_ec2_capacity_reservation" "targeted" {
-  instance_type           = "t3.micro"
+  instance_type           = "m4.large"
   instance_platform       = "Linux/UNIX"
   availability_zone       = "${local.region}a"
   instance_count          = 1
   instance_match_criteria = "targeted"
-}
-
-################################################################################
-# EC2 Module - CPU Options
-################################################################################
-
-module "ec2_cpu_options" {
-  source = "../../"
-
-  name = "${local.name}-cpu-options"
-
-  ami                         = data.aws_ami.amazon_linux_23.id
-  instance_type               = "c6a.xlarge" # used to set core count below and test amd_sev_snp attribute
-  availability_zone           = element(module.vpc.azs, 0)
-  subnet_id                   = element(module.vpc.private_subnets, 0)
-  vpc_security_group_ids      = [module.security_group.security_group_id]
-  placement_group             = aws_placement_group.web.id
-  associate_public_ip_address = true
-  disable_api_stop            = false
-
-  create_iam_instance_profile = true
-  iam_role_description        = "IAM role for EC2 instance"
-  iam_role_policies = {
-    AdministratorAccess = "arn:aws:iam::aws:policy/AdministratorAccess"
-  }
-
-  user_data_base64            = base64encode(local.user_data)
-  user_data_replace_on_change = true
-
-  cpu_options = {
-    core_count       = 2
-    threads_per_core = 1
-    amd_sev_snp      = "enabled"
-  }
-  enable_volume_tags = false
-  root_block_device = [
-    {
-      encrypted   = true
-      volume_type = "gp3"
-      throughput  = 200
-      volume_size = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
-  ]
-
-  ebs_block_device = [
-    {
-      device_name = "/dev/sdf"
-      volume_type = "gp3"
-      volume_size = 5
-      throughput  = 200
-      encrypted   = true
-      kms_key_id  = aws_kms_key.this.arn
-      tags = {
-        MountPoint = "/mnt/data"
-      }
-    }
-  ]
-
-  instance_tags = { Persistence = "09:00-18:00" }
-
-  tags = local.tags
 }
 
 ################################################################################
@@ -426,7 +339,7 @@ module "ec2_cpu_options" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
+  version = "~> 6.0"
 
   name = local.name
   cidr = local.vpc_cidr
@@ -441,26 +354,12 @@ module "vpc" {
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-hvm-*-x86_64-gp2"]
-  }
-}
-
-data "aws_ami" "amazon_linux_23" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023*-x86_64"]
-  }
+  name_regex  = "^al2023-ami-2023.*-x86_64"
 }
 
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   name        = local.name
   description = "Security group for example usage with EC2 instance"
@@ -468,7 +367,6 @@ module "security_group" {
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["http-80-tcp", "all-icmp"]
-  egress_rules        = ["all-all"]
 
   tags = local.tags
 }
@@ -482,5 +380,6 @@ resource "aws_kms_key" "this" {
 }
 
 resource "aws_network_interface" "this" {
-  subnet_id = element(module.vpc.private_subnets, 0)
+  subnet_id       = element(module.vpc.private_subnets, 0)
+  security_groups = [module.security_group.security_group_id]
 }

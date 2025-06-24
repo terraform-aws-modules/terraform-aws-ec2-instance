@@ -10,16 +10,26 @@ variable "name" {
   default     = ""
 }
 
-variable "ami_ssm_parameter" {
-  description = "SSM parameter name for the AMI ID. For Amazon Linux AMI SSM parameters see [reference](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html)"
+variable "region" {
+  description = "Region where the resource(s) will be managed. Defaults to the Region set in the provider configuration"
   type        = string
-  default     = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+  default     = null
 }
+
+################################################################################
+# Instance
+################################################################################
 
 variable "ami" {
   description = "ID of AMI to use for the instance"
   type        = string
   default     = null
+}
+
+variable "ami_ssm_parameter" {
+  description = "SSM parameter name for the AMI ID. For Amazon Linux AMI SSM parameters see [reference](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html)"
+  type        = string
+  default     = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
 }
 
 variable "ignore_ami_changes" {
@@ -34,12 +44,6 @@ variable "associate_public_ip_address" {
   default     = null
 }
 
-variable "maintenance_options" {
-  description = "The maintenance options for the instance"
-  type        = any
-  default     = {}
-}
-
 variable "availability_zone" {
   description = "AZ to start the instance in"
   type        = string
@@ -48,8 +52,24 @@ variable "availability_zone" {
 
 variable "capacity_reservation_specification" {
   description = "Describes an instance's Capacity Reservation targeting option"
-  type        = any
-  default     = {}
+  type = object({
+    capacity_reservation_preference = optional(string)
+    capacity_reservation_target = optional(object({
+      capacity_reservation_id                 = optional(string)
+      capacity_reservation_resource_group_arn = optional(string)
+    }))
+  })
+  default = null
+}
+
+variable "cpu_options" {
+  description = "Defines CPU options to apply to the instance at launch time."
+  type = object({
+    amd_sev_snp      = optional(string)
+    core_count       = optional(number)
+    threads_per_core = optional(number)
+  })
+  default = null
 }
 
 variable "cpu_credits" {
@@ -64,10 +84,10 @@ variable "disable_api_termination" {
   default     = null
 }
 
-variable "ebs_block_device" {
-  description = "Additional EBS block devices to attach to the instance"
-  type        = list(any)
-  default     = []
+variable "disable_api_stop" {
+  description = "If true, enables EC2 Instance Stop Protection"
+  type        = bool
+  default     = null
 }
 
 variable "ebs_optimized" {
@@ -82,10 +102,20 @@ variable "enclave_options_enabled" {
   default     = null
 }
 
+variable "enable_primary_ipv6" {
+  description = "Whether to assign a primary IPv6 Global Unicast Address (GUA) to the instance when launched in a dual-stack or IPv6-only subnet"
+  type        = bool
+  default     = null
+}
+
 variable "ephemeral_block_device" {
   description = "Customize Ephemeral (also known as Instance Store) volumes on the instance"
-  type        = list(map(string))
-  default     = []
+  type = map(object({
+    device_name  = string
+    no_device    = optional(bool)
+    virtual_name = optional(string)
+  }))
+  default = null
 }
 
 variable "get_password_data" {
@@ -106,6 +136,12 @@ variable "host_id" {
   default     = null
 }
 
+variable "host_resource_group_arn" {
+  description = "ARN of the host resource group in which to launch the instances. If you specify an ARN, omit the `tenancy` parameter or set it to `host`"
+  type        = string
+  default     = null
+}
+
 variable "iam_instance_profile" {
   description = "IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile"
   type        = string
@@ -118,16 +154,24 @@ variable "instance_initiated_shutdown_behavior" {
   default     = null
 }
 
+variable "instance_market_options" {
+  description = "The market (purchasing) option for the instance. If set, overrides the `create_spot_instance` variable"
+  type = object({
+    market_type = optional(string)
+    spot_options = optional(object({
+      instance_interruption_behavior = optional(string)
+      max_price                      = optional(string)
+      spot_instance_type             = optional(string)
+      valid_until                    = optional(string)
+    }))
+  })
+  default = null
+}
+
 variable "instance_type" {
   description = "The type of instance to start"
   type        = string
   default     = "t3.micro"
-}
-
-variable "instance_tags" {
-  description = "Additional tags for the instance"
-  type        = map(string)
-  default     = {}
 }
 
 variable "ipv6_address_count" {
@@ -150,17 +194,35 @@ variable "key_name" {
 
 variable "launch_template" {
   description = "Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template"
-  type        = map(string)
-  default     = {}
+  type = object({
+    id      = optional(string)
+    name    = optional(string)
+    version = optional(string)
+  })
+  default = null
+}
+
+variable "maintenance_options" {
+  description = "The maintenance options for the instance"
+  type = object({
+    auto_recovery = optional(string)
+  })
+  default = null
 }
 
 variable "metadata_options" {
   description = "Customize the metadata options of the instance"
-  type        = map(string)
+  type = object({
+    http_endpoint               = optional(string, "enabled")
+    http_protocol_ipv6          = optional(string)
+    http_put_response_hop_limit = optional(number, 1)
+    http_tokens                 = optional(string, "required")
+    instance_metadata_tags      = optional(string)
+  })
   default = {
-    "http_endpoint"               = "enabled"
-    "http_put_response_hop_limit" = 1
-    "http_tokens"                 = "required"
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 1
+    http_tokens                 = "required"
   }
 }
 
@@ -172,20 +234,35 @@ variable "monitoring" {
 
 variable "network_interface" {
   description = "Customize network interfaces to be attached at instance boot time"
-  type        = list(map(string))
-  default     = []
-}
-
-variable "private_dns_name_options" {
-  description = "Customize the private DNS name options of the instance"
-  type        = map(string)
-  default     = {}
+  type = map(object({
+    delete_on_termination = optional(bool)
+    device_index          = optional(number) # Will fall back to use map key as device index
+    network_card_index    = optional(number)
+    network_interface_id  = string
+  }))
+  default = null
 }
 
 variable "placement_group" {
   description = "The Placement Group to start the instance in"
   type        = string
   default     = null
+}
+
+variable "placement_partition_number" {
+  description = "Number of the partition the instance is in. Valid only if the `aws_placement_group` resource's `strategy` argument is set to `partition`"
+  type        = number
+  default     = null
+}
+
+variable "private_dns_name_options" {
+  description = "Customize the private DNS name options of the instance"
+  type = object({
+    enable_resource_name_dns_a_record    = optional(bool)
+    enable_resource_name_dns_aaaa_record = optional(bool)
+    hostname_type                        = optional(string)
+  })
+  default = null
 }
 
 variable "private_ip" {
@@ -196,8 +273,17 @@ variable "private_ip" {
 
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details"
-  type        = list(any)
-  default     = []
+  type = object({
+    delete_on_termination = optional(bool)
+    encrypted             = optional(bool)
+    iops                  = optional(number)
+    kms_key_id            = optional(string)
+    tags                  = optional(map(string), {})
+    throughput            = optional(number)
+    size                  = optional(number)
+    type                  = optional(string)
+  })
+  default = null
 }
 
 variable "secondary_private_ips" {
@@ -220,6 +306,12 @@ variable "subnet_id" {
 
 variable "tags" {
   description = "A mapping of tags to assign to the resource"
+  type        = map(string)
+  default     = {}
+}
+
+variable "instance_tags" {
+  description = "Additional tags for the instance"
   type        = map(string)
   default     = {}
 }
@@ -263,7 +355,7 @@ variable "enable_volume_tags" {
 variable "vpc_security_group_ids" {
   description = "A list of security group IDs to associate with"
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "timeouts" {
@@ -272,45 +364,18 @@ variable "timeouts" {
   default     = {}
 }
 
-variable "cpu_options" {
-  description = "Defines CPU options to apply to the instance at launch time."
-  type        = any
-  default     = {}
-}
+################################################################################
+# Spot Instance Request
+################################################################################
 
-variable "cpu_core_count" {
-  description = "Sets the number of CPU cores for an instance" # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
-  type        = number
-  default     = null
-}
-
-variable "cpu_threads_per_core" {
-  description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)"
-  type        = number
-  default     = null
-}
-
-# Spot instance request
 variable "create_spot_instance" {
   description = "Depicts if the instance is a spot instance"
   type        = bool
   default     = false
 }
 
-variable "spot_price" {
-  description = "The maximum price to request on the spot market. Defaults to on-demand price"
-  type        = string
-  default     = null
-}
-
-variable "spot_wait_for_fulfillment" {
-  description = "If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached"
-  type        = bool
-  default     = null
-}
-
-variable "spot_type" {
-  description = "If set to one-time, after the instance is terminated, the spot request will be closed. Default `persistent`"
+variable "spot_instance_interruption_behavior" {
+  description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
   type        = string
   default     = null
 }
@@ -321,14 +386,26 @@ variable "spot_launch_group" {
   default     = null
 }
 
-variable "spot_block_duration_minutes" {
-  description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)"
-  type        = number
+variable "spot_price" {
+  description = "The maximum price to request on the spot market. Defaults to on-demand price"
+  type        = string
   default     = null
 }
 
-variable "spot_instance_interruption_behavior" {
-  description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
+variable "spot_type" {
+  description = "If set to one-time, after the instance is terminated, the spot request will be closed. Default `persistent`"
+  type        = string
+  default     = null
+}
+
+variable "spot_wait_for_fulfillment" {
+  description = "If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached"
+  type        = bool
+  default     = null
+}
+
+variable "spot_valid_from" {
+  description = "The start date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
   type        = string
   default     = null
 }
@@ -339,22 +416,31 @@ variable "spot_valid_until" {
   default     = null
 }
 
-variable "spot_valid_from" {
-  description = "The start date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
-  type        = string
-  default     = null
-}
+################################################################################
+# EBS Volume(s)
+################################################################################
 
-variable "disable_api_stop" {
-  description = "If true, enables EC2 Instance Stop Protection"
-  type        = bool
-  default     = null
-
-}
-variable "putin_khuylo" {
-  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
-  type        = bool
-  default     = true
+variable "ebs_volumes" {
+  description = "Additional EBS volumes to attach to the instance"
+  type = map(object({
+    encrypted            = optional(bool)
+    final_snapshot       = optional(bool)
+    iops                 = optional(number)
+    kms_key_id           = optional(string)
+    multi_attach_enabled = optional(bool)
+    outpost_arn          = optional(string)
+    size                 = optional(number)
+    snapshot_id          = optional(string)
+    tags                 = optional(map(string), {})
+    throughput           = optional(number)
+    type                 = optional(string, "gp3")
+    # Attachment
+    device_name                    = optional(string) # Will fall back to use map key as device name
+    force_detach                   = optional(bool)
+    skip_destroy                   = optional(bool)
+    stop_instance_before_detaching = optional(bool)
+  }))
+  default = null
 }
 
 ################################################################################
@@ -410,6 +496,89 @@ variable "iam_role_tags" {
 }
 
 ################################################################################
+# Security Group
+################################################################################
+
+variable "create_security_group" {
+  description = "Determines whether a security group will be created"
+  type        = bool
+  default     = true
+}
+
+variable "security_group_name" {
+  description = "Name to use on security group created"
+  type        = string
+  default     = null
+}
+
+variable "security_group_use_name_prefix" {
+  description = "Determines whether the security group name (`security_group_name` or `name`) is used as a prefix"
+  type        = bool
+  default     = true
+}
+
+variable "security_group_description" {
+  description = "Description of the security group"
+  type        = string
+  default     = null
+}
+
+variable "security_group_vpc_id" {
+  description = "VPC ID to create the security group in. If not set, the security group will be created in the default VPC"
+  type        = string
+  default     = null
+}
+
+variable "security_group_tags" {
+  description = "A map of additional tags to add to the security group created"
+  type        = map(string)
+  default     = {}
+}
+
+variable "security_group_egress_rules" {
+  description = "Egress rules to add to the security group"
+  type = map(object({
+    cidr_ipv4                    = optional(string)
+    cidr_ipv6                    = optional(string)
+    description                  = optional(string)
+    from_port                    = optional(number)
+    ip_protocol                  = optional(string, "tcp")
+    prefix_list_id               = optional(string)
+    referenced_security_group_id = optional(string)
+    tags                         = optional(map(string), {})
+    to_port                      = optional(number)
+  }))
+  default = {
+    ipv4_default = {
+      cidr_ipv4   = "0.0.0.0/0"
+      description = "Allow all IPv4 traffic"
+      ip_protocol = "-1"
+    }
+    ipv6_default = {
+      cidr_ipv6   = "::/0"
+      description = "Allow all IPv6 traffic"
+      ip_protocol = "-1"
+    }
+  }
+}
+
+variable "security_group_ingress_rules" {
+  description = "Egress rules to add to the security group"
+  type = map(object({
+    cidr_ipv4                    = optional(string)
+    cidr_ipv6                    = optional(string)
+    description                  = optional(string)
+    from_port                    = optional(number)
+    ip_protocol                  = optional(string, "tcp")
+    prefix_list_id               = optional(string)
+    referenced_security_group_id = optional(string)
+    tags                         = optional(map(string), {})
+    to_port                      = optional(number)
+  }))
+  default = null
+}
+
+################################################################################
 # Elastic IP
 ################################################################################
 
@@ -429,4 +598,10 @@ variable "eip_tags" {
   description = "A map of additional tags to add to the eip"
   type        = map(string)
   default     = {}
+}
+
+variable "putin_khuylo" {
+  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
+  type        = bool
+  default     = true
 }
