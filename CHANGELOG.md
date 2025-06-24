@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.8.0...v6.0.0) (2025-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.10` respectively (#436)
+
+### Features
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.10` respectively ([#436](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/436)) ([bfd5ed3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/bfd5ed33d66024a76f482d6fa2ca226ff9d8f615))
+
 ## [5.8.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.7.1...v5.8.0) (2025-03-30)
 
 
