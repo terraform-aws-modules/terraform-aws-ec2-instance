@@ -33,7 +33,6 @@ Note that this example may create resources which can cost money. Run `terraform
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ec2_complete"></a> [ec2\_complete](#module\_ec2\_complete) | ../../ | n/a |
-| <a name="module_ec2_cpu_options"></a> [ec2\_cpu\_options](#module\_ec2\_cpu\_options) | ../../ | n/a |
 | <a name="module_ec2_disabled"></a> [ec2\_disabled](#module\_ec2\_disabled) | ../../ | n/a |
 | <a name="module_ec2_ignore_ami_changes"></a> [ec2\_ignore\_ami\_changes](#module\_ec2\_ignore\_ami\_changes) | ../../ | n/a |
 | <a name="module_ec2_metadata_options"></a> [ec2\_metadata\_options](#module\_ec2\_metadata\_options) | ../../ | n/a |

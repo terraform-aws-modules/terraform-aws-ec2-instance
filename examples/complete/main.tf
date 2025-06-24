@@ -52,7 +52,7 @@ module "ec2_complete" {
   # enclave_options_enabled = true
 
   user_data_base64            = base64encode(local.user_data)
-  user_data_replace_on_change = true
+  user_data_replace_on_change = false
 
   cpu_options = {
     core_count       = 2
@@ -60,15 +60,13 @@ module "ec2_complete" {
   }
   enable_volume_tags = false
   root_block_device = {
-    main = {
-      encrypted  = true
-      type       = "gp3"
-      throughput = 200
-      size       = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    },
+    encrypted  = true
+    type       = "gp3"
+    throughput = 200
+    size       = 50
+    tags = {
+      Name = "my-root-block"
+    }
   }
 
   ebs_volumes = {
@@ -161,7 +159,7 @@ module "ec2_disabled" {
 module "ec2_ignore_ami_changes" {
   source = "../../"
 
-  name = local.name
+  name = "${local.name}-ignore-ami-changes"
 
   ignore_ami_changes = true
 
@@ -184,14 +182,12 @@ locals {
       availability_zone = element(module.vpc.azs, 0)
       subnet_id         = element(module.vpc.private_subnets, 0)
       root_block_device = {
-        main = {
-          encrypted  = true
-          type       = "gp3"
-          throughput = 200
-          size       = 50
-          tags = {
-            Name = "my-root-block"
-          }
+        encrypted  = true
+        type       = "gp3"
+        throughput = 200
+        size       = 50
+        tags = {
+          Name = "my-root-block"
         }
       }
     }
@@ -200,11 +196,9 @@ locals {
       availability_zone = element(module.vpc.azs, 1)
       subnet_id         = element(module.vpc.private_subnets, 1)
       root_block_device = {
-        main = {
-          encrypted = true
-          type      = "gp2"
-          size      = 50
-        }
+        encrypted = true
+        type      = "gp2"
+        size      = 50
       }
     }
     three = {
@@ -262,14 +256,12 @@ module "ec2_spot_instance" {
 
   enable_volume_tags = false
   root_block_device = {
-    main = {
-      encrypted  = true
-      type       = "gp3"
-      throughput = 200
-      size       = 50
-      tags = {
-        Name = "my-root-block"
-      }
+    encrypted  = true
+    type       = "gp3"
+    throughput = 200
+    size       = 50
+    tags = {
+      Name = "my-root-block"
     }
   }
 
@@ -339,67 +331,6 @@ resource "aws_ec2_capacity_reservation" "targeted" {
   availability_zone       = "${local.region}a"
   instance_count          = 1
   instance_match_criteria = "targeted"
-}
-
-################################################################################
-# EC2 Module - CPU Options
-################################################################################
-
-module "ec2_cpu_options" {
-  source = "../../"
-
-  create = false
-  name   = "${local.name}-cpu-options"
-
-  instance_type               = "c6a.xlarge" # used to set core count below and test amd_sev_snp attribute
-  availability_zone           = element(module.vpc.azs, 0)
-  subnet_id                   = element(module.vpc.private_subnets, 0)
-  placement_group             = aws_placement_group.web.id
-  associate_public_ip_address = true
-  disable_api_stop            = false
-
-  create_iam_instance_profile = true
-  iam_role_description        = "IAM role for EC2 instance"
-  iam_role_policies = {
-    AdministratorAccess = "arn:aws:iam::aws:policy/AdministratorAccess"
-  }
-
-  user_data_base64            = base64encode(local.user_data)
-  user_data_replace_on_change = true
-
-  cpu_options = {
-    core_count       = 2
-    threads_per_core = 1
-    amd_sev_snp      = "enabled"
-  }
-  enable_volume_tags = false
-  root_block_device = {
-    main = {
-      encrypted  = true
-      type       = "gp3"
-      throughput = 200
-      size       = 50
-      tags = {
-        Name = "my-root-block"
-      }
-    }
-  }
-
-  ebs_volumes = {
-    "/dev/sdf" = {
-      size       = 5
-      throughput = 200
-      encrypted  = true
-      kms_key_id = aws_kms_key.this.arn
-      tags = {
-        MountPoint = "/mnt/data"
-      }
-    }
-  }
-
-  instance_tags = { Persistence = "09:00-18:00" }
-
-  tags = local.tags
 }
 
 ################################################################################

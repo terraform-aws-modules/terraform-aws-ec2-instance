@@ -72,12 +72,6 @@ module "ec2_instance" {
 }
 ```
 
-## Module wrappers
-
-Users of this Terraform module can create multiple similar resources by using [`for_each` meta-argument within `module` block](https://www.terraform.io/language/meta-arguments/for_each) which became available in Terraform 0.13.
-
-Users of Terragrunt can achieve similar results by using modules provided in the [wrappers](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/wrappers) directory, if they prefer to reduce amount of configuration files.
-
 ## Examples
 
 - [Complete EC2 instance](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples/complete)
@@ -87,7 +81,7 @@ Users of Terragrunt can achieve similar results by using modules provided in the
 
 This module does not support encrypted AMI's out of the box however it is easy enough for you to generate one for use
 
-This example creates an encrypted image from the latest ubuntu 16.04 base image.
+This example creates an encrypted image from the latest ubuntu 20.04 base image.
 
 ```hcl
 provider "aws" {
@@ -134,8 +128,6 @@ data "aws_ami" "encrypted-ami" {
 ## Conditional creation
 
 The following combinations are supported to conditionally create resources:
-
-- Disable resource creation (no resources created):
 
 ```hcl
 module "ec2_instance" {
@@ -188,6 +180,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_ebs_volume.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume) | resource |
+| [aws_ec2_tag.spot_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) | resource |
 | [aws_eip.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
 | [aws_iam_instance_profile.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
 | [aws_iam_role.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
@@ -262,16 +255,17 @@ No modules.
 | <a name="input_private_ip"></a> [private\_ip](#input\_private\_ip) | Private IP address to associate with the instance in a VPC | `string` | `null` | no |
 | <a name="input_putin_khuylo"></a> [putin\_khuylo](#input\_putin\_khuylo) | Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo! | `bool` | `true` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region where the resource(s) will be managed. Defaults to the Region set in the provider configuration | `string` | `null` | no |
-| <a name="input_root_block_device"></a> [root\_block\_device](#input\_root\_block\_device) | Customize details about the root block device of the instance. See Block Devices below for details | <pre>map(object({<br/>    delete_on_termination = optional(bool)<br/>    encrypted             = optional(bool)<br/>    iops                  = optional(number)<br/>    kms_key_id            = optional(string)<br/>    tags                  = optional(map(string), {})<br/>    throughput            = optional(number)<br/>    size                  = optional(number)<br/>    type                  = optional(string)<br/>  }))</pre> | `null` | no |
+| <a name="input_root_block_device"></a> [root\_block\_device](#input\_root\_block\_device) | Customize details about the root block device of the instance. See Block Devices below for details | <pre>object({<br/>    delete_on_termination = optional(bool)<br/>    encrypted             = optional(bool)<br/>    iops                  = optional(number)<br/>    kms_key_id            = optional(string)<br/>    tags                  = optional(map(string), {})<br/>    throughput            = optional(number)<br/>    size                  = optional(number)<br/>    type                  = optional(string)<br/>  })</pre> | `null` | no |
 | <a name="input_secondary_private_ips"></a> [secondary\_private\_ips](#input\_secondary\_private\_ips) | A list of secondary private IPv4 addresses to assign to the instance's primary network interface (eth0) in a VPC. Can only be assigned to the primary network interface (eth0) attached at instance creation, not a pre-existing network interface i.e. referenced in a `network_interface block` | `list(string)` | `null` | no |
 | <a name="input_security_group_description"></a> [security\_group\_description](#input\_security\_group\_description) | Description of the security group | `string` | `null` | no |
-| <a name="input_security_group_egress_rules"></a> [security\_group\_egress\_rules](#input\_security\_group\_egress\_rules) | Egress rules to add to the security group | <pre>map(object({<br/>    cidr_ipv4                    = optional(string)<br/>    cidr_ipv6                    = optional(string)<br/>    description                  = optional(string)<br/>    from_port                    = optional(number)<br/>    ip_protocol                  = optional(string)<br/>    prefix_list_id               = optional(string)<br/>    referenced_security_group_id = optional(string)<br/>    tags                         = optional(map(string), {})<br/>    to_port                      = optional(number)<br/>  }))</pre> | <pre>{<br/>  "ipv4_default": {<br/>    "cidr_ipv4": "0.0.0.0/0",<br/>    "description": "Allow all IPv4 traffic",<br/>    "ip_protocol": "-1"<br/>  },<br/>  "ipv6_default": {<br/>    "cidr_ipv6": "::/0",<br/>    "description": "Allow all IPv6 traffic",<br/>    "ip_protocol": "-1"<br/>  }<br/>}</pre> | no |
-| <a name="input_security_group_ingress_rules"></a> [security\_group\_ingress\_rules](#input\_security\_group\_ingress\_rules) | Egress rules to add to the security group | <pre>map(object({<br/>    cidr_ipv4                    = optional(string)<br/>    cidr_ipv6                    = optional(string)<br/>    description                  = optional(string)<br/>    from_port                    = optional(number)<br/>    ip_protocol                  = optional(string)<br/>    prefix_list_id               = optional(string)<br/>    referenced_security_group_id = optional(string)<br/>    tags                         = optional(map(string), {})<br/>    to_port                      = optional(number)<br/>  }))</pre> | `null` | no |
+| <a name="input_security_group_egress_rules"></a> [security\_group\_egress\_rules](#input\_security\_group\_egress\_rules) | Egress rules to add to the security group | <pre>map(object({<br/>    cidr_ipv4                    = optional(string)<br/>    cidr_ipv6                    = optional(string)<br/>    description                  = optional(string)<br/>    from_port                    = optional(number)<br/>    ip_protocol                  = optional(string, "tcp")<br/>    prefix_list_id               = optional(string)<br/>    referenced_security_group_id = optional(string)<br/>    tags                         = optional(map(string), {})<br/>    to_port                      = optional(number)<br/>  }))</pre> | <pre>{<br/>  "ipv4_default": {<br/>    "cidr_ipv4": "0.0.0.0/0",<br/>    "description": "Allow all IPv4 traffic",<br/>    "ip_protocol": "-1"<br/>  },<br/>  "ipv6_default": {<br/>    "cidr_ipv6": "::/0",<br/>    "description": "Allow all IPv6 traffic",<br/>    "ip_protocol": "-1"<br/>  }<br/>}</pre> | no |
+| <a name="input_security_group_ingress_rules"></a> [security\_group\_ingress\_rules](#input\_security\_group\_ingress\_rules) | Egress rules to add to the security group | <pre>map(object({<br/>    cidr_ipv4                    = optional(string)<br/>    cidr_ipv6                    = optional(string)<br/>    description                  = optional(string)<br/>    from_port                    = optional(number)<br/>    ip_protocol                  = optional(string, "tcp")<br/>    prefix_list_id               = optional(string)<br/>    referenced_security_group_id = optional(string)<br/>    tags                         = optional(map(string), {})<br/>    to_port                      = optional(number)<br/>  }))</pre> | `null` | no |
 | <a name="input_security_group_name"></a> [security\_group\_name](#input\_security\_group\_name) | Name to use on security group created | `string` | `null` | no |
 | <a name="input_security_group_tags"></a> [security\_group\_tags](#input\_security\_group\_tags) | A map of additional tags to add to the security group created | `map(string)` | `{}` | no |
 | <a name="input_security_group_use_name_prefix"></a> [security\_group\_use\_name\_prefix](#input\_security\_group\_use\_name\_prefix) | Determines whether the security group name (`security_group_name` or `name`) is used as a prefix | `bool` | `true` | no |
 | <a name="input_security_group_vpc_id"></a> [security\_group\_vpc\_id](#input\_security\_group\_vpc\_id) | VPC ID to create the security group in. If not set, the security group will be created in the default VPC | `string` | `null` | no |
 | <a name="input_source_dest_check"></a> [source\_dest\_check](#input\_source\_dest\_check) | Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs | `bool` | `null` | no |
+| <a name="input_spot_instance_interruption_behavior"></a> [spot\_instance\_interruption\_behavior](#input\_spot\_instance\_interruption\_behavior) | Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate` | `string` | `null` | no |
 | <a name="input_spot_launch_group"></a> [spot\_launch\_group](#input\_spot\_launch\_group) | A launch group is a group of spot instances that launch together and terminate together. If left empty instances are launched and terminated individually | `string` | `null` | no |
 | <a name="input_spot_price"></a> [spot\_price](#input\_spot\_price) | The maximum price to request on the spot market. Defaults to on-demand price | `string` | `null` | no |
 | <a name="input_spot_type"></a> [spot\_type](#input\_spot\_type) | If set to one-time, after the instance is terminated, the spot request will be closed. Default `persistent` | `string` | `null` | no |

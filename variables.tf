@@ -273,7 +273,7 @@ variable "private_ip" {
 
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details"
-  type = map(object({
+  type = object({
     delete_on_termination = optional(bool)
     encrypted             = optional(bool)
     iops                  = optional(number)
@@ -282,7 +282,7 @@ variable "root_block_device" {
     throughput            = optional(number)
     size                  = optional(number)
     type                  = optional(string)
-  }))
+  })
   default = null
 }
 
@@ -372,6 +372,12 @@ variable "create_spot_instance" {
   description = "Depicts if the instance is a spot instance"
   type        = bool
   default     = false
+}
+
+variable "spot_instance_interruption_behavior" {
+  description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
+  type        = string
+  default     = null
 }
 
 variable "spot_launch_group" {
@@ -536,7 +542,7 @@ variable "security_group_egress_rules" {
     cidr_ipv6                    = optional(string)
     description                  = optional(string)
     from_port                    = optional(number)
-    ip_protocol                  = optional(string)
+    ip_protocol                  = optional(string, "tcp")
     prefix_list_id               = optional(string)
     referenced_security_group_id = optional(string)
     tags                         = optional(map(string), {})
@@ -563,7 +569,7 @@ variable "security_group_ingress_rules" {
     cidr_ipv6                    = optional(string)
     description                  = optional(string)
     from_port                    = optional(number)
-    ip_protocol                  = optional(string)
+    ip_protocol                  = optional(string, "tcp")
     prefix_list_id               = optional(string)
     referenced_security_group_id = optional(string)
     tags                         = optional(map(string), {})

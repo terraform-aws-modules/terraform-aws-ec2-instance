@@ -7,10 +7,16 @@ locals {
 
   ami = try(coalesce(var.ami, try(nonsensitive(data.aws_ssm_parameter.this[0].value), null)), null)
 
+  instance_tags = merge(
+    var.tags,
+    var.instance_tags,
+    { "Name" = var.name },
+  )
+
   instance_id = try(
     aws_instance.this[0].id,
     aws_instance.ignore_ami[0].id,
-    aws_spot_instance_request.this[0].id,
+    aws_spot_instance_request.this[0].spot_instance_id,
     null,
   )
 
@@ -188,7 +194,7 @@ resource "aws_instance" "this" {
   private_ip = var.private_ip
 
   dynamic "root_block_device" {
-    for_each = var.root_block_device != null ? var.root_block_device : {}
+    for_each = var.root_block_device != null ? [var.root_block_device] : []
 
     content {
       delete_on_termination = root_block_device.value.delete_on_termination
@@ -202,21 +208,15 @@ resource "aws_instance" "this" {
     }
   }
 
-  secondary_private_ips = var.secondary_private_ips
-  source_dest_check     = var.network_interface != null ? null : var.source_dest_check
-  subnet_id             = var.subnet_id
-
-  tags = merge(
-    var.tags,
-    var.instance_tags,
-    { "Name" = var.name },
-  )
-
+  secondary_private_ips       = var.secondary_private_ips
+  source_dest_check           = var.network_interface != null ? null : var.source_dest_check
+  subnet_id                   = var.subnet_id
+  tags                        = local.instance_tags
   tenancy                     = var.tenancy
   user_data                   = var.user_data
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
-  volume_tags                 = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
 
   timeouts {
@@ -384,7 +384,7 @@ resource "aws_instance" "ignore_ami" {
   private_ip = var.private_ip
 
   dynamic "root_block_device" {
-    for_each = var.root_block_device != null ? var.root_block_device : {}
+    for_each = var.root_block_device != null ? [var.root_block_device] : []
 
     content {
       delete_on_termination = root_block_device.value.delete_on_termination
@@ -398,21 +398,15 @@ resource "aws_instance" "ignore_ami" {
     }
   }
 
-  secondary_private_ips = var.secondary_private_ips
-  source_dest_check     = var.network_interface != null ? null : var.source_dest_check
-  subnet_id             = var.subnet_id
-
-  tags = merge(
-    var.tags,
-    var.instance_tags,
-    { "Name" = var.name },
-  )
-
+  secondary_private_ips       = var.secondary_private_ips
+  source_dest_check           = var.network_interface != null ? null : var.source_dest_check
+  subnet_id                   = var.subnet_id
+  tags                        = local.instance_tags
   tenancy                     = var.tenancy
   user_data                   = var.user_data
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
-  volume_tags                 = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
 
   timeouts {
@@ -438,12 +432,13 @@ resource "aws_spot_instance_request" "this" {
   region = var.region
 
   # Spot request specific attributes
-  launch_group         = var.spot_launch_group
-  spot_price           = var.spot_price
-  spot_type            = var.spot_type
-  wait_for_fulfillment = var.spot_wait_for_fulfillment
-  valid_from           = var.spot_valid_from
-  valid_until          = var.spot_valid_until
+  instance_interruption_behavior = var.spot_instance_interruption_behavior
+  launch_group                   = var.spot_launch_group
+  spot_price                     = var.spot_price
+  spot_type                      = var.spot_type
+  wait_for_fulfillment           = var.spot_wait_for_fulfillment
+  valid_from                     = var.spot_valid_from
+  valid_until                    = var.spot_valid_until
   # End spot request specific attributes
 
   ami                         = local.ami
@@ -576,7 +571,7 @@ resource "aws_spot_instance_request" "this" {
   private_ip = var.private_ip
 
   dynamic "root_block_device" {
-    for_each = var.root_block_device != null ? var.root_block_device : {}
+    for_each = var.root_block_device != null ? [var.root_block_device] : []
 
     content {
       delete_on_termination = root_block_device.value.delete_on_termination
@@ -585,32 +580,40 @@ resource "aws_spot_instance_request" "this" {
       kms_key_id            = root_block_device.value.kms_key_id
       tags                  = root_block_device.value.tags
       throughput            = root_block_device.value.throughput
-      volume_size           = try(root_block_device.value.volume_size, root_block_device.value.size, null)
-      volume_type           = try(root_block_device.value.volume_type, root_block_device.value.type, null)
+      volume_size           = root_block_device.value.size
+      volume_type           = root_block_device.value.type
     }
   }
 
-  secondary_private_ips = var.secondary_private_ips
-  source_dest_check     = var.network_interface != null ? null : var.source_dest_check
-  subnet_id             = var.subnet_id
-
-  tags = merge(
-    var.tags,
-    var.instance_tags,
-    { "Name" = var.name },
-  )
-
+  secondary_private_ips       = var.secondary_private_ips
+  source_dest_check           = var.network_interface != null ? null : var.source_dest_check
+  subnet_id                   = var.subnet_id
+  tags                        = local.instance_tags
   tenancy                     = var.tenancy
   user_data                   = var.user_data
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
-  volume_tags                 = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
+  volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
 
   timeouts {
     create = try(var.timeouts.create, null)
     delete = try(var.timeouts.delete, null)
   }
+
+  lifecycle {
+    ignore_changes = [
+      ebs_block_device,
+    ]
+  }
+}
+
+resource "aws_ec2_tag" "spot_instance" {
+  for_each = { for k, v in local.instance_tags : k => v if local.create && var.create_spot_instance }
+
+  resource_id = aws_spot_instance_request.this[0].spot_instance_id
+  key         = each.key
+  value       = each.value
 }
 
 ################################################################################
@@ -728,7 +731,9 @@ locals {
 }
 
 data "aws_subnet" "this" {
-  count = local.create_security_group && var.subnet_id != null ? 1 : 0
+  count = local.create_security_group ? 1 : 0
+
+  region = var.region
 
   id = var.subnet_id
 }
@@ -762,7 +767,7 @@ resource "aws_vpc_security_group_egress_rule" "this" {
   cidr_ipv4                    = each.value.cidr_ipv4
   cidr_ipv6                    = each.value.cidr_ipv6
   description                  = each.value.description
-  from_port                    = each.value.from_port
+  from_port                    = coalesce(each.value.from_port, each.value.to_port)
   ip_protocol                  = each.value.ip_protocol
   prefix_list_id               = each.value.prefix_list_id
   referenced_security_group_id = each.value.referenced_security_group_id
@@ -775,7 +780,7 @@ resource "aws_vpc_security_group_egress_rule" "this" {
     each.value.tags,
   )
 
-  to_port = each.value.to_port
+  to_port = coalesce(each.value.to_port, each.value.from_port)
 }
 
 resource "aws_vpc_security_group_ingress_rule" "this" {
@@ -786,7 +791,7 @@ resource "aws_vpc_security_group_ingress_rule" "this" {
   cidr_ipv4                    = each.value.cidr_ipv4
   cidr_ipv6                    = each.value.cidr_ipv6
   description                  = each.value.description
-  from_port                    = each.value.from_port
+  from_port                    = coalesce(each.value.from_port, each.value.to_port)
   ip_protocol                  = each.value.ip_protocol
   prefix_list_id               = each.value.prefix_list_id
   referenced_security_group_id = each.value.referenced_security_group_id
@@ -799,7 +804,7 @@ resource "aws_vpc_security_group_ingress_rule" "this" {
     each.value.tags,
   )
 
-  to_port = each.value.to_port
+  to_port = coalesce(each.value.to_port, each.value.from_port)
 }
 
 ################################################################################

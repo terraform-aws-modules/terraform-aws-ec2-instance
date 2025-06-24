@@ -31,7 +31,7 @@ module "ec2" {
   security_group_egress_rules = {
     vpc-endpoints = {
       description = "Allow outbound traffic to VPC endpoints"
-      cidr_ipv4   = module.vpc.intra_subnets_cidr_blocks
+      cidr_ipv4   = module.vpc.vpc_cidr_block
       from_port   = 443
     }
   }
