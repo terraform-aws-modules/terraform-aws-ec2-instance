@@ -767,7 +767,7 @@ resource "aws_vpc_security_group_egress_rule" "this" {
   cidr_ipv4                    = each.value.cidr_ipv4
   cidr_ipv6                    = each.value.cidr_ipv6
   description                  = each.value.description
-  from_port                    = coalesce(each.value.from_port, each.value.to_port)
+  from_port                    = try(coalesce(each.value.from_port, each.value.to_port), null)
   ip_protocol                  = each.value.ip_protocol
   prefix_list_id               = each.value.prefix_list_id
   referenced_security_group_id = each.value.referenced_security_group_id
@@ -780,7 +780,7 @@ resource "aws_vpc_security_group_egress_rule" "this" {
     each.value.tags,
   )
 
-  to_port = coalesce(each.value.to_port, each.value.from_port)
+  to_port = try(coalesce(each.value.to_port, each.value.from_port), null)
 }
 
 resource "aws_vpc_security_group_ingress_rule" "this" {
@@ -791,7 +791,7 @@ resource "aws_vpc_security_group_ingress_rule" "this" {
   cidr_ipv4                    = each.value.cidr_ipv4
   cidr_ipv6                    = each.value.cidr_ipv6
   description                  = each.value.description
-  from_port                    = coalesce(each.value.from_port, each.value.to_port)
+  from_port                    = try(coalesce(each.value.from_port, each.value.to_port), null)
   ip_protocol                  = each.value.ip_protocol
   prefix_list_id               = each.value.prefix_list_id
   referenced_security_group_id = each.value.referenced_security_group_id
@@ -804,7 +804,7 @@ resource "aws_vpc_security_group_ingress_rule" "this" {
     each.value.tags,
   )
 
-  to_port = coalesce(each.value.to_port, each.value.from_port)
+  to_port = try(coalesce(each.value.to_port, each.value.from_port), null)
 }
 
 ################################################################################
