@@ -23,8 +23,6 @@ resource "aws_instance" "this" {
 
   ami                  = local.ami
   instance_type        = var.instance_type
-  cpu_core_count       = var.cpu_core_count
-  cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
 
   user_data                   = var.user_data
@@ -385,8 +383,6 @@ resource "aws_spot_instance_request" "this" {
 
   ami                  = local.ami
   instance_type        = var.instance_type
-  cpu_core_count       = var.cpu_core_count
-  cpu_threads_per_core = var.cpu_threads_per_core
   hibernation          = var.hibernation
 
   user_data                   = var.user_data
@@ -415,7 +411,6 @@ resource "aws_spot_instance_request" "this" {
   wait_for_fulfillment           = var.spot_wait_for_fulfillment
   spot_type                      = var.spot_type
   launch_group                   = var.spot_launch_group
-  block_duration_minutes         = var.spot_block_duration_minutes
   instance_interruption_behavior = var.spot_instance_interruption_behavior
   valid_until                    = var.spot_valid_until
   valid_from                     = var.spot_valid_from

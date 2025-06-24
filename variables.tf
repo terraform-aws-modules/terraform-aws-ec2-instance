@@ -231,7 +231,7 @@ variable "tenancy" {
 }
 
 variable "user_data" {
-  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead"
+  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead. This value is stored in plain-text, do not store sensitive information use user_data_base64 instead."
   type        = string
   default     = null
 }
@@ -278,18 +278,6 @@ variable "cpu_options" {
   default     = {}
 }
 
-variable "cpu_core_count" {
-  description = "Sets the number of CPU cores for an instance" # This option is only supported on creation of instance type that support CPU Options https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values
-  type        = number
-  default     = null
-}
-
-variable "cpu_threads_per_core" {
-  description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)"
-  type        = number
-  default     = null
-}
-
 # Spot instance request
 variable "create_spot_instance" {
   description = "Depicts if the instance is a spot instance"
@@ -318,12 +306,6 @@ variable "spot_type" {
 variable "spot_launch_group" {
   description = "A launch group is a group of spot instances that launch together and terminate together. If left empty instances are launched and terminated individually"
   type        = string
-  default     = null
-}
-
-variable "spot_block_duration_minutes" {
-  description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)"
-  type        = number
   default     = null
 }
 
