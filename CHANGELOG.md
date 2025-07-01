@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.0.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.1...v6.0.2) (2025-07-01)
+
+
+### Bug Fixes
+
+* Set default value for `root_block_device.tags` to `null` ([#444](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/444)) ([f1b5273](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/f1b527329b2a9c55beb5b49fc146588d9611b637))
+
 ## [6.0.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.0...v6.0.1) (2025-06-25)
 
 
