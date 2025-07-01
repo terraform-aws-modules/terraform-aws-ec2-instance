@@ -278,7 +278,7 @@ variable "root_block_device" {
     encrypted             = optional(bool)
     iops                  = optional(number)
     kms_key_id            = optional(string)
-    tags                  = optional(map(string), {})
+    tags                  = optional(map(string))
     throughput            = optional(number)
     size                  = optional(number)
     type                  = optional(string)
