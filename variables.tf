@@ -563,7 +563,7 @@ variable "security_group_egress_rules" {
 }
 
 variable "security_group_ingress_rules" {
-  description = "Egress rules to add to the security group"
+  description = "Ingress rules to add to the security group"
   type = map(object({
     cidr_ipv4                    = optional(string)
     cidr_ipv6                    = optional(string)
