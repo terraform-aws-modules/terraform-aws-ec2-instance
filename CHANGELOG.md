@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.2...v6.1.0) (2025-08-22)
+
+
+### Features
+
+* Output security group ARN and ID ([#450](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/450)) ([45a4380](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/45a43803c408968f9f9d11b2ea63d96f6931a1e2))
+
 ## [6.0.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.1...v6.0.2) (2025-07-01)
 
 
