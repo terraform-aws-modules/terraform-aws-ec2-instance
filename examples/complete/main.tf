@@ -55,7 +55,7 @@ module "ec2_complete" {
   user_data_replace_on_change = false
 
   cpu_options = {
-    core_count       = 2
+    core_count       = 1
     threads_per_core = 1
   }
   enable_volume_tags = false
