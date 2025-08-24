@@ -10,7 +10,7 @@ locals {
   instance_tags = merge(
     var.tags,
     var.instance_tags,
-    { "Name" = var.name },
+    var.name != "" ? { "Name" = var.name } : {}
   )
 
   instance_id = try(
