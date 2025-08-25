@@ -14,7 +14,7 @@ module "ec2_instance" {
 
   name = "single-instance"
 
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   key_name      = "user1"
   monitoring    = true
   subnet_id     = "subnet-eddcdzz4"
@@ -36,7 +36,7 @@ module "ec2_instance" {
 
   name = "instance-${each.key}"
 
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   key_name      = "user1"
   monitoring    = true
   subnet_id     = "subnet-eddcdzz4"
@@ -60,7 +60,7 @@ module "ec2_instance" {
   spot_price           = "0.60"
   spot_type            = "persistent"
 
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   key_name      = "user1"
   monitoring    = true
   subnet_id     = "subnet-eddcdzz4"
