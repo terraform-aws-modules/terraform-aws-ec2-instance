@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.0...v6.1.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* Avoid setting `Name` tag when a value has not been provided for `name` ([#452](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/452)) ([c227866](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/c227866fa9c7a3ac557fb6ad53ce813ae42590b7))
+
 ## [6.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.2...v6.1.0) (2025-08-22)
 
 
