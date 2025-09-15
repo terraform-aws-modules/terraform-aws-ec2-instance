@@ -605,3 +605,9 @@ variable "putin_khuylo" {
   type        = bool
   default     = true
 }
+
+variable "create_network_interface_attachment" {
+  description = "Whether to create network interface attachments"
+  type        = bool
+  default     = false
+}
