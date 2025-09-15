@@ -28,6 +28,16 @@ locals {
   )
 }
 
+# Compute primary and additional network interfaces (by device_index)
+locals {
+  network_interfaces = var.network_interface != null ? {
+    for k, v in var.network_interface : tostring(try(v.device_index, tonumber(k))) => v
+  } : {}
+
+  primary_network_interface     = try(local.network_interfaces["0"], null)
+  additional_network_interfaces = { for k, v in local.network_interfaces : k => v if k != "0" }
+}
+
 data "aws_ssm_parameter" "this" {
   count = local.create && var.ami == null ? 1 : 0
 
@@ -166,15 +176,12 @@ resource "aws_instance" "this" {
 
   monitoring = var.monitoring
 
-  dynamic "network_interface" {
-    for_each = var.network_interface != null ? var.network_interface : {}
+  dynamic "primary_network_interface" {
+    for_each = var.network_interface != null && local.primary_network_interface != null ? [local.primary_network_interface] : []
 
     content {
-      delete_on_termination = network_interface.value.delete_on_termination
-      device_index          = coalesce(network_interface.value.device_index, network_interface.key)
-      network_card_index    = network_interface.value.network_card_index
-      network_interface_id  = network_interface.value.network_interface_id
-
+      delete_on_termination = primary_network_interface.value.delete_on_termination
+      network_interface_id  = primary_network_interface.value.network_interface_id
     }
   }
 
@@ -356,15 +363,12 @@ resource "aws_instance" "ignore_ami" {
 
   monitoring = var.monitoring
 
-  dynamic "network_interface" {
-    for_each = var.network_interface != null ? var.network_interface : {}
+  dynamic "primary_network_interface" {
+    for_each = var.network_interface != null && local.primary_network_interface != null ? [local.primary_network_interface] : []
 
     content {
-      delete_on_termination = network_interface.value.delete_on_termination
-      device_index          = coalesce(network_interface.value.device_index, network_interface.key)
-      network_card_index    = network_interface.value.network_card_index
-      network_interface_id  = network_interface.value.network_interface_id
-
+      delete_on_termination = primary_network_interface.value.delete_on_termination
+      network_interface_id  = primary_network_interface.value.network_interface_id
     }
   }
 
@@ -543,15 +547,12 @@ resource "aws_spot_instance_request" "this" {
 
   monitoring = var.monitoring
 
-  dynamic "network_interface" {
-    for_each = var.network_interface != null ? var.network_interface : {}
+  dynamic "primary_network_interface" {
+    for_each = var.network_interface != null && local.primary_network_interface != null ? [local.primary_network_interface] : []
 
     content {
-      delete_on_termination = network_interface.value.delete_on_termination
-      device_index          = try(network_interface.value.device_index, network_interface.key)
-      network_card_index    = network_interface.value.network_card_index
-      network_interface_id  = network_interface.value.network_interface_id
-
+      delete_on_termination = primary_network_interface.value.delete_on_termination
+      network_interface_id  = primary_network_interface.value.network_interface_id
     }
   }
 
@@ -614,6 +615,20 @@ resource "aws_ec2_tag" "spot_instance" {
   resource_id = aws_spot_instance_request.this[0].spot_instance_id
   key         = each.key
   value       = each.value
+}
+
+################################################################################
+# Additional Network Interface Attachments
+################################################################################
+
+resource "aws_network_interface_attachment" "this" {
+  for_each = local.create && var.network_interface != null ? local.additional_network_interfaces : {}
+
+  region = var.region
+
+  instance_id          = local.instance_id
+  network_interface_id = each.value.network_interface_id
+  device_index         = try(each.value.device_index, tonumber(each.key))
 }
 
 ################################################################################
