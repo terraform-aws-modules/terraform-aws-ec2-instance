@@ -13,6 +13,16 @@ output "arn" {
   )
 }
 
+output "name" {
+  description = "The name of the instance"
+  value = var.name
+}
+
+output "instance_type" {
+  description = "The type of the instance"
+  value = var.instance_type
+}
+
 output "capacity_reservation_specification" {
   description = "Capacity reservation specification of the instance"
   value = try(
