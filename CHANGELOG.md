@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.1...v6.1.2) (2025-10-14)
+
+
+### Bug Fixes
+
+* Use computed `local.security_group_name` in the security group `Name` tag ([#458](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/458)) ([541cc3d](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/541cc3d33debd73ca1f961054af8014a7ae08f06))
+
 ## [6.1.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.0...v6.1.1) (2025-08-25)
 
 
