@@ -776,7 +776,7 @@ resource "aws_vpc_security_group_egress_rule" "this" {
   tags = merge(
     var.tags,
     var.security_group_tags,
-    { "Name" = "${var.name}-${each.key}" },
+    { "Name" = "${local.security_group_name}-${each.key}" },
     each.value.tags,
   )
 
@@ -800,7 +800,7 @@ resource "aws_vpc_security_group_ingress_rule" "this" {
   tags = merge(
     var.tags,
     var.security_group_tags,
-    { "Name" = "${var.name}-${each.key}" },
+    { "Name" = "${local.security_group_name}-${each.key}" },
     each.value.tags,
   )
 
