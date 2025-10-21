@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.2...v6.1.3) (2025-10-21)
+
+### Bug Fixes
+
+* Update CI workflow versions to latest ([#460](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/460)) ([6fd0798](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6fd0798b625457c565c42109d65a80d09b255676))
+
 ## [6.1.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.1...v6.1.2) (2025-10-14)
 
 
