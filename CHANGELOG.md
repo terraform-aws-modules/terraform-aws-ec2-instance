@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.3...v6.1.4) (2025-10-22)
+
+### Bug Fixes
+
+* Allow computed values for `name`, make `timeouts` dynamic/optional ([#461](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/461)) ([baf0ba2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/baf0ba2a457690526e12d74e98e6c5599aff9774))
+
 ## [6.1.3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.2...v6.1.3) (2025-10-21)
 
 ### Bug Fixes
