@@ -92,7 +92,7 @@ module "wrapper" {
   subnet_id                           = try(each.value.subnet_id, var.defaults.subnet_id, null)
   tags                                = try(each.value.tags, var.defaults.tags, {})
   tenancy                             = try(each.value.tenancy, var.defaults.tenancy, null)
-  timeouts                            = try(each.value.timeouts, var.defaults.timeouts, {})
+  timeouts                            = try(each.value.timeouts, var.defaults.timeouts, null)
   user_data                           = try(each.value.user_data, var.defaults.user_data, null)
   user_data_base64                    = try(each.value.user_data_base64, var.defaults.user_data_base64, null)
   user_data_replace_on_change         = try(each.value.user_data_replace_on_change, var.defaults.user_data_replace_on_change, null)

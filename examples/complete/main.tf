@@ -146,6 +146,22 @@ module "ec2_t3_unlimited" {
   tags = local.tags
 }
 
+# https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/456
+module "ec2_computed_name" {
+  source = "../../"
+
+  name = join("-", [local.name, random_string.suffix.result])
+
+  ignore_ami_changes = true
+  ami                = data.aws_ami.amazon_linux.id
+
+  instance_type     = "t3.micro"
+  availability_zone = element(module.vpc.azs, 0)
+  subnet_id         = element(module.vpc.private_subnets, 0)
+
+  tags = local.tags
+}
+
 module "ec2_disabled" {
   source = "../../"
 
@@ -382,4 +398,11 @@ resource "aws_kms_key" "this" {
 resource "aws_network_interface" "this" {
   subnet_id       = element(module.vpc.private_subnets, 0)
   security_groups = [module.security_group.security_group_id]
+}
+
+resource "random_string" "suffix" {
+  length  = 2
+  numeric = false
+  upper   = false
+  special = false
 }

@@ -360,8 +360,12 @@ variable "vpc_security_group_ids" {
 
 variable "timeouts" {
   description = "Define maximum timeout for creating, updating, and deleting EC2 instance resources"
-  type        = map(string)
-  default     = {}
+  type = object({
+    create = optional(string)
+    update = optional(string)
+    delete = optional(string)
+  })
+  default = null
 }
 
 ################################################################################
