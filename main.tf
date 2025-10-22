@@ -219,10 +219,14 @@ resource "aws_instance" "this" {
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
 
-  timeouts {
-    create = try(var.timeouts.create, null)
-    update = try(var.timeouts.update, null)
-    delete = try(var.timeouts.delete, null)
+  dynamic "timeouts" {
+    for_each = var.timeouts != null ? [var.timeouts] : []
+
+    content {
+      create = timeouts.value.create
+      update = timeouts.value.update
+      delete = timeouts.value.delete
+    }
   }
 }
 
@@ -409,10 +413,14 @@ resource "aws_instance" "ignore_ami" {
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
 
-  timeouts {
-    create = try(var.timeouts.create, null)
-    update = try(var.timeouts.update, null)
-    delete = try(var.timeouts.delete, null)
+  dynamic "timeouts" {
+    for_each = var.timeouts != null ? [var.timeouts] : []
+
+    content {
+      create = timeouts.value.create
+      update = timeouts.value.update
+      delete = timeouts.value.delete
+    }
   }
 
   lifecycle {
@@ -596,9 +604,13 @@ resource "aws_spot_instance_request" "this" {
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
 
-  timeouts {
-    create = try(var.timeouts.create, null)
-    delete = try(var.timeouts.delete, null)
+  dynamic "timeouts" {
+    for_each = var.timeouts != null ? [var.timeouts] : []
+
+    content {
+      create = timeouts.value.create
+      delete = timeouts.value.delete
+    }
   }
 
   lifecycle {
@@ -609,7 +621,7 @@ resource "aws_spot_instance_request" "this" {
 }
 
 resource "aws_ec2_tag" "spot_instance" {
-  for_each = { for k, v in local.instance_tags : k => v if local.create && var.create_spot_instance }
+  for_each = local.create && var.create_spot_instance ? local.instance_tags : {}
 
   resource_id = aws_spot_instance_request.this[0].spot_instance_id
   key         = each.key
