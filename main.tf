@@ -5,7 +5,7 @@ locals {
 
   is_t_instance_type = replace(var.instance_type, "/^t(2|3|3a|4g){1}\\..*$/", "1") == "1" ? true : false
 
-  ami = try(coalesce(var.ami, try(nonsensitive(data.aws_ssm_parameter.this[0].value), null)), null)
+  ami = try(coalesce(var.ami, try(nonsensitive(data.aws_ssm_parameter.this.value), null)), null)
 
   instance_tags = merge(
     var.tags,
@@ -29,8 +29,6 @@ locals {
 }
 
 data "aws_ssm_parameter" "this" {
-  count = local.create && var.ami == null ? 1 : 0
-
   region = var.region
 
   name = var.ami_ssm_parameter
