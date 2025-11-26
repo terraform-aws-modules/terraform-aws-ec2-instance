@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.5](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.4...v6.1.5) (2025-11-26)
+
+### Bug Fixes
+
+* Always pull a value from SSM data source since a computed value cannot be used in conditional logic ([#466](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/466)) ([36fbf06](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/36fbf06ff5d212a43e42d09a069c00afaf6afb31))
+
 ## [6.1.4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.3...v6.1.4) (2025-10-22)
 
 ### Bug Fixes
