@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.5...v6.2.0) (2026-01-08)
+
+### Features
+
+* Add provider meta user-agent ([#467](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/467)) ([22ac5c6](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/22ac5c6740b73c020c75d5c364a772fcc76f3208))
+
 ## [6.1.5](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.4...v6.1.5) (2025-11-26)
 
 ### Bug Fixes
