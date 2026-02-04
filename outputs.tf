@@ -160,7 +160,7 @@ output "availability_zone" {
 
 output "ebs_volumes" {
   description = "Map of EBS volumes created and their attributes"
-  value       = aws_ebs_volume.this
+  value       = merge(aws_ebs_volume.this, aws_ebs_volume.persistent)
 }
 
 ################################################################################

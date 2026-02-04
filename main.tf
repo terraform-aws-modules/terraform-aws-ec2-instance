@@ -630,8 +630,13 @@ resource "aws_ec2_tag" "spot_instance" {
 # EBS Volume(s)
 ################################################################################
 
+locals {
+  ebs_volumes_standard   = var.create && var.ebs_volumes != null ? { for k, v in var.ebs_volumes : k => v if !coalesce(v.persistent, false) } : {}
+  ebs_volumes_persistent = var.create && var.ebs_volumes != null ? { for k, v in var.ebs_volumes : k => v if coalesce(v.persistent, false) } : {}
+}
+
 resource "aws_ebs_volume" "this" {
-  for_each = var.create && var.ebs_volumes != null ? var.ebs_volumes : {}
+  for_each = local.ebs_volumes_standard
 
   region = var.region
 
@@ -656,14 +661,57 @@ resource "aws_ebs_volume" "this" {
   type       = each.value.type
 }
 
+resource "aws_ebs_volume" "persistent" {
+  for_each = local.ebs_volumes_persistent
+
+  region = var.region
+
+  availability_zone    = local.instance_availability_zone
+  encrypted            = each.value.encrypted
+  final_snapshot       = each.value.final_snapshot
+  iops                 = each.value.iops
+  kms_key_id           = each.value.kms_key_id
+  multi_attach_enabled = each.value.multi_attach_enabled
+  outpost_arn          = each.value.outpost_arn
+  size                 = each.value.size
+  snapshot_id          = each.value.snapshot_id
+
+  tags = merge(
+    var.tags,
+    var.volume_tags,
+    { "Name" = "${var.name}-${each.key}" },
+    each.value.tags,
+  )
+
+  throughput = each.value.throughput
+  type       = each.value.type
+
+  lifecycle {
+    ignore_changes = [availability_zone]
+  }
+}
+
 resource "aws_volume_attachment" "this" {
-  for_each = var.create && var.ebs_volumes != null ? var.ebs_volumes : {}
+  for_each = local.ebs_volumes_standard
 
   region = var.region
 
   device_name                    = coalesce(each.value.device_name, each.key)
   instance_id                    = local.instance_id
   volume_id                      = aws_ebs_volume.this[each.key].id
+  force_detach                   = each.value.force_detach
+  skip_destroy                   = each.value.skip_destroy
+  stop_instance_before_detaching = each.value.stop_instance_before_detaching
+}
+
+resource "aws_volume_attachment" "persistent" {
+  for_each = local.ebs_volumes_persistent
+
+  region = var.region
+
+  device_name                    = coalesce(each.value.device_name, each.key)
+  instance_id                    = local.instance_id
+  volume_id                      = aws_ebs_volume.persistent[each.key].id
   force_detach                   = each.value.force_detach
   skip_destroy                   = each.value.skip_destroy
   stop_instance_before_detaching = each.value.stop_instance_before_detaching

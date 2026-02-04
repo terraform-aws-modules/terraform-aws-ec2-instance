@@ -443,6 +443,8 @@ variable "ebs_volumes" {
     force_detach                   = optional(bool)
     skip_destroy                   = optional(bool)
     stop_instance_before_detaching = optional(bool)
+    # Lifecycle
+    persistent = optional(bool, false) # When true, volume persists across instance replacement by ignoring AZ changes
   }))
   default = null
 }

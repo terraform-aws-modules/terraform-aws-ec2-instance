@@ -12,9 +12,9 @@ This wrapper does not implement any extra functionality.
 
 ```hcl
 terraform {
-  source = "tfr:///terraform-aws-modules/ec2-instance/aws//wrappers"
+  source = "tfr:///terraform-aws-modules/ec2-instance-1/aws//wrappers"
   # Alternative source:
-  # source = "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git//wrappers?ref=master"
+  # source = "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance-1.git//wrappers?ref=master"
 }
 
 inputs = {
@@ -42,7 +42,7 @@ inputs = {
 
 ```hcl
 module "wrapper" {
-  source = "terraform-aws-modules/ec2-instance/aws//wrappers"
+  source = "terraform-aws-modules/ec2-instance-1/aws//wrappers"
 
   defaults = { # Default values
     create = true
@@ -70,9 +70,9 @@ module "wrapper" {
 
 ```hcl
 terraform {
-  source = "tfr:///terraform-aws-modules/ec2-instance/aws//wrappers"
+  source = "tfr:///terraform-aws-modules/ec2-instance-1/aws//wrappers"
   # Alternative source:
-  # source = "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git//wrappers?ref=master"
+  # source = "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance-1.git//wrappers?ref=master"
 }
 
 inputs = {

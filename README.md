@@ -179,6 +179,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_ebs_volume.persistent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume) | resource |
 | [aws_ebs_volume.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume) | resource |
 | [aws_ec2_tag.spot_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) | resource |
 | [aws_eip.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
@@ -189,6 +190,7 @@ No modules.
 | [aws_instance.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 | [aws_security_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_spot_instance_request.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/spot_instance_request) | resource |
+| [aws_volume_attachment.persistent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment) | resource |
 | [aws_volume_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment) | resource |
 | [aws_vpc_security_group_egress_rule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
@@ -216,7 +218,7 @@ No modules.
 | <a name="input_disable_api_stop"></a> [disable\_api\_stop](#input\_disable\_api\_stop) | If true, enables EC2 Instance Stop Protection | `bool` | `null` | no |
 | <a name="input_disable_api_termination"></a> [disable\_api\_termination](#input\_disable\_api\_termination) | If true, enables EC2 Instance Termination Protection | `bool` | `null` | no |
 | <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | If true, the launched EC2 instance will be EBS-optimized | `bool` | `null` | no |
-| <a name="input_ebs_volumes"></a> [ebs\_volumes](#input\_ebs\_volumes) | Additional EBS volumes to attach to the instance | <pre>map(object({<br/>    encrypted            = optional(bool)<br/>    final_snapshot       = optional(bool)<br/>    iops                 = optional(number)<br/>    kms_key_id           = optional(string)<br/>    multi_attach_enabled = optional(bool)<br/>    outpost_arn          = optional(string)<br/>    size                 = optional(number)<br/>    snapshot_id          = optional(string)<br/>    tags                 = optional(map(string), {})<br/>    throughput           = optional(number)<br/>    type                 = optional(string, "gp3")<br/>    # Attachment<br/>    device_name                    = optional(string) # Will fall back to use map key as device name<br/>    force_detach                   = optional(bool)<br/>    skip_destroy                   = optional(bool)<br/>    stop_instance_before_detaching = optional(bool)<br/>  }))</pre> | `null` | no |
+| <a name="input_ebs_volumes"></a> [ebs\_volumes](#input\_ebs\_volumes) | Additional EBS volumes to attach to the instance | <pre>map(object({<br/>    encrypted            = optional(bool)<br/>    final_snapshot       = optional(bool)<br/>    iops                 = optional(number)<br/>    kms_key_id           = optional(string)<br/>    multi_attach_enabled = optional(bool)<br/>    outpost_arn          = optional(string)<br/>    size                 = optional(number)<br/>    snapshot_id          = optional(string)<br/>    tags                 = optional(map(string), {})<br/>    throughput           = optional(number)<br/>    type                 = optional(string, "gp3")<br/>    # Attachment<br/>    device_name                    = optional(string) # Will fall back to use map key as device name<br/>    force_detach                   = optional(bool)<br/>    skip_destroy                   = optional(bool)<br/>    stop_instance_before_detaching = optional(bool)<br/>    # Lifecycle<br/>    persistent = optional(bool, false) # When true, volume persists across instance replacement by ignoring AZ changes<br/>  }))</pre> | `null` | no |
 | <a name="input_eip_domain"></a> [eip\_domain](#input\_eip\_domain) | Indicates if this EIP is for use in VPC | `string` | `"vpc"` | no |
 | <a name="input_eip_tags"></a> [eip\_tags](#input\_eip\_tags) | A map of additional tags to add to the eip | `map(string)` | `{}` | no |
 | <a name="input_enable_primary_ipv6"></a> [enable\_primary\_ipv6](#input\_enable\_primary\_ipv6) | Whether to assign a primary IPv6 Global Unicast Address (GUA) to the instance when launched in a dual-stack or IPv6-only subnet | `bool` | `null` | no |
