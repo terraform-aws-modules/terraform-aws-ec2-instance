@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.2.0...v6.3.0) (2026-02-27)
+
+### Features
+
+* Support `volume_initialization_rate` ([#473](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/473)) ([a05bb47](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/a05bb470815cbabfb68c67ca0ead4d73ea28244a))
+
 ## [6.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.5...v6.2.0) (2026-01-08)
 
 ### Features
