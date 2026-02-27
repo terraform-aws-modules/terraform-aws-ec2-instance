@@ -654,6 +654,8 @@ resource "aws_ebs_volume" "this" {
 
   throughput = each.value.throughput
   type       = each.value.type
+
+  volume_initialization_rate = each.value.volume_initialization_rate
 }
 
 resource "aws_volume_attachment" "this" {
