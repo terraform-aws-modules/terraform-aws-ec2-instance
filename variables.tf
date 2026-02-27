@@ -427,17 +427,18 @@ variable "spot_valid_until" {
 variable "ebs_volumes" {
   description = "Additional EBS volumes to attach to the instance"
   type = map(object({
-    encrypted            = optional(bool)
-    final_snapshot       = optional(bool)
-    iops                 = optional(number)
-    kms_key_id           = optional(string)
-    multi_attach_enabled = optional(bool)
-    outpost_arn          = optional(string)
-    size                 = optional(number)
-    snapshot_id          = optional(string)
-    tags                 = optional(map(string), {})
-    throughput           = optional(number)
-    type                 = optional(string, "gp3")
+    encrypted                  = optional(bool)
+    final_snapshot             = optional(bool)
+    iops                       = optional(number)
+    kms_key_id                 = optional(string)
+    multi_attach_enabled       = optional(bool)
+    outpost_arn                = optional(string)
+    size                       = optional(number)
+    snapshot_id                = optional(string)
+    tags                       = optional(map(string), {})
+    throughput                 = optional(number)
+    type                       = optional(string, "gp3")
+    volume_initialization_rate = optional(number)
     # Attachment
     device_name                    = optional(string) # Will fall back to use map key as device name
     force_detach                   = optional(bool)
