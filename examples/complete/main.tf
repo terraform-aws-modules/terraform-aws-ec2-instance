@@ -1,12 +1,13 @@
 provider "aws" {
-  region = local.region
+  region  = local.region
+  profile = "https://471112992927.signin.aws.amazon.com/console?region=us-east-1"
 }
 
 data "aws_availability_zones" "available" {}
 
 locals {
   name   = "ex-${basename(path.cwd)}"
-  region = "eu-west-1"
+  region = "us-east-1"
 
   vpc_cidr = "10.0.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
@@ -32,7 +33,7 @@ module "ec2_complete" {
 
   name = local.name
 
-  ami                    = data.aws_ami.amazon_linux.id
+  ami                    = data.aws_ami.Amazon_Linux.id
   instance_type          = "c5.xlarge" # used to set core count below
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.private_subnets, 0)
@@ -171,7 +172,7 @@ module "ec2_ignore_ami_changes" {
 
   ignore_ami_changes = true
 
-  ami                    = data.aws_ami.amazon_linux.id
+  ami                    = data.aws_ami.Amazon_Linux.id
   instance_type          = "t2.micro"
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.private_subnets, 0)
@@ -305,7 +306,7 @@ module "ec2_open_capacity_reservation" {
 
   name = "${local.name}-open-capacity-reservation"
 
-  ami                         = data.aws_ami.amazon_linux.id
+  ami                         = data.aws_ami.Amazon_Linux.id
   instance_type               = "t3.micro"
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
@@ -325,7 +326,7 @@ module "ec2_targeted_capacity_reservation" {
 
   name = "${local.name}-targeted-capacity-reservation"
 
-  ami                         = data.aws_ami.amazon_linux.id
+  ami                         = data.aws_ami.Amazon_Linux.id
   instance_type               = "t3.micro"
   subnet_id                   = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids      = [module.security_group.security_group_id]
@@ -438,13 +439,13 @@ module "vpc" {
   tags = local.tags
 }
 
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "Amazon_Linux" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amzn-ami-hvm-*-x86_64-gp2"]
+    values = ["al2023-ami-2023*-x86_64"]
   }
 }
 
