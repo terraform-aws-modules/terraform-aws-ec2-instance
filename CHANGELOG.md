@@ -2,6 +2,82 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.3.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.2.0...v6.3.0) (2026-02-27)
+
+### Features
+
+* Support `volume_initialization_rate` ([#473](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/473)) ([a05bb47](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/a05bb470815cbabfb68c67ca0ead4d73ea28244a))
+
+## [6.2.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.5...v6.2.0) (2026-01-08)
+
+### Features
+
+* Add provider meta user-agent ([#467](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/467)) ([22ac5c6](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/22ac5c6740b73c020c75d5c364a772fcc76f3208))
+
+## [6.1.5](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.4...v6.1.5) (2025-11-26)
+
+### Bug Fixes
+
+* Always pull a value from SSM data source since a computed value cannot be used in conditional logic ([#466](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/466)) ([36fbf06](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/36fbf06ff5d212a43e42d09a069c00afaf6afb31))
+
+## [6.1.4](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.3...v6.1.4) (2025-10-22)
+
+### Bug Fixes
+
+* Allow computed values for `name`, make `timeouts` dynamic/optional ([#461](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/461)) ([baf0ba2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/baf0ba2a457690526e12d74e98e6c5599aff9774))
+
+## [6.1.3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.2...v6.1.3) (2025-10-21)
+
+### Bug Fixes
+
+* Update CI workflow versions to latest ([#460](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/460)) ([6fd0798](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/6fd0798b625457c565c42109d65a80d09b255676))
+
+## [6.1.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.1...v6.1.2) (2025-10-14)
+
+
+### Bug Fixes
+
+* Use computed `local.security_group_name` in the security group `Name` tag ([#458](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/458)) ([541cc3d](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/541cc3d33debd73ca1f961054af8014a7ae08f06))
+
+## [6.1.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.1.0...v6.1.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* Avoid setting `Name` tag when a value has not been provided for `name` ([#452](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/452)) ([c227866](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/c227866fa9c7a3ac557fb6ad53ce813ae42590b7))
+
+## [6.1.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.2...v6.1.0) (2025-08-22)
+
+
+### Features
+
+* Output security group ARN and ID ([#450](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/450)) ([45a4380](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/45a43803c408968f9f9d11b2ea63d96f6931a1e2))
+
+## [6.0.2](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.1...v6.0.2) (2025-07-01)
+
+
+### Bug Fixes
+
+* Set default value for `root_block_device.tags` to `null` ([#444](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/444)) ([f1b5273](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/f1b527329b2a9c55beb5b49fc146588d9611b637))
+
+## [6.0.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.0.0...v6.0.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* Lower minimum Terraform version to 1.5.7 ([#441](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/441)) ([abce6d9](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/abce6d9d505b08d09f578ec65794d5b51eb1e78d))
+
+## [6.0.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.8.0...v6.0.0) (2025-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.10` respectively (#436)
+
+### Features
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.10` respectively ([#436](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/436)) ([bfd5ed3](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/bfd5ed33d66024a76f482d6fa2ca226ff9d8f615))
+
 ## [5.8.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v5.7.1...v5.8.0) (2025-03-30)
 
 
