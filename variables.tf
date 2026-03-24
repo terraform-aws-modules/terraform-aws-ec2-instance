@@ -65,9 +65,10 @@ variable "capacity_reservation_specification" {
 variable "cpu_options" {
   description = "Defines CPU options to apply to the instance at launch time."
   type = object({
-    amd_sev_snp      = optional(string)
-    core_count       = optional(number)
-    threads_per_core = optional(number)
+    amd_sev_snp           = optional(string)
+    core_count            = optional(number)
+    nested_virtualization = optional(string)
+    threads_per_core      = optional(number)
   })
   default = null
 }
@@ -116,6 +117,12 @@ variable "ephemeral_block_device" {
     virtual_name = optional(string)
   }))
   default = null
+}
+
+variable "force_destroy" {
+  description = "Destroys instance even if `disable_api_termination` or `disable_api_stop` is set to true. Once this parameter is set to true, a successful terraform apply run before a destroy is required to update this value in the resource state. Without a successful terraform apply after this parameter is set, this flag will have no effect. If setting this field in the same operation that would require replacing the instance or destroying the instance, this flag will not work. Additionally when importing an instance, a successful terraform apply is required to set this value in state before it will take effect on a destroy operation."
+  type        = bool
+  default     = null
 }
 
 variable "get_password_data" {
@@ -233,7 +240,7 @@ variable "monitoring" {
 }
 
 variable "network_interface" {
-  description = "Customize network interfaces to be attached at instance boot time"
+  description = "Customize network interfaces to be attached at instance boot time. `network_interface` is deprecated. Use `primary_network_interface` to specify the primary network interface"
   type = map(object({
     delete_on_termination = optional(bool)
     device_index          = optional(number) # Will fall back to use map key as device index
@@ -243,8 +250,37 @@ variable "network_interface" {
   default = null
 }
 
+variable "primary_network_interface" {
+  description = "Customize primary network interface on the EC2 Instance"
+  type = object({
+    network_interface_id = string
+  })
+  default = null
+}
+
+variable "secondary_network_interface" {
+  description = "Customize secondary network interfaces to be attached to the EC2 instance"
+  type = map(object({
+    delete_on_termination    = optional(bool)
+    device_index             = optional(number) # Will fall back to use map key as device index
+    interface_type           = optional(string)
+    network_card_index       = number
+    network_interface_id     = string
+    private_ip_address_count = optional(number)
+    private_ip_addresses     = optional(list(string))
+    secondary_subnet_id      = string
+  }))
+  default = null
+}
+
 variable "placement_group" {
   description = "The Placement Group to start the instance in"
+  type        = string
+  default     = null
+}
+
+variable "placement_group_id" {
+  description = "Placement Group ID to start the instance in"
   type        = string
   default     = null
 }
