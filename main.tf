@@ -239,7 +239,7 @@ resource "aws_instance" "this" {
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
-  vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
+  vpc_security_group_ids      = var.network_interface == null && var.primary_network_interface == null ? local.vpc_security_group_ids : null
 
   dynamic "timeouts" {
     for_each = var.timeouts != null ? [var.timeouts] : []
@@ -457,7 +457,7 @@ resource "aws_instance" "ignore_ami" {
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
-  vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
+  vpc_security_group_ids      = var.network_interface == null && var.primary_network_interface == null ? local.vpc_security_group_ids : null
 
   dynamic "timeouts" {
     for_each = var.timeouts != null ? [var.timeouts] : []
@@ -648,7 +648,7 @@ resource "aws_spot_instance_request" "this" {
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
-  vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
+  vpc_security_group_ids      = var.network_interface == null && var.primary_network_interface == null ? local.vpc_security_group_ids : null
 
   dynamic "timeouts" {
     for_each = var.timeouts != null ? [var.timeouts] : []
@@ -784,7 +784,7 @@ resource "aws_iam_instance_profile" "this" {
 ################################################################################
 
 locals {
-  create_security_group = var.create && var.create_security_group && var.network_interface == null
+  create_security_group = var.create && var.create_security_group && var.network_interface == null && var.primary_network_interface == null
   security_group_name   = try(coalesce(var.security_group_name, var.name), "")
 
   vpc_security_group_ids = local.create_security_group ? concat(var.vpc_security_group_ids, [aws_security_group.this[0].id]) : var.vpc_security_group_ids

@@ -265,7 +265,6 @@ variable "secondary_network_interface" {
     device_index             = optional(number) # Will fall back to use map key as device index
     interface_type           = optional(string)
     network_card_index       = number
-    network_interface_id     = string
     private_ip_address_count = optional(number)
     private_ip_addresses     = optional(list(string))
     secondary_subnet_id      = string
