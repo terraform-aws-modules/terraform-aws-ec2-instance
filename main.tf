@@ -221,7 +221,7 @@ resource "aws_instance" "this" {
     for_each = var.secondary_network_interface != null ? var.secondary_network_interface : {}
     content {
       delete_on_termination    = secondary_network_interface.value.delete_on_termination
-      device_index             = try(secondary_network_interface.value.device_index, secondary_network_interface.key)
+      device_index             = coalesce(secondary_network_interface.value.device_index, secondary_network_interface.key)
       interface_type           = secondary_network_interface.value.interface_type
       network_card_index       = secondary_network_interface.value.network_card_index
       private_ip_address_count = secondary_network_interface.value.private_ip_address_count
@@ -439,7 +439,7 @@ resource "aws_instance" "ignore_ami" {
     for_each = var.secondary_network_interface != null ? var.secondary_network_interface : {}
     content {
       delete_on_termination    = secondary_network_interface.value.delete_on_termination
-      device_index             = try(secondary_network_interface.value.device_index, secondary_network_interface.key)
+      device_index             = coalesce(secondary_network_interface.value.device_index, secondary_network_interface.key)
       interface_type           = secondary_network_interface.value.interface_type
       network_card_index       = secondary_network_interface.value.network_card_index
       private_ip_address_count = secondary_network_interface.value.private_ip_address_count

@@ -105,6 +105,25 @@ module "ec2_network_interface" {
     network_interface_id = aws_network_interface.this.id
   }
 
+  # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/secondary-networks.html
+  # secondary_network_interface = {
+  #   1 = {
+  #     network_card_index       = 1
+  #     device_index             = 1
+  #     interface_type           = "secondary"
+  #     delete_on_termination    = true
+  #     private_ip_address_count = 1
+  #     secondary_subnet_id      = aws_ec2_secondary_subnet.this[0].id
+  #   }
+  #   2 = {
+  #     network_card_index       = 2
+  #     interface_type           = "secondary"
+  #     delete_on_termination    = true
+  #     private_ip_address_count = 1
+  #     secondary_subnet_id      = aws_ec2_secondary_subnet.this[1].id
+  #   }
+  # }
+
   tags = local.tags
 }
 
