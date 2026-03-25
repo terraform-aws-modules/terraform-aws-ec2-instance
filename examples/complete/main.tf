@@ -38,8 +38,10 @@ module "ec2_complete" {
   subnet_id              = element(module.vpc.private_subnets, 0)
   vpc_security_group_ids = [module.security_group.security_group_id]
   placement_group        = aws_placement_group.web.id
-  create_eip             = true
-  disable_api_stop       = false
+  # conflicts with placement_group
+  # placement_group_id = aws_placement_group.web.placement_group_id
+  create_eip       = true
+  disable_api_stop = false
 
   create_iam_instance_profile = true
   iam_role_description        = "IAM role for EC2 instance"
@@ -81,6 +83,8 @@ module "ec2_complete" {
     }
   }
 
+  force_destroy = true
+
   tags = local.tags
 }
 
@@ -89,11 +93,16 @@ module "ec2_network_interface" {
 
   name = "${local.name}-network-interface"
 
-  network_interface = {
-    0 = {
-      network_interface_id  = aws_network_interface.this.id
-      delete_on_termination = false
-    }
+  # deprecated - use primary_network_interface instead
+  # network_interface = {
+  #   0 = {
+  #     network_interface_id  = aws_network_interface.this.id
+  #     delete_on_termination = false
+  #   }
+  # }
+
+  primary_network_interface = {
+    network_interface_id = aws_network_interface.this.id
   }
 
   tags = local.tags
