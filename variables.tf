@@ -240,21 +240,13 @@ variable "monitoring" {
 }
 
 variable "network_interface" {
-  description = "Customize network interfaces to be attached at instance boot time. `network_interface` is deprecated. Use `primary_network_interface` to specify the primary network interface"
+  description = "Customize network interfaces to be attached at instance boot time"
   type = map(object({
     delete_on_termination = optional(bool)
     device_index          = optional(number) # Will fall back to use map key as device index
     network_card_index    = optional(number)
     network_interface_id  = string
   }))
-  default = null
-}
-
-variable "primary_network_interface" {
-  description = "Customize primary network interface on the EC2 Instance"
-  type = object({
-    network_interface_id = string
-  })
   default = null
 }
 

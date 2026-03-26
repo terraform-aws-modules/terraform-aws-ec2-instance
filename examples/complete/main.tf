@@ -93,16 +93,11 @@ module "ec2_network_interface" {
 
   name = "${local.name}-network-interface"
 
-  # deprecated - use primary_network_interface instead
-  # network_interface = {
-  #   0 = {
-  #     network_interface_id  = aws_network_interface.this.id
-  #     delete_on_termination = false
-  #   }
-  # }
-
-  primary_network_interface = {
-    network_interface_id = aws_network_interface.this.id
+  network_interface = {
+    0 = {
+      network_interface_id  = aws_network_interface.this.id
+      delete_on_termination = false
+    }
   }
 
   # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/secondary-networks.html

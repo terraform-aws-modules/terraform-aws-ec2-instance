@@ -59,7 +59,6 @@ module "wrapper" {
   placement_group             = try(each.value.placement_group, var.defaults.placement_group, null)
   placement_group_id          = try(each.value.placement_group_id, var.defaults.placement_group_id, null)
   placement_partition_number  = try(each.value.placement_partition_number, var.defaults.placement_partition_number, null)
-  primary_network_interface   = try(each.value.primary_network_interface, var.defaults.primary_network_interface, null)
   private_dns_name_options    = try(each.value.private_dns_name_options, var.defaults.private_dns_name_options, null)
   private_ip                  = try(each.value.private_ip, var.defaults.private_ip, null)
   putin_khuylo                = try(each.value.putin_khuylo, var.defaults.putin_khuylo, true)
