@@ -13,6 +13,11 @@ locals {
     var.name != "" ? { "Name" = var.name } : {}
   )
 
+  eni_tags = merge(
+    local.instance_tags,
+    var.eni_tags,
+  )
+
   instance_id = try(
     aws_instance.this[0].id,
     aws_instance.ignore_ami[0].id,
@@ -654,6 +659,22 @@ resource "aws_ec2_tag" "spot_instance" {
   for_each = local.create && var.create_spot_instance ? local.instance_tags : {}
 
   resource_id = aws_spot_instance_request.this[0].spot_instance_id
+  key         = each.key
+  value       = each.value
+}
+
+resource "aws_ec2_tag" "eni" {
+  for_each = local.create && !var.ignore_ami_changes && !var.create_spot_instance ? local.eni_tags : {}
+
+  resource_id = aws_instance.this[0].primary_network_interface_id
+  key         = each.key
+  value       = each.value
+}
+
+resource "aws_ec2_tag" "eni_ignore_ami" {
+  for_each = local.create && var.ignore_ami_changes && !var.create_spot_instance ? local.eni_tags : {}
+
+  resource_id = aws_instance.ignore_ami[0].primary_network_interface_id
   key         = each.key
   value       = each.value
 }

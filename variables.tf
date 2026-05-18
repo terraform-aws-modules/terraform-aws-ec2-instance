@@ -343,6 +343,12 @@ variable "instance_tags" {
   default     = {}
 }
 
+variable "eni_tags" {
+  description = "A map of additional tags to add to the primary network interface (ENI) of the instance"
+  type        = map(string)
+  default     = {}
+}
+
 variable "tenancy" {
   description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host"
   type        = string
