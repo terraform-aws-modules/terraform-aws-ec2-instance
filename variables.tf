@@ -367,6 +367,12 @@ variable "user_data_replace_on_change" {
   default     = null
 }
 
+variable "ignore_user_data_changes" {
+  description = "Determines whether changes to `user_data`/`user_data_base64` are ignored after the instance is created. Since user data only runs on first boot, updating it does not re-run the script but does force the instance to be restarted (or replaced, when `user_data_replace_on_change` is `true`); enable this to keep running instances untouched"
+  type        = bool
+  default     = false
+}
+
 variable "volume_tags" {
   description = "A mapping of tags to assign to the devices created by the instance at launch time"
   type        = map(string)

@@ -7,6 +7,12 @@ locals {
 
   ami = try(coalesce(var.ami, try(nonsensitive(data.aws_ssm_parameter.this.value), null)), null)
 
+  # `ignore_changes` only accepts a static list, so the user data is instead frozen
+  # behind `terraform_data` whose own (static) `ignore_changes` pins it to the value
+  # captured at creation
+  user_data        = var.ignore_user_data_changes ? try(one(terraform_data.user_data[*].output).user_data, null) : var.user_data
+  user_data_base64 = var.ignore_user_data_changes ? try(one(terraform_data.user_data[*].output).user_data_base64, null) : var.user_data_base64
+
   instance_tags = merge(
     var.tags,
     var.instance_tags,
@@ -32,6 +38,21 @@ data "aws_ssm_parameter" "this" {
   region = var.region
 
   name = var.ami_ssm_parameter
+}
+
+resource "terraform_data" "user_data" {
+  count = local.create && var.ignore_user_data_changes ? 1 : 0
+
+  input = {
+    user_data        = var.user_data
+    user_data_base64 = var.user_data_base64
+  }
+
+  lifecycle {
+    ignore_changes = [
+      input,
+    ]
+  }
 }
 
 ################################################################################
@@ -227,8 +248,8 @@ resource "aws_instance" "this" {
   subnet_id                   = var.subnet_id
   tags                        = local.instance_tags
   tenancy                     = var.tenancy
-  user_data                   = var.user_data
-  user_data_base64            = var.user_data_base64
+  user_data                   = local.user_data
+  user_data_base64            = local.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
@@ -437,8 +458,8 @@ resource "aws_instance" "ignore_ami" {
   subnet_id                   = var.subnet_id
   tags                        = local.instance_tags
   tenancy                     = var.tenancy
-  user_data                   = var.user_data
-  user_data_base64            = var.user_data_base64
+  user_data                   = local.user_data
+  user_data_base64            = local.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
@@ -455,7 +476,7 @@ resource "aws_instance" "ignore_ami" {
 
   lifecycle {
     ignore_changes = [
-      ami
+      ami,
     ]
   }
 }
@@ -628,8 +649,8 @@ resource "aws_spot_instance_request" "this" {
   subnet_id                   = var.subnet_id
   tags                        = local.instance_tags
   tenancy                     = var.tenancy
-  user_data                   = var.user_data
-  user_data_base64            = var.user_data_base64
+  user_data                   = local.user_data
+  user_data_base64            = local.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   volume_tags                 = var.enable_volume_tags ? merge(var.tags, var.volume_tags, { "Name" = var.name }) : null
   vpc_security_group_ids      = var.network_interface == null ? local.vpc_security_group_ids : null
