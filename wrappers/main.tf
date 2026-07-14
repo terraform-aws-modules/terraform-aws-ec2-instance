@@ -39,6 +39,7 @@ module "wrapper" {
   iam_role_tags                        = try(each.value.iam_role_tags, var.defaults.iam_role_tags, {})
   iam_role_use_name_prefix             = try(each.value.iam_role_use_name_prefix, var.defaults.iam_role_use_name_prefix, true)
   ignore_ami_changes                   = try(each.value.ignore_ami_changes, var.defaults.ignore_ami_changes, false)
+  ignore_user_data_changes             = try(each.value.ignore_user_data_changes, var.defaults.ignore_user_data_changes, false)
   instance_initiated_shutdown_behavior = try(each.value.instance_initiated_shutdown_behavior, var.defaults.instance_initiated_shutdown_behavior, null)
   instance_market_options              = try(each.value.instance_market_options, var.defaults.instance_market_options, null)
   instance_tags                        = try(each.value.instance_tags, var.defaults.instance_tags, {})
