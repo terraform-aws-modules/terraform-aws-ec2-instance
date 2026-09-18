@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.1](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.4.0...v6.4.1) (2026-09-18)
+
+### Bug Fixes
+
+* Document known Terraform/OpenTofu limitations in README ([#482](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/issues/482)) ([934fb6a](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/commit/934fb6aaf6427078bd15b4b58c47c41195c341eb))
+
 ## [6.4.0](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/compare/v6.3.0...v6.4.0) (2026-03-26)
 
 ### Features
