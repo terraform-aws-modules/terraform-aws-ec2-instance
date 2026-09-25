@@ -73,7 +73,6 @@ module "ec2_instance" {
 ```
 
 <!-- BEGIN_KNOWN_LIMITATIONS -->
-
 ## Known limitations (Terraform/OpenTofu, not this module)
 
 A few requests come up again and again and cannot be implemented by this
@@ -86,8 +85,8 @@ has been open since 2018,
 the same request for OpenTofu.
 
 - **Terraform wants to replace my EC2 instance because the AMI changed** -
-  Native option: pin the AMI id rather than resolving the most recent one.
-  Otherwise fork and add `ignore_changes = [ami]`.
+  Native options: pin the AMI id, or set `ignore_ami_changes = true` (an
+  existing instance moves to a new state address, so add a `moved` block).
 
 [Compliance.tf](https://compliance.tf/?utm_source=github&utm_medium=readme&utm_campaign=known-limitations) serves this module with
 these rules applied at download time, on top of whatever your organization
@@ -105,7 +104,6 @@ diff without an account, open this module in the
 
 Disclosure: written by this module's maintainer, who also builds
 [compliance.tf](https://compliance.tf/?utm_source=github&utm_medium=readme&utm_campaign=known-limitations).
-
 <!-- END_KNOWN_LIMITATIONS -->
 
 ## Examples
